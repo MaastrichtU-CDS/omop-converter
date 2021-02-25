@@ -1,0 +1,6 @@
+variable,concept,domain,type,units
+age_in_years,4265453,observation,number,
+year_of_birth,none,person,number,
+sex,none,person,string,
+bmi,4245997,measurement,number,
+hypertension,316866,condition,,

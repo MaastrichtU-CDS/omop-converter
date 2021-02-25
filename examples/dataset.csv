@@ -1,0 +1,3 @@
+id,gender,age,birth_year,education_years,apoe_genotype,h_t,body_mass_index,obesity,smoking,cholesterol,alcohol_amount,stroke
+001,Male,78,1943,9,Heterozygote,no,22,no,past,5.4,4,no
+002,Female,80,1941,13,Homozygote,yes,25,yes,yes,5.4,4,no
