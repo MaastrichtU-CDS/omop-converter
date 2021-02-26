@@ -1,5 +1,5 @@
-CONFIGURATION_PATH='../database.ini'
-CONFIGURATION_SECTION='postgresql'
+DB_CONFIGURATION_PATH='../database.ini'
+DB_CONFIGURATION_SECTION='postgresql'
 
 OMOP_CDM_DDL_PATH='./omop_scripts_v6/OMOP_CDM_postgresql_ddl.txt'
 

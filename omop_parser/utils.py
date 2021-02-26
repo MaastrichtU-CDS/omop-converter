@@ -1,4 +1,5 @@
 import os
+import subprocess
 from configparser import ConfigParser
 
 def import_config(path, section):
@@ -22,3 +23,7 @@ def export_config(path, section, configurations):
 
     with open(path, 'w') as configfile:
         config.write(configfile)
+
+def run_command(command):
+    """ Runs a bash command """
+    return subprocess.run(command, capture_output=True, check=False)

@@ -1,7 +1,7 @@
 import click
 import os
 from postgres_manager import PostgresManager
-from utils import export_config, import_config
+from utils import export_config, import_config, run_command
 from constants import *
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from cdm_sql_builder import get_person, get_observation, get_condition, get_measurement
@@ -21,6 +21,7 @@ def cli():
 def set_up(user, password, host, port, database_name):
     """ Set up the configurations needed.
     """
+    # TODO: Load the scripts to create the database and vocabularies directly.
     configurations = {
         DB_USER: user,
         DB_PASSWORD: password,
@@ -28,14 +29,13 @@ def set_up(user, password, host, port, database_name):
         DB_PORT: port,
         DB_DATABASE: database_name
     }
-    export_config(CONFIGURATION_PATH, CONFIGURATION_SECTION, configurations)
+    export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
 @cli.command()
 def create_db():
     """ Create a new OMOP CDM database.
     """
-    import_config(CONFIGURATION_PATH, CONFIGURATION_SECTION)
-
+    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     with PostgresManager(default_db=True, isolation_level=ISOLATION_LEVEL_AUTOCOMMIT) as pg:
             pg.create_database(os.environ[DB_DATABASE])
 
@@ -46,8 +46,7 @@ def create_db():
 def transform():
     """ Populate the OMOP CDM database.
     """
-    import_config(CONFIGURATION_PATH, CONFIGURATION_SECTION)
-
+    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     with PostgresManager() as pg:
         for sequence in [PERSON_SEQUENCE, OBSERVATION_SEQUENCE, MEASUREMENT_SEQUENCE, CONDITION_SEQUENCE]:
             pg.create_sequence(sequence)
@@ -71,6 +70,7 @@ def transform():
                 sex_source_variable = source_mapping[SEX][SOURCE_VARIABLE]
                 birth_year_source_variable = source_mapping[YEAR_OF_BIRTH][SOURCE_VARIABLE]
 
+                # TODO: Maybe a temporary table for the mapping between person_id and source_person_id
                 person_sql = get_person(row[sex_source_variable], row[birth_year_source_variable])
                 person_id = pg.run_sql(person_sql, returning=True)
 
@@ -78,6 +78,32 @@ def transform():
                     if mds_mapping[key][DOMAIN] in CDM_SQL:
                         statement = CDM_SQL[mds_mapping[key][DOMAIN]](row[value[SOURCE_VARIABLE]], person_id, mds_mapping[key])
                         pg.run_sql(statement)
+
+@click.option('--file', default='../omop_cdm_export.pgsql')
+@cli.command()
+def export_db(file):
+    """ Export the database to a file.
+    """
+    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    process = run_command(['pg_dump', '-U', os.getenv(DB_USER), os.getenv(DB_DATABASE), '-f', file])
+    if process.returncode == 0:
+        click.echo('Successfully exported the database.')
+    else:
+        click.echo(f'Failed to export the database: {process.stderr.decode("utf-8")}')
+
+@click.option('--file', default='../omop_cdm_export.pgsql')
+@cli.command()
+def import_db(file):
+    """ Create and build a database from a file.
+    """
+    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    with PostgresManager(default_db=True, isolation_level=ISOLATION_LEVEL_AUTOCOMMIT) as pg:
+        pg.create_database(os.environ[DB_DATABASE])
+    process = run_command(['psql', '-U', os.getenv(DB_USER), os.getenv(DB_DATABASE), '-f', file])
+    if process.returncode == 0:
+        click.echo('Successfully imported the database.')
+    else:
+        click.echo(f'Failed to import the database: {process.stderr.decode("utf-8")}')
 
 if __name__ == '__main__':
     cli()
