@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:13.2
+    environment:
+      POSTGRES_PASSWORD: pass
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  memorabel-parser:
+    image: pmateus/memorabel-data-harmonization:1.0.0
+    stdin_open: true
+    tty: true
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: pass
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: CDMv6
+      DOCKER_ENV: "true"
+      VOCABULARY_PATH: /usr/src/app/vocabulary
+    depends_on:
+      - db
+      - adminer

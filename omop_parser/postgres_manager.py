@@ -66,3 +66,10 @@ class PostgresManager:
         """
         self.cursor.execute(open(path, 'r').read())
         self.connection.commit()
+
+    def copy_from_file(self, table, path):
+        """ Insert data from a file.
+        """
+        with open(path, 'r') as data:
+            self.cursor.copy_expert(f"COPY {table} FROM STDOUT WITH DELIMITER E'\t' CSV HEADER QUOTE E'\b' ;", data)
+            self.connection.commit()

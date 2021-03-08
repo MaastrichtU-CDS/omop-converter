@@ -18,16 +18,17 @@ def cli():
 @click.option('--host', prompt=True)
 @click.option('--port', prompt=True)
 @click.option('--database-name', prompt=True)
-def set_up(user, password, host, port, database_name):
+@click.option('--vocabulary-path', prompt=True)
+def set_up(user, password, host, port, database_name, vocabulary_path):
     """ Set up the configurations needed.
     """
-    # TODO: Load the scripts to create the database and vocabularies directly.
     configurations = {
         DB_USER: user,
         DB_PASSWORD: password,
         DB_HOST: host,
         DB_PORT: port,
-        DB_DATABASE: database_name
+        DB_DATABASE: database_name,
+        VOCABULARY_PATH: vocabulary_path
     }
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
@@ -35,18 +36,24 @@ def set_up(user, password, host, port, database_name):
 def create_db():
     """ Create a new OMOP CDM database.
     """
-    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    click.echo(f'Create the database {os.environ[DB_DATABASE]}')
     with PostgresManager(default_db=True, isolation_level=ISOLATION_LEVEL_AUTOCOMMIT) as pg:
             pg.create_database(os.environ[DB_DATABASE])
 
     with PostgresManager() as pg:
-            pg.execute_file(OMOP_CDM_DDL_PATH)
+        pg.execute_file(OMOP_CDM_DDL_PATH)
+        if VOCABULARY_PATH in os.environ:
+            click.echo('Insert the vocabulary')
+            for table, vocabulary_file in VOCABULARY_FILES.items():
+                click.echo(f'Populating the {table} table')
+                pg.copy_from_file(table, f'{os.environ[VOCABULARY_PATH]}/{vocabulary_file}')
 
 @cli.command()
 def transform():
     """ Populate the OMOP CDM database.
     """
-    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     with PostgresManager() as pg:
         for sequence in [PERSON_SEQUENCE, OBSERVATION_SEQUENCE, MEASUREMENT_SEQUENCE, CONDITION_SEQUENCE]:
             pg.create_sequence(sequence)
@@ -84,7 +91,7 @@ def transform():
 def export_db(file):
     """ Export the database to a file.
     """
-    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     process = run_command(['pg_dump', '-U', os.getenv(DB_USER), os.getenv(DB_DATABASE), '-f', file])
     if process.returncode == 0:
         click.echo('Successfully exported the database.')
@@ -96,7 +103,7 @@ def export_db(file):
 def import_db(file):
     """ Create and build a database from a file.
     """
-    import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     with PostgresManager(default_db=True, isolation_level=ISOLATION_LEVEL_AUTOCOMMIT) as pg:
         pg.create_database(os.environ[DB_DATABASE])
     process = run_command(['psql', '-U', os.getenv(DB_USER), os.getenv(DB_DATABASE), '-f', file])
