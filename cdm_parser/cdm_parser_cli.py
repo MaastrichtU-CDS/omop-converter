@@ -4,8 +4,9 @@ from postgres_manager import PostgresManager
 from utils import export_config, import_config, run_command
 from constants import *
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from cdm_sql_builder import get_person, get_observation, get_condition, get_measurement
+from cdm_sql_builder import get_person
 from parser import parse_csv_mapping
+from transform_dataset import transform_dataset
 import csv
 
 @click.group()
@@ -64,27 +65,7 @@ def transform():
         source_mapping = parse_csv_mapping('../examples/source_mapping.csv')
         
         # TODO: create the statements and commit them in batches
-
-        CDM_SQL = {
-            CONDITION: get_condition,
-            MEASUREMENT: get_measurement,
-            OBSERVATION: get_observation
-        }
-
-        with open('../examples/dataset.csv') as csv_file:
-            csv_reader = csv.DictReader(csv_file, delimiter=',')
-            for row in csv_reader:
-                sex_source_variable = source_mapping[SEX][SOURCE_VARIABLE]
-                birth_year_source_variable = source_mapping[YEAR_OF_BIRTH][SOURCE_VARIABLE]
-
-                # TODO: Maybe a temporary table for the mapping between person_id and source_person_id
-                person_sql = get_person(row[sex_source_variable], row[birth_year_source_variable])
-                person_id = pg.run_sql(person_sql, returning=True)
-
-                for key, value in source_mapping.items():
-                    if mds_mapping[key][DOMAIN] in CDM_SQL:
-                        statement = CDM_SQL[mds_mapping[key][DOMAIN]](row[value[SOURCE_VARIABLE]], person_id, mds_mapping[key])
-                        pg.run_sql(statement)
+        transform_dataset('../examples/dataset.csv', source_mapping, mds_mapping, pg)
 
 @click.option('--file', default='../omop_cdm_export.pgsql')
 @cli.command()

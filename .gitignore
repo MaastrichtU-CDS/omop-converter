@@ -3,3 +3,4 @@ database.ini
 *.pgsql
 omop_scripts/
 vocabularies/
+vocabulary*.zip

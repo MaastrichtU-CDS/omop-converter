@@ -20,7 +20,7 @@ OBSERVATION_SEQUENCE = 'observation_sequence'
 MEASUREMENT_SEQUENCE = 'measurement_sequence'
 CONDITION_SEQUENCE = 'condition_sequence'
 
-CONCEPT = 'concept'
+CONCEPT_ID = 'concept_id'
 SOURCE_VARIABLE = 'source_variable'
 DOMAIN = 'domain'
 OBSERVATION = 'observation'

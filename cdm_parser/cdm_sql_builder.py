@@ -1,4 +1,4 @@
-from constants import CONCEPT
+from constants import CONCEPT_ID
 
 def get_person(gender, year_of_birth):
     """ Build the sql statement for a person.
@@ -22,7 +22,7 @@ def get_observation(value, person_id, field):
         observation_type_concept_id,value_as_string,observation_source_value,observation_source_concept_id,
         obs_event_field_concept_id) VALUES (nextval('observation_sequence'), {0}, {1},
         '19700101 00:00:00', 32879, {2}, {2}, 0, 0);
-    """.format(person_id, field[CONCEPT], value)
+    """.format(person_id, field[CONCEPT_ID], value)
 
 def get_measurement(value, person_id, field):
     """ Build the sql statement for a measurement.
@@ -30,7 +30,7 @@ def get_measurement(value, person_id, field):
     return """INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
         measurement_type_concept_id,value_as_number,measurement_source_concept_id)
         VALUES (nextval('measurement_sequence'), {0}, {1}, '19700101 00:00:00', 0, {2}, 0)
-    """.format(person_id, field[CONCEPT], value)
+    """.format(person_id, field[CONCEPT_ID], value)
 
 def get_condition(value, person_id, field):
     """ Build the sql statement for a condition.
@@ -38,4 +38,4 @@ def get_condition(value, person_id, field):
     return """INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
         condition_start_datetime,condition_type_concept_id,condition_status_concept_id,condition_source_concept_id)
         VALUES (nextval('condition_sequence'), {0}, {1}, '19700101 00:00:00', 0, 0, 0)
-    """.format(person_id, field[CONCEPT])
+    """.format(person_id, field[CONCEPT_ID])

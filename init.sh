@@ -13,5 +13,5 @@ curl -o omop_scripts/v6/OMOP_CDM_postgresql_pk_indexes.txt ${SCRIPTS_URL_PREFIX}
 unzip vocabulary.zip
 rm vocabulary.zip
 
-cd omop_parser
+cd cdm_parser
 bash

@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:13.2
     environment:
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-password}"
 
   adminer:
     image: adminer
@@ -19,7 +19,7 @@ services:
     tty: true
     environment:
       DB_USER: postgres
-      DB_PASSWORD: pass
+      DB_PASSWORD: "${POSTGRES_PASSWORD:-password}"
       DB_HOST: db
       DB_PORT: 5432
       DB_DATABASE: CDMv6
