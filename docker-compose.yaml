@@ -22,9 +22,15 @@ services:
       DB_PASSWORD: "${POSTGRES_PASSWORD:-password}"
       DB_HOST: db
       DB_PORT: 5432
-      DB_DATABASE: CDMv6
+      DB_DATABASE: CDM
       DOCKER_ENV: "true"
       VOCABULARY_PATH: /usr/src/app/vocabulary
+      DESTINATION_MAPPING_PATH: /mnt/mappings/destination_mapping.csv
+      SOURCE_MAPPING_PATH: /mnt/mappings/source_mapping.csv
+      DATASET: /mnt/data/dataset.csv
+    volumes:
+      - $PWD/mappings:/mnt/mappings
+      - $PWD/data:/mnt/data
     depends_on:
       - db
       - adminer

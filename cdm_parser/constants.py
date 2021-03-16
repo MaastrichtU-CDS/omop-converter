@@ -5,6 +5,11 @@ OMOP_CDM_DDL_PATH = '../omop_scripts/v6/OMOP_CDM_postgresql_ddl.txt'
 OMOP_CDM_PK_PATH = '../omop_scripts/v6/OMOP_CDM_postgresql_pk_indexes.txt'
 OMOP_CDM_CONSTRAINTS_PATH = '../omop_scripts/v6/OMOP_CDM_postgresql_constraints.txt'
 
+VOCABULARY_DEFAULT_PATH = '../vocabularies'
+DB_DEFAULT_NAME = 'CDM'
+DESTINATION_MAPPING_DEFAULT_PATH = '../mappings/destination_mapping.csv'
+SOURCE_MAPPING_DEFAULT_PATH = '../mappings/source_mapping.csv'
+
 DB_USER = 'DB_USER'
 DB_PASSWORD = 'DB_PASSWORD'
 DB_HOST = 'DB_HOST'
@@ -12,6 +17,9 @@ DB_PORT = 'DB_PORT'
 DB_DATABASE = 'DB_DATABASE'
 DOCKER_ENV = 'DOCKER_ENV'
 VOCABULARY_PATH = 'VOCABULARY_PATH'
+DESTINATION_MAPPING_PATH = 'DESTINATION_MAPPING_PATH'
+SOURCE_MAPPING_PATH = 'SOURCE_MAPPING_PATH'
+DATASET_PATH = 'DATASET_PATH'
 
 VARIABLE = 'variable'
 
@@ -23,10 +31,20 @@ CONDITION_SEQUENCE = 'condition_sequence'
 CONCEPT_ID = 'concept_id'
 SOURCE_VARIABLE = 'source_variable'
 DOMAIN = 'domain'
-OBSERVATION = 'observation'
-MEASUREMENT = 'measurement'
-CONDITION = 'condition'
-SEX = 'sex'
+VALUES_MAPPING = 'values_mapping'
+VALUES = 'values'
+VALUES_PARSED = 'values_parsed'
+VALUES_CONCEPT_ID = 'values_concept_id'
+UNIT_CONCEPT_ID = 'unit_concept_id'
+
+VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
+
+OBSERVATION = 'Observation'
+MEASUREMENT = 'Measurement'
+CONDITION = 'Condition'
+PERSON = 'Person'
+
+GENDER = 'gender'
 YEAR_OF_BIRTH = 'year_of_birth'
 
 VOCABULARY_FILES = {

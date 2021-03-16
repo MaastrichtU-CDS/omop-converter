@@ -13,8 +13,14 @@ Currently supported database sources:
 
 #### Using docker
 
+Use the `docker-compose.yaml` file to make any change needed e.g. use different paths for the files needed.
+The necessary file structure should be:
+- The source mapping at `$PWD/mappings/source_mapping.csv`
+- The destination mapping at `$PWD/mappings/destination_mapping.csv`
+- The dataset at `$PWD/data/dataset.csv`
+
 Use docker compose `docker-compose run memorabel-parser` to:
-- create a container for the postgres database
+- create a container for the postgres database and a manager (`localhost:8080`)
 - start the container with the data harmonization tools
 
 #### Local development

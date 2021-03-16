@@ -1,6 +1,0 @@
-variable,source_variable,codes,transformation,units,table
-age_in_years,age,,,
-year_of_birth,birth_year,,,
-sex,gender,{"male":0,"female":1},,,
-bmi,body_mass_index,,,
-hypertension,h_t,,,

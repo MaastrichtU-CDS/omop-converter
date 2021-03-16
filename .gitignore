@@ -4,3 +4,5 @@ database.ini
 omop_scripts/
 vocabularies/
 vocabulary*.zip
+mappings/
+__MACOSX

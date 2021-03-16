@@ -24,6 +24,16 @@ def export_config(path, section, configurations):
     with open(path, 'w') as configfile:
         config.write(configfile)
 
-def run_command(command):
+def run_command(command, success_message, error_message):
     """ Runs a bash command """
-    return subprocess.run(command, capture_output=True, check=False)
+    process = subprocess.run(command, capture_output=True, check=False)
+    if process.returncode == 0:
+        print(success_message)
+    else:
+        print(error_message)
+        print(process.stderr.decode("utf-8"))
+
+def arrays_to_dict(keys, values):
+    """ Convert two arrays (representing the keys and values) to a dictionary
+    """
+    return {keys[i]: values[i] for i in range(len(keys))}

@@ -71,5 +71,5 @@ class PostgresManager:
         """ Insert data from a file.
         """
         with open(path, 'r') as data:
-            self.cursor.copy_expert(f"COPY {table} FROM STDOUT WITH DELIMITER E'\t' NULL 'NULL' CSV HEADER QUOTE E'\b' ;", data)
+            self.cursor.copy_expert(f"COPY {table} FROM STDOUT WITH DELIMITER E'\t' NULL '' CSV HEADER QUOTE E'\b' ;", data)
             self.connection.commit()
