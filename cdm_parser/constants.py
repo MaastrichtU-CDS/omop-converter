@@ -36,6 +36,7 @@ VALUES = 'values'
 VALUES_PARSED = 'values_parsed'
 VALUES_CONCEPT_ID = 'values_concept_id'
 UNIT_CONCEPT_ID = 'unit_concept_id'
+FORMAT = 'format'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
 
@@ -46,6 +47,9 @@ PERSON = 'Person'
 
 GENDER = 'gender'
 YEAR_OF_BIRTH = 'year_of_birth'
+DATE = 'date'
+
+DATE_FORMAT = '%Y%m%d %H:%M:%S'
 
 VOCABULARY_FILES = {
     'DRUG_STRENGTH': 'DRUG_STRENGTH.csv',

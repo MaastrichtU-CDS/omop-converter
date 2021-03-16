@@ -47,29 +47,29 @@ def get_person(gender, year_of_birth):
         RETURNING person_id;
     """.format(gender, year_of_birth)
 
-def get_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL'):
+def get_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
     """ Build the sql statement for an observation.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
     return """INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
         observation_type_concept_id,value_as_string,value_as_concept_id,unit_concept_id,observation_source_value,
         observation_source_concept_id,obs_event_field_concept_id) VALUES (nextval('observation_sequence'),{0},{1},
-        '19700101 00:00:00', 32879, {2}, {3}, {4}, {5}, 0, 0);
-    """.format(person_id, field[CONCEPT_ID], value, value_as_concept, unit_concept_id, source_value)
+        '{2}', 32879, {3},{4},{5},{6}, 0, 0);
+    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, unit_concept_id, source_value)
 
-def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL'):
+def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
     """ Build the sql statement for a measurement.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
     return """INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
         measurement_type_concept_id,value_as_number,value_as_concept_id,unit_concept_id,measurement_source_concept_id,value_source_value)
-        VALUES (nextval('measurement_sequence'), {0}, {1}, '19700101 00:00:00', 0,{2},{3},{4},0,{5})
-    """.format(person_id, field[CONCEPT_ID], value, value_as_concept, unit_concept_id, source_value)
+        VALUES (nextval('measurement_sequence'), {0}, {1}, '{2}', 0,{3},{4},{5},0,{6})
+    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, unit_concept_id, source_value)
 
-def get_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL'):
+def get_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
     """ Build the sql statement for a condition.
     """
     return """INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
         condition_start_datetime,condition_type_concept_id,condition_status_concept_id,condition_source_value,
-        condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'19700101 00:00:00',0,0,{2},0)
-    """.format(person_id, field[CONCEPT_ID], source_value)
+        condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},0)
+    """.format(person_id, field[CONCEPT_ID], date, source_value)
