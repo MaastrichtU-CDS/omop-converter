@@ -20,31 +20,25 @@ def parse_dataset(path, source_mapping, destination_mapping, pg):
     value_mapping = create_value_mapping(source_mapping, destination_mapping)
     (date_source_variable, date_format) = get_date_parameters(source_mapping)
 
+    parsing_info = (
+        source_mapping,
+        destination_mapping,
+        value_mapping,
+        date_source_variable,
+        date_format,
+    )
+
+    reader = None
     if 'csv' in path:
-        with open('../examples/dataset.csv') as csv_file:
+        with open(path) as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter=',')
-            for row in csv_reader:
-                transform_row(
-                    row,
-                    source_mapping,
-                    destination_mapping,
-                    value_mapping,
-                    date_source_variable,
-                    date_format,
-                    pg
-                )
+            transform_rows(enumerate(csv_reader), *parsing_info, pg)
     elif 'sav' in path:
         df = pd.read_spss(path)
-        for index, row in df.iterrows():
-            transform_row(
-                row,
-                source_mapping,
-                destination_mapping,
-                value_mapping,
-                date_source_variable,
-                date_format,
-                pg
-            )
+        transform_rows(df.iterrows(), *parsing_info, pg)
+    elif 'sas' in path:
+        df = pd.read_sas(path)
+        transform_rows(df.iterrows(), *parsing_info, pg)
 
 def get_date_parameters(source_mapping):
     """ Returns the date source variable and format
@@ -64,8 +58,6 @@ def create_value_mapping(source_mapping, destination_mapping):
         if value[VALUES]:
             if not value[VALUES_PARSED]:
                 raise Exception(f'Error in the source mapping for variable {key}')
-            elif not destination_mapping[key][VALUES]:
-                raise Exception(f'Error in the destination mapping for variable {key}')
             source_values = variable_values_to_dict(value[VALUES], value[VALUES_PARSED])
             if destination_mapping[key][VALUES_CONCEPT_ID]:
                 # Mapping each value to the concept ID defined
@@ -92,10 +84,28 @@ def get_parsed_value(value_mapping, variable, value):
     """ Get the parsed value for a variable
     """
     if variable in value_mapping:
-        if value not in value_mapping[variable]:
-            raise Exception(f'Variable {variable} is incorrectly mapped')
-        return (value_mapping[variable][VALUE_AS_CONCEPT_ID], value_mapping[variable][value])
+        if str(value) not in value_mapping[variable]:
+            raise Exception(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
+        return (value_mapping[variable][VALUE_AS_CONCEPT_ID], value_mapping[variable][str(value)])
     return (False, value)
+
+def valid_row_value(variable, row):
+    """ Validate if the value exists and is not null
+    """
+    return variable in row and not pd.isnull(row[variable])
+
+def transform_rows(iterator, *args):
+    """ Transform each row in the dataset
+    """
+    skipped_records = 0
+    for index, row in iterator:
+        try:
+            transform_row(row, *args)
+        except Exception as error:
+            # TODO: Use a logger and add this information in a file
+            print(f'Skipped record {index} due to an error:', error)
+            skipped_records += 1
+    print(f'Skipped {skipped_records} records due to errors')
 
 def transform_row(row, source_mapping, destination_mapping, value_mapping, \
     date_source_variable, date_format, pg):
@@ -106,6 +116,9 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
 
     # TODO: Maybe a temporary table for the mapping between person_id and source_person_id
     # in case there are multiple files/tables
+    if not all([valid_row_value(var, row) for var in [sex_source_variable, birth_year_source_variable]]):
+        raise Exception('Missing required information, the row should contain the year of birth and gender.')
+
     person_sql = get_person(
         get_parsed_value(value_mapping, sex_source_variable, row[sex_source_variable])[1],
         row[birth_year_source_variable]
@@ -123,7 +136,7 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
         elif destination_mapping[key][DOMAIN] not in CDM_SQL:
             if destination_mapping[key][DOMAIN] != PERSON:
                 print(f'Skipped variable {key} since its domain is not currently accepted')
-        elif value[SOURCE_VARIABLE] in row:
+        elif value[SOURCE_VARIABLE] in row and valid_row_value(value[SOURCE_VARIABLE], row):
             domain = destination_mapping[key][DOMAIN]
             source_value = row[value[SOURCE_VARIABLE]]
             (value_as_concept, parsed_value) = get_parsed_value(value_mapping, key, source_value)

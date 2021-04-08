@@ -34,11 +34,11 @@ Otherwise, it'll cause an error when trying to install `psycopg2`.
 To see more information on the available commands:
 
 ```bash
-python3 omop_parser_cli.py --help
+python3 cdm_parser_cli.py --help
 ```
 
 Start by setting up the database configurations:
 
 ```bash
-python3 omop_parser_cli.py set-up
+python3 cdm_parser_cli.py set-up
 ```

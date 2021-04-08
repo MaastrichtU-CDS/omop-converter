@@ -54,7 +54,7 @@ def get_observation(person_id, field, value='NULL', value_as_concept=0, source_v
     return """INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
         observation_type_concept_id,value_as_string,value_as_concept_id,unit_concept_id,observation_source_value,
         observation_source_concept_id,obs_event_field_concept_id) VALUES (nextval('observation_sequence'),{0},{1},
-        '{2}', 32879, {3},{4},{5},{6}, 0, 0);
+        '{2}', 32879, '{3}',{4},{5},{6}, 0, 0);
     """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, unit_concept_id, source_value)
 
 def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
@@ -63,7 +63,7 @@ def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_v
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
     return """INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
         measurement_type_concept_id,value_as_number,value_as_concept_id,unit_concept_id,measurement_source_concept_id,value_source_value)
-        VALUES (nextval('measurement_sequence'), {0}, {1}, '{2}', 0,{3},{4},{5},0,{6})
+        VALUES (nextval('measurement_sequence'), {0}, {1}, '{2}', 0, {3}, {4}, {5}, 0, {6})
     """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, unit_concept_id, source_value)
 
 def get_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
