@@ -8,6 +8,8 @@ The OMOP parser CLI allows to set up a new Postgres database based on the OMOP C
 
 Currently supported database sources:
 - csv
+- SPSS data files (sav)
+- sas
 
 ### Installation
 
@@ -37,7 +39,7 @@ To see more information on the available commands:
 python3 cdm_parser_cli.py --help
 ```
 
-Start by setting up the database configurations:
+(Local Development) Start by setting up the database configurations:
 
 ```bash
 python3 cdm_parser_cli.py set-up

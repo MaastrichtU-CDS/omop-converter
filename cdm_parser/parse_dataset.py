@@ -29,14 +29,14 @@ def parse_dataset(path, source_mapping, destination_mapping, pg):
     )
 
     reader = None
-    if 'csv' in path:
+    if '.csv' in path:
         with open(path) as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter=',')
             transform_rows(enumerate(csv_reader), *parsing_info, pg)
-    elif 'sav' in path:
+    elif '.sav' in path:
         df = pd.read_spss(path)
         transform_rows(df.iterrows(), *parsing_info, pg)
-    elif 'sas' in path:
+    elif '.sas' in path:
         df = pd.read_sas(path)
         transform_rows(df.iterrows(), *parsing_info, pg)
 
