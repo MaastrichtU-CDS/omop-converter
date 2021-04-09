@@ -1,0 +1,10 @@
+variable,source_variable,values,values_parsed,format
+date,date,,,%d/%m/%Y
+age,age,,
+year_of_birth,birth_year,,
+gender,gender,Male/Female,male/female
+bmi,body_mass_index,,
+hypertension,h_t,0/1,no/yes
+hypertension_history,h_h_t,0/1,no/yes
+sbp,s_b_p,,,
+dbp,d_b_p,,,

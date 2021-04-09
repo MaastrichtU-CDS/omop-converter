@@ -2,9 +2,16 @@
 
 Tools used for the data harmonization.
 
-## OMOP Parser CLI
+## CDM Parser CLI
 
-The OMOP parser CLI allows to set up a new Postgres database based on the OMOP CDM specification.
+The CDM parser CLI provides a way to harmonize the data from different sites to a common data model. It allows to set up and populate a new Postgres database based on the OMOP (Observational Medical Outcomes Partnership) CDM (Common Data Model).
+
+Steps:
+- Evaluate the variables used in the project, define global names and map them to concepts (either from the Athena vocabularies or your own)
+- Create a mapping between the variables and the concepts (e.g. `./examples/destination_mapping.csv`)
+- For each site with a different database schema/codebook, create a mapping between the source variables and the global variables defined previously (e.g. `./examples/source_mapping.csv`)
+- Correctly configure the path to the mappings and dataset
+- Run the CDM Parser to build and populate the postgres database 
 
 Currently supported database sources:
 - csv

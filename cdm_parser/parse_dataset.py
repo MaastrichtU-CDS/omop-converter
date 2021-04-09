@@ -92,7 +92,7 @@ def get_parsed_value(value_mapping, variable, value):
 def valid_row_value(variable, row):
     """ Validate if the value exists and is not null
     """
-    return variable in row and not pd.isnull(row[variable])
+    return variable in row and row[variable] and not pd.isnull(row[variable])
 
 def transform_rows(iterator, *args):
     """ Transform each row in the dataset
