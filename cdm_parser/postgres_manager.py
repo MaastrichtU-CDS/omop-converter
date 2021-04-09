@@ -8,30 +8,33 @@ class PostgresManager:
     """ Manages the Postgres connection and methods to manipulate the database.
     """
 
+    @staticmethod
+    def get_database_uri(default_db=False):
+        """ Build the database uri.
+        """
+        return 'postgresql://{}:{}@{}:{}/{}'.format(
+            os.getenv(DB_USER),
+            os.getenv(DB_PASSWORD),
+            os.getenv(DB_HOST),
+            os.getenv(DB_PORT),
+            '' if default_db else os.getenv(DB_DATABASE)
+        )
+
     def __init__(self, default_db=False, isolation_level=None):
-        if default_db:
-            self.database = None
-        else:
-            self.database = os.getenv(DB_DATABASE)
+        self.default_db = default_db
         self.isConnected = False
         self.isolation_level = isolation_level
     
     def __enter__(self):
         """ Sets up the connection to the postgres database.
         """
-        try:
-            self.connection = psycopg2.connect(user=os.getenv(DB_USER),
-                                            password=os.getenv(DB_PASSWORD),
-                                            host=os.getenv(DB_HOST),
-                                            port=os.getenv(DB_PORT),
-                                            database=self.database)
-            if self.connection:
-                if self.isolation_level is not None:
-                    self.connection.set_isolation_level(self.isolation_level)
-                self.cursor = self.connection.cursor()
-                self.isConnected = True
-        except Exception as error:
-            print('Error while connecting to PostgreSQL', error)
+        self.connection = psycopg2.connect(
+            self.get_database_uri(default_db=self.default_db))
+        if self.connection:
+            if self.isolation_level is not None:
+                self.connection.set_isolation_level(self.isolation_level)
+            self.cursor = self.connection.cursor()
+            self.isConnected = True
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):

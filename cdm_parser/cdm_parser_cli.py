@@ -71,18 +71,20 @@ def parse_data():
     with PostgresManager() as pg:
         parse_dataset(os.getenv(DATASET_PATH), source_mapping, destination_mapping, pg)
 
-@click.option('--file', default='../omop_cdm_export.pgsql')
+@click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
+    help='Path for the output file')
 @cli.command()
 def export_db(file):
     """ Export the database to a file.
     """
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     process = run_command(
-        ['pg_dump', '-U', os.getenv(DB_USER), os.getenv(DB_DATABASE), '-f', file],
+        ['pg_dump', '-d', PostgresManager.get_database_uri(), '-f', file],
         'Successfully exported the database.',
         'Failed to export the database.')
 
-@click.option('--file', default='../omop_cdm_export.pgsql')
+@click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
+    help='Path for the file to import')
 @cli.command()
 def import_db(file):
     """ Create and build a database from a file.
@@ -90,7 +92,7 @@ def import_db(file):
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     create_database()
     run_command(
-        ['psql', '-U', os.getenv(DB_USER), os.getenv(DB_DATABASE), '-f', file],
+        ['psql', '-d', PostgresManager.get_database_uri(), '-f', file],
         'Successfully imported the database.',
         'Failed to import the database.')
 
