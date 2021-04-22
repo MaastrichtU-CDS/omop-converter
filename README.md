@@ -32,6 +32,8 @@ Use docker compose `docker-compose run memorabel-parser` to:
 - create a container for the postgres database and a manager (`localhost:8080`)
 - start the container with the data harmonization tools
 
+To stop the containers and remove the different components use `docker-compose down`.
+
 #### Local development
 
 Install the necessary packages following the requirement file.

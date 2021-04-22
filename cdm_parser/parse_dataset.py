@@ -12,7 +12,7 @@ CDM_SQL = {
     OBSERVATION: get_observation
 }
 
-def parse_dataset(path, source_mapping, destination_mapping, pg):
+def parse_dataset(path, source_mapping, destination_mapping, start, limit, pg):
     """ Parse the dataset to the CDM format.
     """
     print(f'Parse dataset from file {path}')
@@ -27,18 +27,24 @@ def parse_dataset(path, source_mapping, destination_mapping, pg):
         date_source_variable,
         date_format,
     )
+    kwargs = {
+        'start': start,
+        'limit': limit,
+    }
 
     reader = None
     if '.csv' in path:
         with open(path) as csv_file:
             csv_reader = csv.DictReader(csv_file, delimiter=',')
-            transform_rows(enumerate(csv_reader), *parsing_info, pg)
+            for i in range(start):
+                next(csv_reader)
+            transform_rows(enumerate(csv_reader, start=start), *parsing_info, pg, **kwargs)
     elif '.sav' in path:
         df = pd.read_spss(path)
-        transform_rows(df.iterrows(), *parsing_info, pg)
+        transform_rows(df.loc[start:].iterrows(), *parsing_info, pg, **kwargs)
     elif '.sas' in path:
         df = pd.read_sas(path)
-        transform_rows(df.iterrows(), *parsing_info, pg)
+        transform_rows(df.loc[start:].iterrows(), *parsing_info, pg, **kwargs)
 
 def get_date_parameters(source_mapping):
     """ Returns the date source variable and format
@@ -94,18 +100,25 @@ def valid_row_value(variable, row):
     """
     return variable in row and row[variable] and not pd.isnull(row[variable])
 
-def transform_rows(iterator, *args):
+def transform_rows(iterator, *args, start, limit):
     """ Transform each row in the dataset
     """
+    processed_records = 0
     skipped_records = 0
     for index, row in iterator:
+        print(index)
+        print(start)
+        if limit > 0 and index - start >= limit:
+            break
+        print('processsss')
         try:
             transform_row(row, *args)
+            processed_records += 1
         except Exception as error:
             # TODO: Use a logger and add this information in a file
             print(f'Skipped record {index} due to an error:', error)
             skipped_records += 1
-    print(f'Skipped {skipped_records} records due to errors')
+    print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
 def transform_row(row, source_mapping, destination_mapping, value_mapping, \
     date_source_variable, date_format, pg):

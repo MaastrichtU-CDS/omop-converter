@@ -23,7 +23,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_DATABASE: CDM
-      DOCKER_ENV: "true"
+      DOCKER_ENV: 1
       VOCABULARY_PATH: /usr/src/app/vocabularies
       DESTINATION_MAPPING_PATH: /mnt/mappings/destination_mapping.csv
       SOURCE_MAPPING_PATH: /mnt/mappings/source_mapping.csv

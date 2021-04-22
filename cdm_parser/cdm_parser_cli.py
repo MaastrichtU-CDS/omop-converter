@@ -60,7 +60,9 @@ def insert_constraints():
         set_constraints(pg)
 
 @cli.command()
-def parse_data():
+@click.option('--start', default=0, type=int)
+@click.option('--limit', default=-1, type=int)
+def parse_data(start, limit):
     """ Parse the source dataset and populate the CDM database.
     """
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
@@ -69,7 +71,7 @@ def parse_data():
 
     # TODO: create the statements and commit them in batches
     with PostgresManager() as pg:
-        parse_dataset(os.getenv(DATASET_PATH), source_mapping, destination_mapping, pg)
+        parse_dataset(os.getenv(DATASET_PATH), source_mapping, destination_mapping, start, limit, pg)
 
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')
