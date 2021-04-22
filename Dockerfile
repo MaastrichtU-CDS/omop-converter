@@ -9,10 +9,10 @@ RUN apt update
 RUN apt-get -y install python3-pip postgresql-client-12 libpq-dev curl zip
 ENV PATH="${PATH}:/usr/lib/postgresql/12/bin"
 
-# Install the requirements for the CDM parser
-COPY requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt
+COPY ./cdm_parser ./cdm_parser
+COPY requirements.txt vocabulary.zip init.sh ./
 
-COPY . .
+# Install the requirements for the CDM parser
+RUN pip3 install --no-cache-dir -r requirements.txt
 
 CMD [ "./init.sh" ]
