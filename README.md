@@ -53,3 +53,23 @@ python3 cdm_parser_cli.py --help
 ```bash
 python3 cdm_parser_cli.py set-up
 ```
+
+### Notes
+
+- Representing negative information on a diagnosis:
+
+The OMOP CDM Condition table represents a diagnosis/sign/symptom that suggests the presence of a disease. However, the current model (v6.0) does not provide a clear solution on how to store a negative diagnosis.
+One approach that can be followed is to use the Observation table to store this information. A combination of a concept representing the negative conotation (e.g. 'Absence of') and the concept representing the condition can clarify such a case.
+
+This can be done in the following way:
+- Create two entries in the destination mapping (one for the Condition table and another for the Observation) and use '_' to ignore the value that shouldn't be added:
+```
+hypertension,316866,Condition,,,yes/no,4188539/_
+no_hypertension,316866,Observation,,,yes/no,_/4132135
+```
+
+- Create one entry for each of the variables in the source mapping:
+```
+hypertension,h_t,0/1,no/yes
+no_hypertension,h_t,0/1,no/yes
+```

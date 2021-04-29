@@ -4,7 +4,8 @@ age,4265453,Observation,year,4119673,,
 year_of_birth,,Person,,,,
 gender,,Person,,,male/female,8507/8532
 dementia_diagnosis,4182210,Condition,,,yes/no,4188539/4188540
-hypertension,316866,Condition,,,yes/no,4188539/4188540
+hypertension,316866,Condition,,,yes/no,4188539/_
+no_hypertension,316866,Observation,,,yes/no,_/4132135
 hypertension_history,4058286,Observation,,,yes/no,4188539/4188540
 sbp,4152194,Measurement,mmHg,4118323,,
 dbp,4154790,Measurement,mmHg,4118323,,

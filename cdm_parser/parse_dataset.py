@@ -106,11 +106,8 @@ def transform_rows(iterator, *args, start, limit):
     processed_records = 0
     skipped_records = 0
     for index, row in iterator:
-        print(index)
-        print(start)
         if limit > 0 and index - start >= limit:
             break
-        print('processsss')
         try:
             transform_row(row, *args)
             processed_records += 1
@@ -132,17 +129,18 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
     if not all([valid_row_value(var, row) for var in [sex_source_variable, birth_year_source_variable]]):
         raise Exception('Missing required information, the row should contain the year of birth and gender.')
 
+    # Add a new entry for the person/patient
     person_sql = get_person(
         get_parsed_value(value_mapping, sex_source_variable, row[sex_source_variable])[1],
         row[birth_year_source_variable]
     )
     person_id = pg.run_sql(person_sql, returning=True)
-
-    date = None
+    # Parse the date for the observation/measurement/condition if available
+    date = '19700101 00:00:00'
     if date_source_variable in row:
         date_parsed = datetime.strptime(row[date_source_variable], date_format)
         date = date_parsed.strftime(DATE_FORMAT)
-
+    # Parse the observations/measurements/conditions
     for key, value in source_mapping.items():
         if key not in destination_mapping:
             print(f'Skipped variable {key} since its not mapped')
@@ -153,13 +151,13 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
             domain = destination_mapping[key][DOMAIN]
             source_value = row[value[SOURCE_VARIABLE]]
             (value_as_concept, parsed_value) = get_parsed_value(value_mapping, key, source_value)
-            named_args = {
-                'source_value': source_value
-            }
-            if value_as_concept:
-                named_args['value_as_concept'] = parsed_value
-            else:
-                named_args['value'] = parsed_value
-            if date:
-                named_args['date'] = date
-            pg.run_sql(CDM_SQL[domain](person_id, destination_mapping[key], **named_args))
+            if not value_as_concept or parsed_value != '_':
+                named_args = {
+                    'source_value': source_value,
+                    'date': date
+                }
+                if value_as_concept:
+                    named_args['value_as_concept'] = parsed_value
+                else:
+                    named_args['value'] = parsed_value
+                pg.run_sql(CDM_SQL[domain](person_id, destination_mapping[key], **named_args))

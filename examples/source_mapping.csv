@@ -5,6 +5,7 @@ year_of_birth,birth_year,,
 gender,gender,Male/Female,male/female
 bmi,body_mass_index,,
 hypertension,h_t,0/1,no/yes
+no_hypertension,h_t,0/1,no/yes
 hypertension_history,h_h_t,0/1,no/yes
 sbp,s_b_p,,,
 dbp,d_b_p,,,

@@ -50,6 +50,7 @@ YEAR_OF_BIRTH = 'year_of_birth'
 DATE = 'date'
 
 DATE_FORMAT = '%Y%m%d %H:%M:%S'
+DATE_DEFAULT = '19700101 00:00:00'
 
 VOCABULARY_FILES = {
     'DRUG_STRENGTH': 'DRUG_STRENGTH.csv',
