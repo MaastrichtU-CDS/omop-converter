@@ -35,17 +35,18 @@ def create_sequences(pg):
     """ Create the sequences needed.
     """
     print('Create sequences')
-    for sequence in [PERSON_SEQUENCE, OBSERVATION_SEQUENCE, MEASUREMENT_SEQUENCE, CONDITION_SEQUENCE]:
+    for sequence in [PERSON_SEQUENCE, OBSERVATION_SEQUENCE, MEASUREMENT_SEQUENCE,
+        CONDITION_SEQUENCE, CARE_SITE_SEQUENCE]:
         pg.create_sequence(sequence)
 
-def get_person(gender, year_of_birth):
+def get_person(gender, year_of_birth, cohort_id):
     """ Build the sql statement for a person.
     """
     return """INSERT INTO PERSON (person_id,gender_concept_id,year_of_birth,
-        race_concept_id,ethnicity_concept_id,gender_source_concept_id,race_source_concept_id,ethnicity_source_concept_id)
-        VALUES (nextval('person_sequence'),{0},{1},0,0,0,0,0)
+        race_concept_id,ethnicity_concept_id,gender_source_concept_id,race_source_concept_id,
+        ethnicity_source_concept_id,care_site_id) VALUES (nextval('person_sequence'),{0},{1},0,0,0,0,0,{2})
         RETURNING person_id;
-    """.format(gender, year_of_birth)
+    """.format(gender, year_of_birth, cohort_id if cohort_id else 'NULL')
 
 def get_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
     """ Build the sql statement for an observation.
@@ -73,3 +74,16 @@ def get_condition(person_id, field, value='NULL', value_as_concept=0, source_val
         condition_start_datetime,condition_type_concept_id,condition_status_concept_id,condition_source_value,
         condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},0)
     """.format(person_id, field[CONCEPT_ID], date, source_value)
+
+def get_cohort(cohort_name):
+    """ Build the sql statement for a care site.
+    """
+    return """
+        WITH CS AS (INSERT INTO CARE_SITE (care_site_id,care_site_name,place_of_service_concept_id,
+            location_id,care_site_source_value,place_of_service_source_value) SELECT nextval('care_site_sequence'),
+            '{0}',0,0,'{0}',{1} WHERE NOT EXISTS (SELECT * FROM CARE_SITE WHERE care_site_name='{0}')
+            RETURNING care_site_id)
+        SELECT care_site_id FROM CS
+        UNION
+        SELECT care_site_id FROM CARE_SITE WHERE care_site_name='{0}' LIMIT 1
+    """.format(cohort_name, 'NULL')

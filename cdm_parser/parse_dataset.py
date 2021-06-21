@@ -1,7 +1,8 @@
 import csv
 import pandas as pd
 from postgres_manager import PostgresManager
-from cdm_builder import get_observation, get_condition, get_measurement, get_person
+from cdm_builder import get_observation, get_condition, get_measurement, \
+    get_person, get_cohort
 from constants import *
 from utils import arrays_to_dict
 from datetime import datetime
@@ -12,13 +13,14 @@ CDM_SQL = {
     OBSERVATION: get_observation
 }
 
-def parse_dataset(path, source_mapping, destination_mapping, start, limit, pg):
+def parse_dataset(path, source_mapping, destination_mapping,
+        cohort_id, start, limit, pg):
     """ Parse the dataset to the CDM format.
     """
     print(f'Parse dataset from file {path}')
 
     value_mapping = create_value_mapping(source_mapping, destination_mapping)
-    (date_source_variable, date_format) = get_date_parameters(source_mapping)
+    (date_source_variable, date_format) = get_parameters(source_mapping, DATE, with_format=True)
 
     parsing_info = (
         source_mapping,
@@ -26,6 +28,7 @@ def parse_dataset(path, source_mapping, destination_mapping, start, limit, pg):
         value_mapping,
         date_source_variable,
         date_format,
+        cohort_id,
     )
     kwargs = {
         'start': start,
@@ -46,15 +49,16 @@ def parse_dataset(path, source_mapping, destination_mapping, start, limit, pg):
         df = pd.read_sas(path)
         transform_rows(df.loc[start:].iterrows(), *parsing_info, pg, **kwargs)
 
-def get_date_parameters(source_mapping):
-    """ Returns the date source variable and format
+def get_parameters(source_mapping, parameter, with_format=False):
+    """ Returns the source variable and format for a parameter.
     """
-    date_source_variable = None
-    date_format = None
+    parameter_source_variable = None
+    parameter_format = None
     if DATE in source_mapping:
-        date_source_variable = source_mapping[DATE][SOURCE_VARIABLE]
-        date_format = source_mapping[DATE][FORMAT]
-    return (date_source_variable, date_format)
+        parameter_source_variable = source_mapping[parameter][SOURCE_VARIABLE]
+        if with_format:
+            parameter_format = source_mapping[parameter][FORMAT]
+    return (parameter_source_variable, parameter_format)
 
 def create_value_mapping(source_mapping, destination_mapping):
     """ Create the mapping between the source and destination values for each variable
@@ -118,7 +122,7 @@ def transform_rows(iterator, *args, start, limit):
     print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
 def transform_row(row, source_mapping, destination_mapping, value_mapping, \
-    date_source_variable, date_format, pg):
+    date_source_variable, date_format, cohort_id, pg):
     """ Transform each row and insert in the database.
     """
     sex_source_variable = source_mapping[GENDER][SOURCE_VARIABLE]
@@ -132,7 +136,8 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
     # Add a new entry for the person/patient
     person_sql = get_person(
         get_parsed_value(value_mapping, sex_source_variable, row[sex_source_variable])[1],
-        row[birth_year_source_variable]
+        row[birth_year_source_variable],
+        cohort_id,
     )
     person_id = pg.run_sql(person_sql, returning=True)
     # Parse the date for the observation/measurement/condition if available
@@ -161,3 +166,8 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
                 else:
                     named_args['value'] = parsed_value
                 pg.run_sql(CDM_SQL[domain](person_id, destination_mapping[key], **named_args))
+
+def insert_cohort(cohort_name, pg):
+    """ Insert the cohort information.
+    """
+    return pg.run_sql(get_cohort(cohort_name), returning=True)

@@ -56,7 +56,7 @@ python3 cdm_parser_cli.py set-up
 
 ### Notes
 
-- Representing negative information on a diagnosis:
+**Representing negative information on a diagnosis**
 
 The OMOP CDM Condition table represents a diagnosis/sign/symptom that suggests the presence of a disease. However, the current model (v6.0) does not provide a clear solution on how to store a negative diagnosis.
 One approach that can be followed is to use the Observation table to store this information. A combination of a concept representing the negative conotation (e.g. 'Absence of') and the concept representing the condition can clarify such a case.

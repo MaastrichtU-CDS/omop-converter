@@ -27,6 +27,7 @@ PERSON_SEQUENCE = 'person_sequence'
 OBSERVATION_SEQUENCE = 'observation_sequence'
 MEASUREMENT_SEQUENCE = 'measurement_sequence'
 CONDITION_SEQUENCE = 'condition_sequence'
+CARE_SITE_SEQUENCE = 'care_site_sequence'
 
 CONCEPT_ID = 'concept_id'
 SOURCE_VARIABLE = 'source_variable'

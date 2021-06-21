@@ -4,7 +4,7 @@ from utils import export_config, import_config, run_command
 from constants import *
 from cdm_builder import create_database, set_schema, insert_vocabulary, set_constraints, create_sequences
 from parser import parse_csv_mapping
-from parse_dataset import parse_dataset
+from parse_dataset import parse_dataset, insert_cohort
 from postgres_manager import PostgresManager
 
 @click.group()
@@ -60,9 +60,10 @@ def insert_constraints():
         set_constraints(pg)
 
 @cli.command()
+@click.option('--cohort-name', prompt=True)
 @click.option('--start', default=0, type=int)
 @click.option('--limit', default=-1, type=int)
-def parse_data(start, limit):
+def parse_data(cohort_name, start, limit):
     """ Parse the source dataset and populate the CDM database.
     """
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
@@ -71,7 +72,23 @@ def parse_data(start, limit):
 
     # TODO: create the statements and commit them in batches
     with PostgresManager() as pg:
-        parse_dataset(os.getenv(DATASET_PATH), source_mapping, destination_mapping, start, limit, pg)
+        # Insert the cohort information
+        # If the cohort is already in the DB it'll only retrieve the id
+        cohort_id = None
+        if cohort_name:
+            cohort_id = insert_cohort(cohort_name, pg)
+            print(cohort_id)
+
+        # Partse the dataset
+        parse_dataset(
+            os.getenv(DATASET_PATH),
+            source_mapping,
+            destination_mapping,
+            cohort_id,
+            start,
+            limit,
+            pg
+        )
 
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')
