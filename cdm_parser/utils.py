@@ -1,6 +1,7 @@
 import os
 import subprocess
 from configparser import ConfigParser
+from datetime import datetime
 
 def import_config(path, section):
     """ Import the configurations from a file and set them as
@@ -37,3 +38,9 @@ def arrays_to_dict(keys, values):
     """ Convert two arrays (representing the keys and values) to a dictionary
     """
     return {keys[i]: values[i] for i in range(len(keys))}
+
+def parse_date(date, input_format, output_format):
+    """ Parse a date from one format to another.
+    """
+    date_parsed = datetime.strptime(date, input_format)
+    return date_parsed.strftime(output_format)

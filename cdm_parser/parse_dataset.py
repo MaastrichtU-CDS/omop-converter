@@ -2,10 +2,9 @@ import csv
 import pandas as pd
 from postgres_manager import PostgresManager
 from cdm_builder import get_observation, get_condition, get_measurement, \
-    get_person, get_cohort
+    get_person, get_cohort, insert_visit_occurrence
 from constants import *
-from utils import arrays_to_dict
-from datetime import datetime
+from utils import arrays_to_dict, parse_date
 
 CDM_SQL = {
     CONDITION: get_condition,
@@ -141,10 +140,12 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
     )
     person_id = pg.run_sql(person_sql, returning=True)
     # Parse the date for the observation/measurement/condition if available
-    date = '19700101 00:00:00'
+    # TODO: Calculating the end data when provided with a period for the wave
+    visit_id = None
     if date_source_variable in row:
-        date_parsed = datetime.strptime(row[date_source_variable], date_format)
-        date = date_parsed.strftime(DATE_FORMAT)
+        visit_date = parse_date(row[date_source_variable], date_format, DATE_FORMAT)
+        visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, pg)
+
     # Parse the observations/measurements/conditions
     for key, value in source_mapping.items():
         if key not in destination_mapping:
@@ -157,17 +158,26 @@ def transform_row(row, source_mapping, destination_mapping, value_mapping, \
             source_value = row[value[SOURCE_VARIABLE]]
             (value_as_concept, parsed_value) = get_parsed_value(value_mapping, key, source_value)
             if not value_as_concept or parsed_value != '_':
+                # Check if there is a specific date for the variable
+                date = '19700101 00:00:00'
+                source_date_variable = value[DATE]
+                if source_date_variable and source_date_variable in row:
+                    if FORMAT in value:
+                        try:
+                            date = parse_date(row[source_date_variable], value[FORMAT], DATE_FORMAT)
+                        except Exception as error:
+                            print(f'Error parsing a record due to a malformated date: {value[DATE]} {value[FORMAT]}')
+                            print(error)
+                    else:
+                        print(f'Set the format so that the date for variable {key} is considered')
+
                 named_args = {
                     'source_value': source_value,
-                    'date': date
+                    'date': date,
+                    'visit_id': visit_id
                 }
                 if value_as_concept:
                     named_args['value_as_concept'] = parsed_value
                 else:
                     named_args['value'] = parsed_value
                 pg.run_sql(CDM_SQL[domain](person_id, destination_mapping[key], **named_args))
-
-def insert_cohort(cohort_name, pg):
-    """ Insert the cohort information.
-    """
-    return pg.run_sql(get_cohort(cohort_name), returning=True)

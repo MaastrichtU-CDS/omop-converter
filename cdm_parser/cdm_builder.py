@@ -36,7 +36,7 @@ def create_sequences(pg):
     """
     print('Create sequences')
     for sequence in [PERSON_SEQUENCE, OBSERVATION_SEQUENCE, MEASUREMENT_SEQUENCE,
-        CONDITION_SEQUENCE, CARE_SITE_SEQUENCE]:
+        CONDITION_SEQUENCE, CARE_SITE_SEQUENCE, VISIT_OCCURRENCE]:
         pg.create_sequence(sequence)
 
 def get_person(gender, year_of_birth, cohort_id):
@@ -48,32 +48,35 @@ def get_person(gender, year_of_birth, cohort_id):
         RETURNING person_id;
     """.format(gender, year_of_birth, cohort_id if cohort_id else 'NULL')
 
-def get_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
+def get_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
+    date='19700101 00:00:00', visit_id=0):
     """ Build the sql statement for an observation.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
     return """INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
-        observation_type_concept_id,value_as_string,value_as_concept_id,unit_concept_id,observation_source_value,
-        observation_source_concept_id,obs_event_field_concept_id) VALUES (nextval('observation_sequence'),{0},{1},
-        '{2}', 32879, '{3}',{4},{5},{6}, 0, 0);
-    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, unit_concept_id, source_value)
+        observation_type_concept_id,value_as_string,value_as_concept_id,visit_occurrence_id,unit_concept_id,
+        observation_source_value,observation_source_concept_id,obs_event_field_concept_id) VALUES 
+        (nextval('observation_sequence'),{0},{1},'{2}', 32879, '{3}',{4},{5},{6},{7}, 0, 0);
+    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
 
-def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
+def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
+    date='19700101 00:00:00', visit_id=0):
     """ Build the sql statement for a measurement.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
     return """INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
-        measurement_type_concept_id,value_as_number,value_as_concept_id,unit_concept_id,measurement_source_concept_id,value_source_value)
-        VALUES (nextval('measurement_sequence'), {0}, {1}, '{2}', 0, {3}, {4}, {5}, 0, {6})
-    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, unit_concept_id, source_value)
+        measurement_type_concept_id,value_as_number,value_as_concept_id,visit_occurrence_id,unit_concept_id,
+        measurement_source_concept_id,value_source_value)
+        VALUES (nextval('measurement_sequence'),{0},{1},'{2}',0,{3},{4},{5},{6},0,{7})
+    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
 
-def get_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00'):
+def get_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00', visit_id=0):
     """ Build the sql statement for a condition.
     """
     return """INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
-        condition_start_datetime,condition_type_concept_id,condition_status_concept_id,condition_source_value,
-        condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},0)
-    """.format(person_id, field[CONCEPT_ID], date, source_value)
+        condition_start_datetime,condition_type_concept_id,condition_status_concept_id,visit_occurrence_id,
+        condition_source_value,condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},{4},0)
+    """.format(person_id, field[CONCEPT_ID], date, visit_id, source_value)
 
 def get_cohort(cohort_name):
     """ Build the sql statement for a care site.
@@ -87,3 +90,23 @@ def get_cohort(cohort_name):
         UNION
         SELECT care_site_id FROM CARE_SITE WHERE care_site_name='{0}' LIMIT 1
     """.format(cohort_name, 'NULL')
+
+def get_visit_occurrence(person_id, start_date, end_date):
+    """ Build the sql statement for a visit occurence.
+    """
+    return """INSERT INTO VISIT_OCCURRENCE (visit_occurrence_id,person_id,visit_concept_id,visit_start_date,
+        visit_start_datetime,visit_end_date,visit_end_datetime,visit_type_concept_id,visit_source_concept_id,
+        admitted_from_concept_id,discharge_to_concept_id) VALUES
+        (nextval('visit_occurrence_sequence'), {0}, 0, '{1}', '{1}', '{2}', '{2}', 0, 0, 0, 0)
+        RETURNING visit_occurrence_id
+    """.format(person_id, start_date, end_date)
+
+def insert_cohort(cohort_name, pg):
+    """ Insert the cohort information.
+    """
+    return pg.run_sql(get_cohort(cohort_name), returning=True)
+
+def insert_visit_occurrence(person_id, start_date, end_date, pg):
+    """ Insert the visit occurence information.
+    """
+    return pg.run_sql(get_visit_occurrence(person_id, start_date, end_date), returning=True)

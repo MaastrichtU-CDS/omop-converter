@@ -2,9 +2,10 @@ import click
 import os
 from utils import export_config, import_config, run_command
 from constants import *
-from cdm_builder import create_database, set_schema, insert_vocabulary, set_constraints, create_sequences
+from cdm_builder import create_database, set_schema, insert_vocabulary, \
+    set_constraints, create_sequences, insert_cohort
 from parser import parse_csv_mapping
-from parse_dataset import parse_dataset, insert_cohort
+from parse_dataset import parse_dataset
 from postgres_manager import PostgresManager
 
 @click.group()
@@ -77,7 +78,6 @@ def parse_data(cohort_name, start, limit):
         cohort_id = None
         if cohort_name:
             cohort_id = insert_cohort(cohort_name, pg)
-            print(cohort_id)
 
         # Partse the dataset
         parse_dataset(
