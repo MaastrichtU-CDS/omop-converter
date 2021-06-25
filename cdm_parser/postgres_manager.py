@@ -57,6 +57,11 @@ class PostgresManager:
         self.cursor.execute('CREATE SEQUENCE IF NOT EXISTS {} AS BIGINT INCREMENT BY 1 START WITH 1;'.format(name))
         self.connection.commit()
 
+    def drop_table(self, table):
+        """ Drop a table from the database.
+        """
+        self.run_sql(f'DROP TABLE IF EXISTS {table}')
+
     def run_sql(self, statement, returning=False):
         self.cursor.execute(statement)
         self.connection.commit()

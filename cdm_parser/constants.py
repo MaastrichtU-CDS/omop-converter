@@ -23,6 +23,8 @@ DATASET_PATH = 'DATASET_PATH'
 
 VARIABLE = 'variable'
 
+TEMP_ID_TABLE = 'temp_person_source_id'
+
 PERSON_SEQUENCE = 'person_sequence'
 OBSERVATION_SEQUENCE = 'observation_sequence'
 MEASUREMENT_SEQUENCE = 'measurement_sequence'
@@ -50,6 +52,7 @@ PERSON = 'Person'
 GENDER = 'gender'
 YEAR_OF_BIRTH = 'year_of_birth'
 DATE = 'date'
+SOURCE_ID = 'source_id'
 
 DATE_FORMAT = '%Y%m%d %H:%M:%S'
 DATE_DEFAULT = '19700101 00:00:00'

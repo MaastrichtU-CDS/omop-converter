@@ -39,6 +39,22 @@ def create_sequences(pg):
         CONDITION_SEQUENCE, CARE_SITE_SEQUENCE, VISIT_OCCURRENCE]:
         pg.create_sequence(sequence)
 
+def create_temp_id_table(pg):
+    """ Create temporary table to store the link between person id and the source id.
+    """
+    print(f'Create temporary id table: {TEMP_ID_TABLE}')
+    pg.run_sql(f'CREATE TABLE IF NOT EXISTS {TEMP_ID_TABLE} (source_id bigint PRIMARY KEY, person_id bigint UNIQUE NOT NULL)')
+
+def get_person_id(source_id, pg):
+    """ Retrieve the person id from the source id.
+    """
+    return pg.run_sql(f'SELECT person_id FROM {TEMP_ID_TABLE} WHERE source_id = {source_id} LIMIT 1')
+
+def insert_temp_id_record(source_id, person_id, pg):
+    """ Insert a new record in the temporary table.
+    """
+    return pg.run_sql(f'INSERT INTO {TEMP_ID_TABLE} VALUES ({source_id}, {person_id})')
+
 def get_person(gender, year_of_birth, cohort_id):
     """ Build the sql statement for a person.
     """
