@@ -55,7 +55,7 @@ def insert_temp_id_record(source_id, person_id, pg):
     """
     return pg.run_sql(f'INSERT INTO {TEMP_ID_TABLE} VALUES ({source_id}, {person_id})')
 
-def get_person(gender, year_of_birth, cohort_id):
+def build_person(gender, year_of_birth, cohort_id):
     """ Build the sql statement for a person.
     """
     return """INSERT INTO PERSON (person_id,gender_concept_id,year_of_birth,
@@ -64,7 +64,7 @@ def get_person(gender, year_of_birth, cohort_id):
         RETURNING person_id;
     """.format(gender, year_of_birth, cohort_id if cohort_id else 'NULL')
 
-def get_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
+def build_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
     date='19700101 00:00:00', visit_id=0):
     """ Build the sql statement for an observation.
     """
@@ -75,7 +75,7 @@ def get_observation(person_id, field, value='NULL', value_as_concept=0, source_v
         (nextval('observation_sequence'),{0},{1},'{2}', 32879, '{3}',{4},{5},{6},{7}, 0, 0);
     """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
 
-def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
+def build_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
     date='19700101 00:00:00', visit_id=0):
     """ Build the sql statement for a measurement.
     """
@@ -86,7 +86,7 @@ def get_measurement(person_id, field, value='NULL', value_as_concept=0, source_v
         VALUES (nextval('measurement_sequence'),{0},{1},'{2}',0,{3},{4},{5},{6},0,{7})
     """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
 
-def get_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00', visit_id=0):
+def build_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00', visit_id=0):
     """ Build the sql statement for a condition.
     """
     return """INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
@@ -94,7 +94,7 @@ def get_condition(person_id, field, value='NULL', value_as_concept=0, source_val
         condition_source_value,condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},{4},0)
     """.format(person_id, field[CONCEPT_ID], date, visit_id, source_value)
 
-def get_cohort(cohort_name, location_id):
+def build_cohort(cohort_name, location_id):
     """ Build the sql statement for a care site.
     """
     return """
@@ -107,7 +107,7 @@ def get_cohort(cohort_name, location_id):
         SELECT care_site_id FROM CARE_SITE WHERE care_site_name='{0}' LIMIT 1
     """.format(cohort_name, location_id)
 
-def get_visit_occurrence(person_id, start_date, end_date):
+def build_visit_occurrence(person_id, start_date, end_date):
     """ Build the sql statement for a visit occurence.
     """
     return """INSERT INTO VISIT_OCCURRENCE (visit_occurrence_id,person_id,visit_concept_id,visit_start_date,
@@ -117,7 +117,7 @@ def get_visit_occurrence(person_id, start_date, end_date):
         RETURNING visit_occurrence_id
     """.format(person_id, start_date, end_date)
 
-def get_location(address):
+def build_location(address):
     """ Build the sql statement to insert a location.
     """
     return """INSERT INTO LOCATION (location_id,address_1) VALUES (nextval('{0}'),'{1}')
@@ -126,14 +126,14 @@ def get_location(address):
 def insert_cohort(cohort_name, location_id, pg):
     """ Insert the cohort information.
     """
-    return pg.run_sql(get_cohort(cohort_name, location_id), returning=True)
+    return pg.run_sql(build_cohort(cohort_name, location_id), returning=True)
 
 def insert_visit_occurrence(person_id, start_date, end_date, pg):
     """ Insert the visit occurence information.
     """
-    return pg.run_sql(get_visit_occurrence(person_id, start_date, end_date), returning=True)
+    return pg.run_sql(build_visit_occurrence(person_id, start_date, end_date), returning=True)
 
 def insert_location(address, pg):
     """ Insert a location.
     """
-    return pg.run_sql(get_location(address), returning=True)
+    return pg.run_sql(build_location(address), returning=True)

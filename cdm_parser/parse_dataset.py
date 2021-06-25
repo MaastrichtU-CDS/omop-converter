@@ -6,9 +6,9 @@ from constants import *
 from utils import arrays_to_dict, parse_date
 
 CDM_SQL = {
-    CONDITION: get_condition,
-    MEASUREMENT: get_measurement,
-    OBSERVATION: get_observation
+    CONDITION: build_condition,
+    MEASUREMENT: build_measurement,
+    OBSERVATION: build_observation
 }
 
 class DataParser:
@@ -124,7 +124,7 @@ class DataParser:
 
 
         # Add a new entry for the person/patient
-        person_sql = get_person(
+        person_sql = build_person(
             self.get_parsed_value(sex_source_variable, row[sex_source_variable])[1],
             row[birth_year_source_variable],
             self.cohort_id,
