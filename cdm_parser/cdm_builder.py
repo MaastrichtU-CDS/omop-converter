@@ -36,7 +36,7 @@ def create_sequences(pg):
     """
     print('Create sequences')
     for sequence in [PERSON_SEQUENCE, OBSERVATION_SEQUENCE, MEASUREMENT_SEQUENCE,
-        CONDITION_SEQUENCE, CARE_SITE_SEQUENCE, VISIT_OCCURRENCE]:
+        CONDITION_SEQUENCE, CARE_SITE_SEQUENCE, VISIT_OCCURRENCE, LOCATION_SEQUENCE]:
         pg.create_sequence(sequence)
 
 def create_temp_id_table(pg):
@@ -94,18 +94,18 @@ def get_condition(person_id, field, value='NULL', value_as_concept=0, source_val
         condition_source_value,condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},{4},0)
     """.format(person_id, field[CONCEPT_ID], date, visit_id, source_value)
 
-def get_cohort(cohort_name):
+def get_cohort(cohort_name, location_id):
     """ Build the sql statement for a care site.
     """
     return """
         WITH CS AS (INSERT INTO CARE_SITE (care_site_id,care_site_name,place_of_service_concept_id,
             location_id,care_site_source_value,place_of_service_source_value) SELECT nextval('care_site_sequence'),
-            '{0}',0,0,'{0}',{1} WHERE NOT EXISTS (SELECT * FROM CARE_SITE WHERE care_site_name='{0}')
+            '{0}',0,{1},'{0}','NULL' WHERE NOT EXISTS (SELECT * FROM CARE_SITE WHERE care_site_name='{0}')
             RETURNING care_site_id)
         SELECT care_site_id FROM CS
         UNION
         SELECT care_site_id FROM CARE_SITE WHERE care_site_name='{0}' LIMIT 1
-    """.format(cohort_name, 'NULL')
+    """.format(cohort_name, location_id)
 
 def get_visit_occurrence(person_id, start_date, end_date):
     """ Build the sql statement for a visit occurence.
@@ -117,12 +117,23 @@ def get_visit_occurrence(person_id, start_date, end_date):
         RETURNING visit_occurrence_id
     """.format(person_id, start_date, end_date)
 
-def insert_cohort(cohort_name, pg):
+def get_location(address):
+    """ Build the sql statement to insert a location.
+    """
+    return """INSERT INTO LOCATION (location_id,address_1) VALUES (nextval('{0}'),'{1}')
+    RETURNING location_id""".format(LOCATION_SEQUENCE, address)
+
+def insert_cohort(cohort_name, location_id, pg):
     """ Insert the cohort information.
     """
-    return pg.run_sql(get_cohort(cohort_name), returning=True)
+    return pg.run_sql(get_cohort(cohort_name, location_id), returning=True)
 
 def insert_visit_occurrence(person_id, start_date, end_date, pg):
     """ Insert the visit occurence information.
     """
     return pg.run_sql(get_visit_occurrence(person_id, start_date, end_date), returning=True)
+
+def insert_location(address, pg):
+    """ Insert a location.
+    """
+    return pg.run_sql(get_location(address), returning=True)

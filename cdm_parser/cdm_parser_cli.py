@@ -2,8 +2,7 @@ import click
 import os
 from utils import export_config, import_config, run_command
 from constants import *
-from cdm_builder import create_database, set_schema, insert_vocabulary, \
-    set_constraints, create_sequences, insert_cohort, create_temp_id_table
+from cdm_builder import *
 from parser import parse_csv_mapping
 from parse_dataset import DataParser
 from postgres_manager import PostgresManager
@@ -62,10 +61,11 @@ def insert_constraints():
 
 @cli.command()
 @click.option('--cohort-name', prompt=True)
+@click.option('--cohort-location')
 @click.option('--start', default=0, type=int)
 @click.option('--limit', default=-1, type=int)
 @click.option('--drop-temp-tables', default=True, type=bool)
-def parse_data(cohort_name, start, limit, drop_temp_tables):
+def parse_data(cohort_name, cohort_location, start, limit, drop_temp_tables):
     """ Parse the source dataset and populate the CDM database.
         
         Important: One or more temporary tables will be created to store information only required
@@ -84,7 +84,8 @@ def parse_data(cohort_name, start, limit, drop_temp_tables):
         # If the cohort is already in the DB it'll only retrieve the id
         cohort_id = None
         if cohort_name:
-            cohort_id = insert_cohort(cohort_name, pg)
+            location_id = insert_location(cohort_location if cohort_location else cohort_name, pg)
+            cohort_id = insert_cohort(cohort_name, location_id, pg)
 
         # Create the necessary temporary table
         create_temp_id_table(pg)
