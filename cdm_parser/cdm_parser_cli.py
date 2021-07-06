@@ -11,7 +11,7 @@ from postgres_manager import PostgresManager
 def cli():
     click.echo('OMOP parser CLI')
 
-@cli.command()
+@cli.command(help='Set up the configurations when using the CLI without docker.')
 @click.option('--user', prompt=True)
 @click.option('--password', prompt=True, hide_input=True)
 @click.option('--host', prompt=True)
@@ -59,7 +59,7 @@ def insert_constraints():
     with PostgresManager() as pg:
         set_constraints(pg)
 
-@cli.command()
+@cli.command(help='Parse the dataset and populate the OMOP CDM database.')
 @click.option('--cohort-name', prompt=True)
 @click.option('--cohort-location')
 @click.option('--start', default=0, type=int)
@@ -101,8 +101,8 @@ def parse_data(cohort_name, cohort_location, start, limit, drop_temp_tables):
         parser.parse_dataset(start, limit)
 
         # Dropping the temporary tables
-        if drop_temp_tables:
-            pg.drop_table(TEMP_ID_TABLE)
+        # if drop_temp_tables:
+        #    pg.drop_table(TEMP_ID_TABLE)
 
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')

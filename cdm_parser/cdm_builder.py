@@ -43,26 +43,29 @@ def create_temp_id_table(pg):
     """ Create temporary table to store the link between person id and the source id.
     """
     print(f'Create temporary id table: {TEMP_ID_TABLE}')
-    pg.run_sql(f'CREATE TABLE IF NOT EXISTS {TEMP_ID_TABLE} (source_id bigint PRIMARY KEY, person_id bigint UNIQUE NOT NULL)')
+    pg.run_sql(f'CREATE TABLE IF NOT EXISTS {TEMP_ID_TABLE} (person_id bigint PRIMARY KEY, source_id varchar(100) NOT NULL)')
 
 def get_person_id(source_id, pg):
     """ Retrieve the person id from the source id.
     """
-    return pg.run_sql(f'SELECT person_id FROM {TEMP_ID_TABLE} WHERE source_id = {source_id} LIMIT 1')
+    return pg.run_sql(
+        f"SELECT person_id FROM {TEMP_ID_TABLE} WHERE source_id='{source_id}' LIMIT 1",
+        returning=True,
+    )
 
 def insert_temp_id_record(source_id, person_id, pg):
     """ Insert a new record in the temporary table.
     """
-    return pg.run_sql(f'INSERT INTO {TEMP_ID_TABLE} VALUES ({source_id}, {person_id})')
+    return pg.run_sql(f"INSERT INTO {TEMP_ID_TABLE} VALUES ({person_id}, '{source_id}')")
 
-def build_person(gender, year_of_birth, cohort_id):
+def build_person(gender, year_of_birth, cohort_id, death_datetime):
     """ Build the sql statement for a person.
     """
-    return """INSERT INTO PERSON (person_id,gender_concept_id,year_of_birth,
+    return """INSERT INTO PERSON (person_id,gender_concept_id,year_of_birth,death_datetime,
         race_concept_id,ethnicity_concept_id,gender_source_concept_id,race_source_concept_id,
-        ethnicity_source_concept_id,care_site_id) VALUES (nextval('person_sequence'),{0},{1},0,0,0,0,0,{2})
+        ethnicity_source_concept_id,care_site_id) VALUES (nextval('person_sequence'),{0},{1},'{2}',0,0,0,0,0,{3})
         RETURNING person_id;
-    """.format(gender, year_of_birth, cohort_id if cohort_id else 'NULL')
+    """.format(gender, year_of_birth, death_datetime if death_datetime else 'NULL', cohort_id if cohort_id else 'NULL')
 
 def build_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
     date='19700101 00:00:00', visit_id=0):

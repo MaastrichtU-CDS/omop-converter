@@ -67,7 +67,8 @@ class PostgresManager:
         self.connection.commit()
 
         if returning:
-            return self.cursor.fetchone()[0]
+            result = self.cursor.fetchone()
+            return result[0] if result else None
 
     def execute_file(self, path):
         """ Execute a file with a sql script.

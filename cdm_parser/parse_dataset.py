@@ -93,7 +93,7 @@ class DataParser:
         """
         parameter_source_variable = None
         parameter_format = None
-        if DATE in self.source_mapping:
+        if parameter in self.source_mapping:
             parameter_source_variable = self.source_mapping[parameter][SOURCE_VARIABLE]
             if with_format:
                 parameter_format = self.source_mapping[parameter][FORMAT]
@@ -122,12 +122,23 @@ class DataParser:
         if not all([self.valid_row_value(var, row) for var in [sex_source_variable, birth_year_source_variable]]):
             raise Exception('Missing required information, the row should contain the year of birth and gender.')
 
+        # Handling death information
+        death_datetime = None
+        death_time_source_variable = self.get_source_variable(DEATH_DATE)
+        death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
+        if self.valid_row_value(death_time_source_variable, row):
+            death_datetime = parse_date(row[death_time_source_variable], self.date_format, DATE_FORMAT)
+        elif self.valid_row_value(death_flag_source_variable, row):
+            (value_as_concept, parsed_value) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
+            if parsed_value and parsed_value == 'True':
+                death_datetime = DATE_DEFAULT
 
         # Add a new entry for the person/patient
         person_sql = build_person(
             self.get_parsed_value(sex_source_variable, row[sex_source_variable])[1],
             row[birth_year_source_variable],
             self.cohort_id,
+            death_datetime,
         )
         person_id = self.pg.run_sql(person_sql, returning=True)
 
@@ -168,7 +179,7 @@ class DataParser:
                 processed_records += 1
             except Exception as error:
                 # TODO: Use a logger and add this information in a file
-                print(f'Skipped record {index} due to an error:', error)
+                print(f'Skipped record {index} due to an error:', str(error))
                 skipped_records += 1
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 

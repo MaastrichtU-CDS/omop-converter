@@ -54,6 +54,8 @@ GENDER = 'gender'
 YEAR_OF_BIRTH = 'year_of_birth'
 DATE = 'date'
 SOURCE_ID = 'source_id'
+DEATH_DATE = 'death_date'
+DEATH_FLAG = 'death_flag'
 
 DATE_FORMAT = '%Y%m%d %H:%M:%S'
 DATE_DEFAULT = '19700101 00:00:00'
