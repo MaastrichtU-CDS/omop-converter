@@ -44,6 +44,7 @@ UNIT_CONCEPT_ID = 'unit_concept_id'
 FORMAT = 'format'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
+DEFAULT_VALUE = '-'
 
 OBSERVATION = 'Observation'
 MEASUREMENT = 'Measurement'

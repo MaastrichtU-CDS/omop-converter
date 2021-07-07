@@ -100,12 +100,14 @@ class DataParser:
         return (parameter_source_variable, parameter_format)
 
     def get_parsed_value(self, variable, value):
-        """ Get the parsed value for a variable
+        """ Get the parsed value for a variable.
         """
         if variable in self.value_mapping:
-            if str(value) not in self.value_mapping[variable]:
-                raise Exception(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
-            return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value)])
+            if str(value) in self.value_mapping[variable]:
+                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value)])
+            elif DEFAULT_VALUE in self.value_mapping[variable]:
+                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])
+            raise Exception(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         return (False, value)
 
     def get_source_variable(self, variable):
@@ -119,7 +121,7 @@ class DataParser:
         sex_source_variable = self.get_source_variable(GENDER)
         birth_year_source_variable = self.get_source_variable(YEAR_OF_BIRTH)
 
-        if not all([self.valid_row_value(var, row) for var in [sex_source_variable, birth_year_source_variable]]):
+        if not all([self.valid_row_value(var, row) for var in [birth_year_source_variable]]):
             raise Exception('Missing required information, the row should contain the year of birth and gender.')
 
         # Handling death information
