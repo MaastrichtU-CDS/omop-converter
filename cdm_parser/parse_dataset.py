@@ -200,9 +200,9 @@ class DataParser:
             if key not in self.destination_mapping:
                 print(f'Skipped variable {key} since its not mapped')
             elif self.destination_mapping[key][DOMAIN] not in CDM_SQL:
-                if self.destination_mapping[key][DOMAIN] != PERSON:
+                if self.destination_mapping[key][DOMAIN] not in [PERSON, NOT_APPLICABLE]:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
-            elif value[SOURCE_VARIABLE] in row and self.valid_row_value(value[SOURCE_VARIABLE], row):
+            elif self.valid_row_value(value[SOURCE_VARIABLE], row):
                 domain = self.destination_mapping[key][DOMAIN]
                 source_value = row[value[SOURCE_VARIABLE]]
                 (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
@@ -219,7 +219,7 @@ class DataParser:
                                 print(error)
                         else:
                             print(f'Set the format so that the date for variable {key} is considered')
-
+                    # Cretae the necessary arguments to build the SQL statement
                     named_args = {
                         'source_value': source_value,
                         'date': date,
@@ -229,4 +229,16 @@ class DataParser:
                         named_args['value_as_concept'] = parsed_value
                     else:
                         named_args['value'] = parsed_value
+                    # Check if there is a field for additional information
+                    additional_info = self.destination_mapping[key][ADDITIONAL_INFO]
+                    if additional_info and additional_info in self.source_mapping:
+                        additional_info_value = self.source_mapping[additional_info][STATIC_VALUE]
+                        if additional_info_value:
+                            named_args['additional_info'] = additional_info_value
+                        else:
+                            additional_info_varible = self.source_mapping[additional_info][SOURCE_VARIABLE]
+                            if additional_info_varible and self.valid_row_value(additional_info_varible, row):
+                                named_args['additional_info'] = f'{additional_info_varible}: \
+                                    {self.get_parsed_value(additional_info_varible, row[additional_info_varible])[1]}'
+                    # Run the SQL script to insert the measurement/observation/condition
                     self.pg.run_sql(CDM_SQL[domain](person_id, self.destination_mapping[key], **named_args))

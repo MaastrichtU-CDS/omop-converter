@@ -68,7 +68,7 @@ def build_person(gender, year_of_birth, cohort_id, death_datetime):
     """.format(gender, year_of_birth, death_datetime if death_datetime else 'NULL', cohort_id if cohort_id else 'NULL')
 
 def build_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
-    date='19700101 00:00:00', visit_id=0):
+    date='19700101 00:00:00', visit_id=0, additional_info='NULL'):
     """ Build the sql statement for an observation.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
@@ -79,7 +79,7 @@ def build_observation(person_id, field, value='NULL', value_as_concept=0, source
     """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
 
 def build_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
-    date='19700101 00:00:00', visit_id=0):
+    date='19700101 00:00:00', visit_id=0, additional_info='NULL'):
     """ Build the sql statement for a measurement.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
@@ -89,13 +89,15 @@ def build_measurement(person_id, field, value='NULL', value_as_concept=0, source
         VALUES (nextval('measurement_sequence'),{0},{1},'{2}',0,{3},{4},{5},{6},0,{7})
     """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
 
-def build_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL', date='19700101 00:00:00', visit_id=0):
+def build_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
+    date='19700101 00:00:00', visit_id=0, additional_info='NULL'):
     """ Build the sql statement for a condition.
     """
     return """INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
         condition_start_datetime,condition_type_concept_id,condition_status_concept_id,visit_occurrence_id,
-        condition_source_value,condition_source_concept_id) VALUES (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},{4},0)
-    """.format(person_id, field[CONCEPT_ID], date, visit_id, source_value)
+        condition_source_value,condition_source_concept_id,condition_status_source_value) VALUES
+        (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},{4},0,'{5}')
+    """.format(person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info)
 
 def build_cohort(cohort_name, location_id):
     """ Build the sql statement for a care site.
