@@ -142,7 +142,7 @@ class DataParser:
             self.cohort_id,
             death_datetime,
         )
-        person_id = self.pg.run_sql(person_sql, returning=True)
+        person_id = self.pg.run_sql(*person_sql, returning=True)
 
         return person_id
 
@@ -241,4 +241,4 @@ class DataParser:
                                 named_args['additional_info'] = f'{additional_info_varible}: \
                                     {self.get_parsed_value(additional_info_varible, row[additional_info_varible])[1]}'
                     # Run the SQL script to insert the measurement/observation/condition
-                    self.pg.run_sql(CDM_SQL[domain](person_id, self.destination_mapping[key], **named_args))
+                    self.pg.run_sql(*CDM_SQL[domain](person_id, self.destination_mapping[key], **named_args))

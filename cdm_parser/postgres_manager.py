@@ -62,8 +62,8 @@ class PostgresManager:
         """
         self.run_sql(f'DROP TABLE IF EXISTS {table}')
 
-    def run_sql(self, statement, returning=False):
-        self.cursor.execute(statement)
+    def run_sql(self, statement, parameters=None, returning=False):
+        self.cursor.execute(statement, parameters)
         self.connection.commit()
 
         if returning:

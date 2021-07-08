@@ -61,43 +61,43 @@ def insert_temp_id_record(source_id, person_id, pg):
 def build_person(gender, year_of_birth, cohort_id, death_datetime):
     """ Build the sql statement for a person.
     """
-    return """INSERT INTO PERSON (person_id,gender_concept_id,year_of_birth,death_datetime,
+    return (("""INSERT INTO PERSON (person_id,gender_concept_id,year_of_birth,death_datetime,
         race_concept_id,ethnicity_concept_id,gender_source_concept_id,race_source_concept_id,
-        ethnicity_source_concept_id,care_site_id) VALUES (nextval('person_sequence'),{0},{1},'{2}',0,0,0,0,0,{3})
+        ethnicity_source_concept_id,care_site_id) VALUES (nextval('person_sequence'),%s,%s,%s,0,0,0,0,0,%s)
         RETURNING person_id;
-    """.format(gender, year_of_birth, death_datetime if death_datetime else 'NULL', cohort_id if cohort_id else 'NULL')
+    """), (gender, year_of_birth, death_datetime, cohort_id))
 
-def build_observation(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
-    date='19700101 00:00:00', visit_id=0, additional_info='NULL'):
+def build_observation(person_id, field, value=None, value_as_concept=0, source_value=None,
+    date='19700101 00:00:00', visit_id=0, additional_info=None):
     """ Build the sql statement for an observation.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
-    return """INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
+    return (("""INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
         observation_type_concept_id,value_as_string,value_as_concept_id,visit_occurrence_id,unit_concept_id,
         observation_source_value,observation_source_concept_id,obs_event_field_concept_id) VALUES 
-        (nextval('observation_sequence'),{0},{1},'{2}', 32879, '{3}',{4},{5},{6},{7}, 0, 0);
-    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
+        (nextval('observation_sequence'),%s,%s,%s, 32879, %s,%s,%s,%s,%s, 0, 0);
+    """), (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value))
 
-def build_measurement(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
-    date='19700101 00:00:00', visit_id=0, additional_info='NULL'):
+def build_measurement(person_id, field, value=None, value_as_concept=0, source_value=None,
+    date='19700101 00:00:00', visit_id=0, additional_info=None):
     """ Build the sql statement for a measurement.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
-    return """INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
+    return ("""INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
         measurement_type_concept_id,value_as_number,value_as_concept_id,visit_occurrence_id,unit_concept_id,
         measurement_source_concept_id,value_source_value)
-        VALUES (nextval('measurement_sequence'),{0},{1},'{2}',0,{3},{4},{5},{6},0,{7})
-    """.format(person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
+        VALUES (nextval('measurement_sequence'),%s,%s,%s,0,%s,%s,%s,%s,0,%s)
+    """, (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value))
 
-def build_condition(person_id, field, value='NULL', value_as_concept=0, source_value='NULL',
-    date='19700101 00:00:00', visit_id=0, additional_info='NULL'):
+def build_condition(person_id, field, value=None, value_as_concept=0, source_value=None,
+    date='19700101 00:00:00', visit_id=0, additional_info=None):
     """ Build the sql statement for a condition.
     """
-    return """INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
+    return (("""INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
         condition_start_datetime,condition_type_concept_id,condition_status_concept_id,visit_occurrence_id,
         condition_source_value,condition_source_concept_id,condition_status_source_value) VALUES
-        (nextval('condition_sequence'),{0},{1},'{2}',0,0,{3},{4},0,'{5}')
-    """.format(person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info)
+        (nextval('condition_sequence'),%s,%s,%s,0,0,%s,%s,0,%s)
+    """), (person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info))
 
 def build_cohort(cohort_name, location_id):
     """ Build the sql statement for a care site.
@@ -105,7 +105,7 @@ def build_cohort(cohort_name, location_id):
     return """
         WITH CS AS (INSERT INTO CARE_SITE (care_site_id,care_site_name,place_of_service_concept_id,
             location_id,care_site_source_value,place_of_service_source_value) SELECT nextval('care_site_sequence'),
-            '{0}',0,{1},'{0}','NULL' WHERE NOT EXISTS (SELECT * FROM CARE_SITE WHERE care_site_name='{0}')
+            '{0}',0,{1},'{0}',NULL WHERE NOT EXISTS (SELECT * FROM CARE_SITE WHERE care_site_name='{0}')
             RETURNING care_site_id)
         SELECT care_site_id FROM CS
         UNION
