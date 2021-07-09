@@ -122,7 +122,7 @@ class DataParser:
         birth_year_source_variable = self.get_source_variable(YEAR_OF_BIRTH)
 
         if not all([self.valid_row_value(var, row) for var in [birth_year_source_variable]]):
-            raise Exception('Missing required information, the row should contain the year of birth and gender.')
+            raise Exception('Missing required information, the row should contain the year of birth.')
 
         # Handling death information
         death_datetime = None
@@ -137,7 +137,7 @@ class DataParser:
 
         # Add a new entry for the person/patient
         person_sql = build_person(
-            self.get_parsed_value(sex_source_variable, row[sex_source_variable])[1],
+            self.get_parsed_value(GENDER, row[sex_source_variable])[1],
             row[birth_year_source_variable],
             self.cohort_id,
             death_datetime,
