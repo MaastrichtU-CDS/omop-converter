@@ -23,7 +23,7 @@ DATASET_PATH = 'DATASET_PATH'
 
 VARIABLE = 'variable'
 
-TEMP_ID_TABLE = 'temp_person_source_id'
+ID_TABLE = 'person_source_id'
 
 PERSON_SEQUENCE = 'person_sequence'
 OBSERVATION_SEQUENCE = 'observation_sequence'
@@ -55,7 +55,7 @@ PERSON = 'Person'
 NOT_APPLICABLE = 'NA'
 
 GENDER = 'sex'
-YEAR_OF_BIRTH = 'year_of_birth'
+YEAR_OF_BIRTH = 'birth_year'
 DATE = 'date'
 SOURCE_ID = 'source_id'
 DEATH_DATE = 'Mort_Date'

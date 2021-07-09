@@ -88,7 +88,7 @@ def parse_data(cohort_name, cohort_location, start, limit, drop_temp_tables):
             cohort_id = insert_cohort(cohort_name, location_id, pg)
 
         # Create the necessary temporary table
-        create_temp_id_table(pg)
+        create_id_table(pg)
 
         # Parse the dataset
         parser = DataParser(
@@ -102,7 +102,7 @@ def parse_data(cohort_name, cohort_location, start, limit, drop_temp_tables):
 
         # Dropping the temporary tables
         # if drop_temp_tables:
-        #    pg.drop_table(TEMP_ID_TABLE)
+        #    pg.drop_table(ID_TABLE)
 
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')

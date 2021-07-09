@@ -39,24 +39,25 @@ def create_sequences(pg):
         CONDITION_SEQUENCE, CARE_SITE_SEQUENCE, VISIT_OCCURRENCE, LOCATION_SEQUENCE]:
         pg.create_sequence(sequence)
 
-def create_temp_id_table(pg):
-    """ Create temporary table to store the link between person id and the source id.
+def create_id_table(pg):
+    """ Create the table to store the link between person id and the source id.
     """
-    print(f'Create temporary id table: {TEMP_ID_TABLE}')
-    pg.run_sql(f'CREATE TABLE IF NOT EXISTS {TEMP_ID_TABLE} (person_id bigint PRIMARY KEY, source_id varchar(100) NOT NULL)')
+    print(f'Create temporary id table: {ID_TABLE}')
+    pg.run_sql(f'CREATE TABLE IF NOT EXISTS {ID_TABLE} \
+        (person_id bigint PRIMARY KEY, source_id varchar(100), cohort_id varchar(100) NOT NULL)')
 
-def get_person_id(source_id, pg):
+def get_person_id(source_id, cohort_id, pg):
     """ Retrieve the person id from the source id.
     """
     return pg.run_sql(
-        f"SELECT person_id FROM {TEMP_ID_TABLE} WHERE source_id='{source_id}' LIMIT 1",
+        f"SELECT person_id FROM {ID_TABLE} WHERE source_id='{source_id}' AND cohort_id='{cohort_id}' LIMIT 1",
         returning=True,
     )
 
-def insert_temp_id_record(source_id, person_id, pg):
+def insert_id_record(source_id, person_id, cohort_id, pg):
     """ Insert a new record in the temporary table.
     """
-    return pg.run_sql(f"INSERT INTO {TEMP_ID_TABLE} VALUES ({person_id}, '{source_id}')")
+    return pg.run_sql(f"INSERT INTO {ID_TABLE} VALUES ({person_id}, '{source_id}', '{cohort_id}')")
 
 def build_person(gender, year_of_birth, cohort_id, death_datetime):
     """ Build the sql statement for a person.

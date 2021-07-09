@@ -169,10 +169,10 @@ class DataParser:
                         person_id = id_map[source_id]
                     else:
                         # First check if it's already included in the temporary table.
-                        person_id = get_person_id(source_id, self.pg)
+                        person_id = get_person_id(source_id, self.cohort_id, self.pg)
                         if not person_id:
                             person_id = self.parse_person(row)
-                            insert_temp_id_record(source_id, person_id, self.pg)
+                            insert_id_record(source_id, person_id, self.cohort_id, self.pg)
                         id_map[source_id] = person_id
                 else:
                     person_id = self.parse_person(row)
