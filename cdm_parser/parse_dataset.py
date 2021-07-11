@@ -20,6 +20,7 @@ class DataParser:
         self.destination_mapping = destination_mapping
         self.cohort_id = cohort_id
         self.pg = pg
+        self.warnings = []
 
         # Retrieve the necessary information from the mappings
         self.value_mapping = self.create_value_mapping(self.source_mapping, self.destination_mapping)
@@ -50,6 +51,8 @@ class DataParser:
             if value[VALUES]:
                 if not value[VALUES_PARSED]:
                     raise Exception(f'Error in the source mapping for variable {key}')
+                if key not in destination_mapping or VALUES_CONCEPT_ID not in destination_mapping[key]:
+                    raise Exception(f'Variable {key} is not correctly mapped in the destination mapping!')
                 source_values = cls.variable_values_to_dict(value[VALUES], value[VALUES_PARSED])
                 if destination_mapping[key][VALUES_CONCEPT_ID]:
                     # Mapping each value to the concept ID defined
@@ -198,11 +201,14 @@ class DataParser:
         # Parse the observations/measurements/conditions
         for key, value in self.source_mapping.items():
             if key not in self.destination_mapping:
-                if DATE not in key.lower():
+                if DATE not in key.lower() and key not in self.warnings:
                     print(f'Skipped variable {key} since its not mapped')
+                    self.warnings.append(key)
             elif self.destination_mapping[key][DOMAIN] not in CDM_SQL:
-                if self.destination_mapping[key][DOMAIN] not in [PERSON, NOT_APPLICABLE]:
+                if self.destination_mapping[key][DOMAIN] not in [PERSON, NOT_APPLICABLE] and \
+                    key not in self.warnings:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
+                    self.warnings.append(key)
             elif self.valid_row_value(value[SOURCE_VARIABLE], row):
                 domain = self.destination_mapping[key][DOMAIN]
                 source_value = row[value[SOURCE_VARIABLE]]

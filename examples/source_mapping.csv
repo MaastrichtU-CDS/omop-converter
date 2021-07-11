@@ -13,5 +13,4 @@ dbp,d_b_p,,,
 dementia_diagnosis,dementia_d,true/false,yes/no,,,
 no_dementia_diagnosis,dementia_d,true/false,yes/no,,,
 dementia_cutoff,,,,,dementia_cutoff > 0.5
-hypertension_threshold,hp_th,,,,
-Date_diagnosis,d_d,,,%d/%m/%Y
+date_diagnosis,d_d,,,%d/%m/%Y
