@@ -104,6 +104,20 @@ def parse_data(cohort_name, cohort_location, start, limit, drop_temp_tables):
         # if drop_temp_tables:
         #    pg.drop_table(ID_TABLE)
 
+@cli.command()
+def report():
+    """ Returns information that can be use for quality control.
+    """
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    with PostgresManager() as pg:
+        persons = get_number_of_persons(pg)
+        if persons:
+            for persons_by_gender in persons:
+                print(f'Gender: {persons_by_gender[0]} - Count: {persons_by_gender[1]}; '
+                    + f'Max/Min/Avg Year of Birth: {persons_by_gender[2]}/{persons_by_gender[3]}/{round(persons_by_gender[4], 2)};')
+        entry_count = count_entries(pg)
+        print(f'{entry_count[0]} observations, {entry_count[1]} measurements, {entry_count[2]} conditions')
+
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')
 @cli.command()

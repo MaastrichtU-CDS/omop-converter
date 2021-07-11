@@ -51,7 +51,7 @@ def get_person_id(source_id, cohort_id, pg):
     """
     return pg.run_sql(
         f"SELECT person_id FROM {ID_TABLE} WHERE source_id='{source_id}' AND cohort_id='{cohort_id}' LIMIT 1",
-        returning=True,
+        fetch_one=True,
     )
 
 def insert_id_record(source_id, person_id, cohort_id, pg):
@@ -132,14 +132,34 @@ def build_location(address):
 def insert_cohort(cohort_name, location_id, pg):
     """ Insert the cohort information.
     """
-    return pg.run_sql(build_cohort(cohort_name, location_id), returning=True)
+    return pg.run_sql(build_cohort(cohort_name, location_id), fetch_one=True)
 
 def insert_visit_occurrence(person_id, start_date, end_date, pg):
     """ Insert the visit occurence information.
     """
-    return pg.run_sql(build_visit_occurrence(person_id, start_date, end_date), returning=True)
+    return pg.run_sql(build_visit_occurrence(person_id, start_date, end_date), fetch_one=True)
 
 def insert_location(address, pg):
     """ Insert a location.
     """
-    return pg.run_sql(build_location(address), returning=True)
+    return pg.run_sql(build_location(address), fetch_one=True)
+
+def get_number_of_persons(pg):
+    """ Get the total number of persons in the database.
+    """
+    return pg.run_sql("""SELECT gender_concept_id, COUNT(person_id), 
+        MAX(year_of_birth), MIN(year_of_birth), AVG(year_of_birth) FROM 
+        PERSON GROUP BY gender_concept_id""", fetch_all=True)
+
+def count_entries(pg):
+    """ Count entries for observations, measurements, and conditions.
+    """
+    entries = {
+        'OBSERVATION': 'observation_id',
+        'MEASUREMENT': 'measurement_id',
+        'CONDITION_OCCURRENCE': 'condition_occurrence_id'
+    }
+    count = []
+    for key, value in entries.items():
+        count.append(pg.run_sql(f'SELECT count({value}) FROM {key};', fetch_one=True))
+    return count

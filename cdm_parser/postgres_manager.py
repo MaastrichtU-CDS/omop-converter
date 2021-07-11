@@ -62,13 +62,15 @@ class PostgresManager:
         """
         self.run_sql(f'DROP TABLE IF EXISTS {table}')
 
-    def run_sql(self, statement, parameters=None, returning=False):
+    def run_sql(self, statement, parameters=None, fetch_one=False, fetch_all=False):
         self.cursor.execute(statement, parameters)
         self.connection.commit()
 
-        if returning:
+        if fetch_one:
             result = self.cursor.fetchone()
             return result[0] if result else None
+        elif fetch_all:
+            return self.cursor.fetchall()
 
     def execute_file(self, path):
         """ Execute a file with a sql script.
