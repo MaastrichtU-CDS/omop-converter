@@ -93,7 +93,7 @@ class DataParser:
         """
         parameter_source_variable = None
         parameter_format = None
-        if parameter in self.source_mapping:
+        if parameter and parameter in self.source_mapping:
             parameter_source_variable = self.source_mapping[parameter][SOURCE_VARIABLE]
             if with_format:
                 parameter_format = self.source_mapping[parameter][FORMAT]
@@ -198,7 +198,8 @@ class DataParser:
         # Parse the observations/measurements/conditions
         for key, value in self.source_mapping.items():
             if key not in self.destination_mapping:
-                print(f'Skipped variable {key} since its not mapped')
+                if DATE not in key.lower():
+                    print(f'Skipped variable {key} since its not mapped')
             elif self.destination_mapping[key][DOMAIN] not in CDM_SQL:
                 if self.destination_mapping[key][DOMAIN] not in [PERSON, NOT_APPLICABLE]:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
@@ -208,18 +209,15 @@ class DataParser:
                 (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
                 if not value_as_concept or parsed_value != '_':
                     # Check if there is a specific date for the variable
-                    date = '19700101 00:00:00'
-                    source_date_variable = value[DATE]
-                    if source_date_variable and source_date_variable in row:
-                        if FORMAT in value:
-                            try:
-                                date = parse_date(row[source_date_variable], value[FORMAT], DATE_FORMAT)
-                            except Exception as error:
-                                print(f'Error parsing a record due to a malformated date: {value[DATE]} {value[FORMAT]}')
-                                print(error)
-                        else:
-                            print(f'Set the format so that the date for variable {key} is considered')
-                    # Cretae the necessary arguments to build the SQL statement
+                    date = DATE_DEFAULT
+                    (source_date, source_date_format) = self.get_parameters(self.destination_mapping[key][DATE], with_format=True)
+                    if source_date and source_date in row:
+                        try:
+                            date = parse_date(row[source_date], source_date_format or self.date_format, DATE_FORMAT)
+                        except Exception as error:
+                            print(f'Error parsing a malformated date for variable {key}:')
+                            print(error)
+                    # Create the necessary arguments to build the SQL statement
                     named_args = {
                         'source_value': source_value,
                         'date': date,

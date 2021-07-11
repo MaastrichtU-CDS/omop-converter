@@ -1,15 +1,17 @@
-variable,source_variable,values,values_parsed,date,format,static_value
-source_id,id,,,,
-date,date,,,,%d/%m/%Y
-mort_date,dd,,,,%d/%m/%Y
-mort,df,true/false,True/False,,%d/%m/%Y
+variable,source_variable,values,values_parsed,format,static_value
+source_id,id,,,
+date,date,,,%d/%m/%Y
+mort_date,dd,,,%d/%m/%Y
+mort,df,true/false,True/False,
 age,age,,
 birth_year,birth_year,,
 sex,gender,Male/Female/-,male/female/-
-bmi,body_mass_index,,,bmi_date,%d/%m/%Y
+bmi,body_mass_index,,,
 hypertension,h_t,0/1,no/yes
 sbp,s_b_p,,,
 dbp,d_b_p,,,
 dementia_diagnosis,dementia_d,true/false,yes/no,,,
-dementia_cutoff,,,,,,dementia_cutoff > 0.5
+no_dementia_diagnosis,dementia_d,true/false,yes/no,,,
+dementia_cutoff,,,,,dementia_cutoff > 0.5
 hypertension_threshold,hp_th,,,,
+Date_diagnosis,d_d,,,%d/%m/%Y

@@ -1,4 +1,4 @@
-id,gender,age,dd,df,birth_year,education_years,apoe_genotype,h_t,body_mass_index,bmi_date,obesity,smoking,cholesterol,alcohol_amount,stroke,h_h_t,s_b_p,d_b_p,date,additional_info,hp_th,dementia_d
-001,,78,11/09/2008,true,1943,9,Heterozygote,0,22,26/01/2004,no,past,5.4,4,no,0,129,,23/01/2004,false,,true
-002,Female,80,,true,1941,13,Homozygote,1,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false
+id,gender,age,dd,df,birth_year,education_years,apoe_genotype,h_t,body_mass_index,bmi_date,obesity,smoking,cholesterol,alcohol_amount,stroke,h_h_t,s_b_p,d_b_p,date,additional_info,hp_th,dementia_d,d_d
+001,,78,11/09/2008,true,1943,9,Heterozygote,0,22,26/01/2004,no,past,5.4,4,no,0,129,,23/01/2004,false,,true,23/01/2004
+002,Female,80,,true,1941,13,Homozygote,1,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004
 001,,,,,,,,1,23,28/07/2004,yes,,6.4,,no,1,153,,21/7/2004,true

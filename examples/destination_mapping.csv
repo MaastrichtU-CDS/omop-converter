@@ -1,4 +1,4 @@
-variable,concept_id,domain,unit,unit_concept_id,values,values_concept_id,additional_info,concept_date
+variable,concept_id,domain,unit,unit_concept_id,values,values_concept_id,additional_info,date
 source_id,,Person,,,,,,
 date,,Person,,,,,,
 birth_year,,Person,,,,,,

@@ -42,7 +42,7 @@ def create_sequences(pg):
 def create_id_table(pg):
     """ Create the table to store the link between person id and the source id.
     """
-    print(f'Create temporary id table: {ID_TABLE}')
+    print(f'Create id table: {ID_TABLE}')
     pg.run_sql(f'CREATE TABLE IF NOT EXISTS {ID_TABLE} \
         (person_id bigint PRIMARY KEY, source_id varchar(100), cohort_id varchar(100) NOT NULL)')
 
