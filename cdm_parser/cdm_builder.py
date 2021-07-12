@@ -86,9 +86,9 @@ def build_measurement(person_id, field, value=None, value_as_concept=0, source_v
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
     return ("""INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
         measurement_type_concept_id,value_as_number,value_as_concept_id,visit_occurrence_id,unit_concept_id,
-        measurement_source_concept_id,value_source_value)
-        VALUES (nextval('measurement_sequence'),%s,%s,%s,0,%s,%s,%s,%s,0,%s)
-    """, (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value))
+        measurement_source_value,measurement_source_concept_id,value_source_value)
+        VALUES (nextval('measurement_sequence'),%s,%s,%s,0,%s,%s,%s,%s,%s,0,%s)
+    """, (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, additional_info, source_value))
 
 def build_condition(person_id, field, value=None, value_as_concept=0, source_value=None,
     date='19700101 00:00:00', visit_id=0, additional_info=None):

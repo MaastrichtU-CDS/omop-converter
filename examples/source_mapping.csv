@@ -8,8 +8,8 @@ birth_year,birth_year,,
 sex,gender,Male/Female/-,male/female/-
 bmi,body_mass_index,,,
 hypertension,h_t,0/1,no/yes
-sbp,s_b_p,,,
-dbp,d_b_p,,,
+sbp,s_b_p,,,,1st Measurement
+dbp,d_b_p,,,,
 dementia_diagnosis,dementia_d,true/false,yes/no,,,
 no_dementia_diagnosis,dementia_d,true/false,yes/no,,,
 dementia_cutoff,,,,,dementia_cutoff > 0.5

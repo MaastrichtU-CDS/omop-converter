@@ -13,3 +13,5 @@ no_dementia_diagnosis,4182210,Observation,,,yes/no,_/4132135,,date_diagnosis
 hypertension,4058286,Observation,,,yes/no,4188539/4188540,,date_comorbidities
 dementia_cutoff,,NA,,
 cdr_total,36714811,Observation,,,,,,date_CDR
+sbp,4152194,Measurement,mmHg,8876,,,,date_vitals
+dbp,4154790,Measurement,mmHg,8876,,,,date_vitals
