@@ -4,7 +4,8 @@ mort_date,,Person,,,,,,
 mort,,Person,,,true/false,,,
 date,,Person,,,,,,
 birth_year,,Person,,,,,,
-age,4265453,Observation,year,9448,,,,
+age_1,4265453,Observation,year,9448,,,,date_diagnosis
+age_2,4265453,Observation,year,9448,,,,date2
 sex,,Person,,,male/female/-,8507/8532/8551,,
 education_years,2000000001,Observation,year,9448,,,,
 education_category,4171617,Observation,,,low/high,4267416/4328749,,

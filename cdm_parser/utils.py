@@ -2,6 +2,7 @@ import os
 import subprocess
 from configparser import ConfigParser
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 def import_config(path, section):
     """ Import the configurations from a file and set them as
@@ -44,3 +45,9 @@ def parse_date(date, input_format, output_format):
     """
     date_parsed = datetime.strptime(date, input_format)
     return date_parsed.strftime(output_format)
+
+def get_year_of_birth(age, date, input_format):
+    """ Retrieve the year of birth from the age at a specific date.
+    """
+    date_parsed = datetime.strptime(date, input_format)
+    return (date_parsed - relativedelta(years=age)).year

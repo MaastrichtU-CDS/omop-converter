@@ -3,7 +3,7 @@ import pandas as pd
 from postgres_manager import PostgresManager
 from cdm_builder import *
 from constants import *
-from utils import arrays_to_dict, parse_date
+from utils import arrays_to_dict, parse_date, get_year_of_birth
 
 CDM_SQL = {
     CONDITION: build_condition,
@@ -123,8 +123,28 @@ class DataParser:
         """
         sex_source_variable = self.get_source_variable(GENDER)
         birth_year_source_variable = self.get_source_variable(YEAR_OF_BIRTH)
-
-        if not all([self.valid_row_value(var, row) for var in [birth_year_source_variable]]):
+        birth_year = None
+        if birth_year_source_variable and self.valid_row_value(birth_year_source_variable, row):
+            birth_year = row[birth_year_source_variable]
+        else:
+            # The year of birth is required to create an entry for the person. In case that 
+            # variable isn't provided, the year of birth will be obtained from a variable indicating
+            # the age for a particular date.
+            age_variables = [ k for k in self.destination_mapping.keys() if AGE_PREFIX in k ]
+            if len(age_variables) > 0:
+                for age_variable in age_variables:
+                    age_source_variable = self.get_source_variable(age_variable)
+                    (age_date_variable, age_date_format) = self.get_parameters(
+                        self.destination_mapping[age_variable][DATE], with_format=True)
+                    if all([var and self.valid_row_value(var, row) for var in [age_source_variable, age_date_variable]]):
+                        try:
+                            birth_year = get_year_of_birth(int(row[age_source_variable]), \
+                                row[age_date_variable], age_date_format or self.date_format)
+                            break
+                        except Exception as error:
+                            print(f'Error parsing year of birth from variable {age_variable}')
+                            print(str(error))
+        if not birth_year:
             raise Exception('Missing required information, the row should contain the year of birth.')
 
         # Handling death information
@@ -141,7 +161,7 @@ class DataParser:
         # Add a new entry for the person/patient
         person_sql = build_person(
             self.get_parsed_value(GENDER, row[sex_source_variable])[1],
-            row[birth_year_source_variable],
+            birth_year,
             self.cohort_id,
             death_datetime,
         )

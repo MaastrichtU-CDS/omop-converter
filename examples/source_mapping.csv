@@ -3,7 +3,8 @@ source_id,id,,,
 date,date,,,%d/%m/%Y
 mort_date,dd,,,%d/%m/%Y
 mort,df,true/false,True/False,
-age,age,,
+age_1,age_neuro,,
+age_2,age_vitals,,,
 birth_year,birth_year,,
 sex,gender,Male/Female/-,male/female/-
 bmi,body_mass_index,,,
@@ -14,3 +15,4 @@ dementia_diagnosis,dementia_d,true/false,yes/no,,,
 no_dementia_diagnosis,dementia_d,true/false,yes/no,,,
 dementia_cutoff,,,,,dementia_cutoff > 0.5
 date_diagnosis,d_d,,,%d/%m/%Y
+date2,d_d_2,,,%d/%m/%Y

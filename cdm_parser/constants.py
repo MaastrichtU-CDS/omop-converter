@@ -56,6 +56,7 @@ NOT_APPLICABLE = 'NA'
 
 GENDER = 'sex'
 YEAR_OF_BIRTH = 'birth_year'
+AGE_PREFIX = 'age_'
 DATE = 'date'
 SOURCE_ID = 'source_id'
 DEATH_DATE = 'Mort_Date'
