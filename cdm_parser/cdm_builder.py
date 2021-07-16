@@ -68,30 +68,30 @@ def build_person(gender, year_of_birth, cohort_id, death_datetime):
         RETURNING person_id;
     """), (gender, year_of_birth, death_datetime, cohort_id))
 
-def build_observation(person_id, field, value=None, value_as_concept=0, source_value=None,
-    date='19700101 00:00:00', visit_id=0, additional_info=None):
+def build_observation(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None):
     """ Build the sql statement for an observation.
     """
-    unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
+    unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else None
     return (("""INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
         observation_type_concept_id,value_as_string,value_as_concept_id,visit_occurrence_id,unit_concept_id,
         observation_source_value,observation_source_concept_id,obs_event_field_concept_id) VALUES 
         (nextval('observation_sequence'),%s,%s,%s, 32879, %s,%s,%s,%s,%s, 0, 0);
     """), (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value))
 
-def build_measurement(person_id, field, value=None, value_as_concept=0, source_value=None,
-    date='19700101 00:00:00', visit_id=0, additional_info=None):
+def build_measurement(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None):
     """ Build the sql statement for a measurement.
     """
-    unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else 0
+    unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else None
     return ("""INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
         measurement_type_concept_id,value_as_number,value_as_concept_id,visit_occurrence_id,unit_concept_id,
         measurement_source_value,measurement_source_concept_id,value_source_value)
         VALUES (nextval('measurement_sequence'),%s,%s,%s,0,%s,%s,%s,%s,%s,0,%s)
     """, (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, additional_info, source_value))
 
-def build_condition(person_id, field, value=None, value_as_concept=0, source_value=None,
-    date='19700101 00:00:00', visit_id=0, additional_info=None):
+def build_condition(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None):
     """ Build the sql statement for a condition.
     """
     return (("""INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,

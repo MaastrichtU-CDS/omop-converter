@@ -23,7 +23,7 @@ class DataParser:
         self.warnings = []
 
         # Retrieve the necessary information from the mappings
-        self.value_mapping = self.create_value_mapping(self.source_mapping, self.destination_mapping)
+        self.value_mapping = self.create_value_mapping()
         (self.date_source_variable, self.date_format) = self.get_parameters(DATE, with_format=True)
 
     @staticmethod
@@ -42,29 +42,48 @@ class DataParser:
         # TODO: Handling missing values in another way
         return variable in row and row[variable] and not pd.isnull(row[variable])
 
-    @classmethod
-    def create_value_mapping(cls, source_mapping, destination_mapping):
+    def map_variable_values(self, variable, specification):
+        """ Create the mapping between a source and destination variable
+        """
+        mapping = {}
+        source_values = self.variable_values_to_dict(
+            specification[VALUES],
+            specification[VALUES_PARSED]
+        )
+        if self.destination_mapping[variable][VALUES_CONCEPT_ID]:
+            # Mapping each value to the concept ID defined
+            destination_values = self.variable_values_to_dict(
+                self.destination_mapping[variable][VALUES],
+                self.destination_mapping[variable][VALUES_CONCEPT_ID]
+            )
+            mapping = {map_key: destination_values[map_value] \
+                for map_key, map_value in source_values.items()}
+            mapping[VALUE_AS_CONCEPT_ID] = True
+        else:
+            # Mapping each value to another string
+            mapping = source_values
+            mapping[VALUE_AS_CONCEPT_ID] = False
+        # Check if the variable type is boolean
+        # TODO: Add another field in the mapping for the variable type.
+        # May be interesting to parse the other types that aren't strings.
+        mapping[BOOLEAN_TYPE] = specification[VALUES_PARSED] == BOOLEAN_VALUES
+        # Check if there are alternatives
+        mapping[ALTERNATIVES] = specification[ALTERNATIVES].split('/') if \
+            specification[ALTERNATIVES] else []
+
+        return mapping
+    
+    def create_value_mapping(self):
         """ Create the mapping between the source and destination values for each variable
         """
         value_mapping = {}
-        for key, value in source_mapping.items():
+        for key, value in self.source_mapping.items():
             if value[VALUES]:
                 if not value[VALUES_PARSED]:
                     raise Exception(f'Error in the source mapping for variable {key}')
-                if key not in destination_mapping or VALUES_CONCEPT_ID not in destination_mapping[key]:
+                if key not in self.destination_mapping or VALUES_CONCEPT_ID not in self.destination_mapping[key]:
                     raise Exception(f'Variable {key} is not correctly mapped in the destination mapping!')
-                source_values = cls.variable_values_to_dict(value[VALUES], value[VALUES_PARSED])
-                if destination_mapping[key][VALUES_CONCEPT_ID]:
-                    # Mapping each value to the concept ID defined
-                    destination_values = cls.variable_values_to_dict(destination_mapping[key][VALUES], \
-                        destination_mapping[key][VALUES_CONCEPT_ID])
-                    value_mapping[key] = {map_key: destination_values[map_value] \
-                        for map_key, map_value in source_values.items()}
-                    value_mapping[key][VALUE_AS_CONCEPT_ID] = True
-                else:
-                    # Mapping each value to another string
-                    value_mapping[key] = source_values
-                    value_mapping[key][VALUE_AS_CONCEPT_ID] = False
+                value_mapping[key] = self.map_variable_values(key, value)
         return value_mapping
 
     def parse_dataset(self, start, limit):
@@ -130,6 +149,7 @@ class DataParser:
             # The year of birth is required to create an entry for the person. In case that 
             # variable isn't provided, the year of birth will be obtained from a variable indicating
             # the age for a particular date.
+            # TODO: Use alternatives to have all the other variables instead of prefix
             age_variables = [ k for k in self.destination_mapping.keys() if AGE_PREFIX in k ]
             if len(age_variables) > 0:
                 for age_variable in age_variables:
@@ -215,8 +235,8 @@ class DataParser:
         # TODO: Calculating the end data when provided with a period for the wave
         visit_id = None
         if self.date_source_variable in row:
-            visit_date = parse_date(row[self.date_source_variable], self.date_format, DATE_FORMAT)
-            visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
+           visit_date = parse_date(row[self.date_source_variable], self.date_format, DATE_FORMAT)
+           visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
 
         # Parse the observations/measurements/conditions
         for key, value in self.source_mapping.items():
@@ -230,42 +250,44 @@ class DataParser:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
                     self.warnings.append(key)
             elif self.valid_row_value(value[SOURCE_VARIABLE], row):
-                domain = self.destination_mapping[key][DOMAIN]
-                source_value = row[value[SOURCE_VARIABLE]]
-                (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
-                if not value_as_concept or parsed_value != '_':
-                    # Check if there is a specific date for the variable
-                    date = DATE_DEFAULT
-                    (source_date, source_date_format) = self.get_parameters(self.destination_mapping[key][DATE], with_format=True)
-                    if source_date and source_date in row:
-                        try:
-                            date = parse_date(row[source_date], source_date_format or self.date_format, DATE_FORMAT)
-                        except Exception as error:
-                            print(f'Error parsing a malformated date for variable {key}:')
-                            print(error)
-                    # Create the necessary arguments to build the SQL statement
-                    named_args = {
-                        'source_value': source_value,
-                        'date': date,
-                        'visit_id': visit_id
-                    }
-                    if value_as_concept:
-                        named_args['value_as_concept'] = parsed_value
-                    else:
-                        named_args['value'] = parsed_value
-                    # Check if there is a field for additional information
-                    additional_info = self.destination_mapping[key][ADDITIONAL_INFO]
-                    if additional_info and additional_info in self.source_mapping:
-                        additional_info_value = self.source_mapping[additional_info][STATIC_VALUE]
-                        if additional_info_value:
-                            named_args['additional_info'] = additional_info_value
+                    # TODO: improve the mapping between a variable and multiple
+                    # source variables
+                    domain = self.destination_mapping[key][DOMAIN]
+                    source_value = row[value[SOURCE_VARIABLE]]
+                    (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
+                    if parsed_value != '_':
+                        # Check if there is a specific date for the variable
+                        date = DATE_DEFAULT
+                        (source_date, source_date_format) = self.get_parameters(self.destination_mapping[key][DATE], with_format=True)
+                        if source_date and source_date in row:
+                            try:
+                                date = parse_date(row[source_date], source_date_format or self.date_format, DATE_FORMAT)
+                            except Exception as error:
+                                print(f'Error parsing a malformated date for variable {key}:')
+                                print(error)
+                        # Create the necessary arguments to build the SQL statement
+                        named_args = {
+                            'source_value': source_value,
+                            'date': date,
+                            'visit_id': visit_id
+                        }
+                        if value_as_concept:
+                            named_args['value_as_concept'] = parsed_value
                         else:
-                            additional_info_varible = self.source_mapping[additional_info][SOURCE_VARIABLE]
-                            if additional_info_varible and self.valid_row_value(additional_info_varible, row):
-                                named_args['additional_info'] = f'{additional_info_varible}: \
-                                    {self.get_parsed_value(additional_info_varible, row[additional_info_varible])[1]}'
-                    elif value[STATIC_VALUE]:
-                        named_args['additional_info'] = value[STATIC_VALUE]
+                            named_args['value'] = parsed_value
+                        # Check if there is a field for additional information
+                        additional_info = self.destination_mapping[key][ADDITIONAL_INFO]
+                        if additional_info and additional_info in self.source_mapping:
+                            additional_info_value = self.source_mapping[additional_info][STATIC_VALUE]
+                            if additional_info_value:
+                                named_args['additional_info'] = additional_info_value
+                            else:
+                                additional_info_varible = self.source_mapping[additional_info][SOURCE_VARIABLE]
+                                if additional_info_varible and self.valid_row_value(additional_info_varible, row):
+                                    named_args['additional_info'] = f'{additional_info_varible}: \
+                                        {self.get_parsed_value(additional_info_varible, row[additional_info_varible])[1]}'
+                        elif value[STATIC_VALUE]:
+                            named_args['additional_info'] = value[STATIC_VALUE]
 
-                    # Run the SQL script to insert the measurement/observation/condition
-                    self.pg.run_sql(*CDM_SQL[domain](person_id, self.destination_mapping[key], **named_args))
+                        # Run the SQL script to insert the measurement/observation/condition
+                        self.pg.run_sql(*CDM_SQL[domain](person_id, self.destination_mapping[key], **named_args))
