@@ -63,14 +63,6 @@ class DataParser:
             # Mapping each value to another string
             mapping = source_values
             mapping[VALUE_AS_CONCEPT_ID] = False
-        # Check if the variable type is boolean
-        # TODO: Add another field in the mapping for the variable type.
-        # May be interesting to parse the other types that aren't strings.
-        mapping[BOOLEAN_TYPE] = specification[VALUES_PARSED] == BOOLEAN_VALUES
-        # Check if there are alternatives
-        mapping[ALTERNATIVES] = specification[ALTERNATIVES].split('/') if \
-            specification[ALTERNATIVES] else []
-
         return mapping
     
     def create_value_mapping(self):
@@ -171,9 +163,9 @@ class DataParser:
         death_datetime = None
         death_time_source_variable = self.get_source_variable(DEATH_DATE)
         death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
-        if self.valid_row_value(death_time_source_variable, row):
+        if death_time_source_variable and self.valid_row_value(death_time_source_variable, row):
             death_datetime = parse_date(row[death_time_source_variable], self.date_format, DATE_FORMAT)
-        elif self.valid_row_value(death_flag_source_variable, row):
+        elif death_flag_source_variable and self.valid_row_value(death_flag_source_variable, row):
             (value_as_concept, parsed_value) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
             if parsed_value and parsed_value == 'True':
                 death_datetime = DATE_DEFAULT
@@ -200,28 +192,28 @@ class DataParser:
             if limit > 0 and index - start >= limit:
                 break
             try:
-                # Check if the source id variable is provided. In that case,
-                # the link between the source id and the person id will be stored
-                # in a dictionary and in a temporary table.
-                person_id = None
-                if id_source_variable:
-                    if not self.valid_row_value(id_source_variable, row):
-                        raise Exception('Error when parsing the source id.')
-                    source_id = row[id_source_variable]
-                    if source_id in id_map:
-                        person_id = id_map[source_id]
-                    else:
-                        # First check if it's already included in the temporary table.
-                        person_id = get_person_id(source_id, self.cohort_id, self.pg)
-                        if not person_id:
-                            person_id = self.parse_person(row)
-                            insert_id_record(source_id, person_id, self.cohort_id, self.pg)
-                        id_map[source_id] = person_id
+            # Check if the source id variable is provided. In that case,
+            # the link between the source id and the person id will be stored
+            # in a dictionary and in a temporary table.
+            person_id = None
+            if id_source_variable:
+                if not self.valid_row_value(id_source_variable, row):
+                    raise Exception('Error when parsing the source id.')
+                source_id = row[id_source_variable]
+                if source_id in id_map:
+                    person_id = id_map[source_id]
                 else:
-                    person_id = self.parse_person(row)
-                #Parse the row
-                self.transform_row(row, person_id)
-                processed_records += 1
+                    # First check if it's already included in the temporary table.
+                    person_id = get_person_id(source_id, self.cohort_id, self.pg)
+                    if not person_id:
+                        person_id = self.parse_person(row)
+                        insert_id_record(source_id, person_id, self.cohort_id, self.pg)
+                    id_map[source_id] = person_id
+            else:
+                person_id = self.parse_person(row)
+            #Parse the row
+            self.transform_row(row, person_id)
+            processed_records += 1
             except Exception as error:
                 # TODO: Use a logger and add this information in a file
                 print(f'Skipped record {index} due to an error:', str(error))
@@ -249,17 +241,28 @@ class DataParser:
                     key not in self.warnings:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
                     self.warnings.append(key)
-            elif self.valid_row_value(value[SOURCE_VARIABLE], row):
+            else:
+                source_variables = [value[SOURCE_VARIABLE]]
+                if value[ALTERNATIVES]:
+                    source_variables.extend(value[ALTERNATIVES].split('/'))
+                # Check the first variable for the field that it's valid
+                valid_source_variable = None
+                for source_variable in source_variables:
+                    if self.valid_row_value(source_variable, row):
+                        valid_source_variable = source_variable
+                        if value[CONDITION] and row[source_variable] in value[CONDITION].split('/'):
+                            break
+                if valid_source_variable:
                     # TODO: improve the mapping between a variable and multiple
                     # source variables
                     domain = self.destination_mapping[key][DOMAIN]
-                    source_value = row[value[SOURCE_VARIABLE]]
+                    source_value = row[valid_source_variable]
                     (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
                     if parsed_value != '_':
                         # Check if there is a specific date for the variable
                         date = DATE_DEFAULT
                         (source_date, source_date_format) = self.get_parameters(self.destination_mapping[key][DATE], with_format=True)
-                        if source_date and source_date in row:
+                        if source_date and source_date in row[source_date]:
                             try:
                                 date = parse_date(row[source_date], source_date_format or self.date_format, DATE_FORMAT)
                             except Exception as error:
