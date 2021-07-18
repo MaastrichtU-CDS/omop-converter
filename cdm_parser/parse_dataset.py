@@ -27,7 +27,7 @@ class DataParser:
         (self.date_source_variable, self.date_format) = self.get_parameters(DATE, with_format=True)
 
     @staticmethod
-    def variable_values_to_dict(keys, values, separator='/'):
+    def variable_values_to_dict(keys, values, separator=DEFAULT_SEPARATOR):
         """ Convert the string representing the variable values map to a dictionary.
         """
         return arrays_to_dict(
@@ -192,28 +192,28 @@ class DataParser:
             if limit > 0 and index - start >= limit:
                 break
             try:
-            # Check if the source id variable is provided. In that case,
-            # the link between the source id and the person id will be stored
-            # in a dictionary and in a temporary table.
-            person_id = None
-            if id_source_variable:
-                if not self.valid_row_value(id_source_variable, row):
-                    raise Exception('Error when parsing the source id.')
-                source_id = row[id_source_variable]
-                if source_id in id_map:
-                    person_id = id_map[source_id]
+                # Check if the source id variable is provided. In that case,
+                # the link between the source id and the person id will be stored
+                # in a dictionary and in a temporary table.
+                person_id = None
+                if id_source_variable:
+                    if not self.valid_row_value(id_source_variable, row):
+                        raise Exception('Error when parsing the source id.')
+                    source_id = row[id_source_variable]
+                    if source_id in id_map:
+                        person_id = id_map[source_id]
+                    else:
+                        # First check if it's already included in the temporary table.
+                        person_id = get_person_id(source_id, self.cohort_id, self.pg)
+                        if not person_id:
+                            person_id = self.parse_person(row)
+                            insert_id_record(source_id, person_id, self.cohort_id, self.pg)
+                        id_map[source_id] = person_id
                 else:
-                    # First check if it's already included in the temporary table.
-                    person_id = get_person_id(source_id, self.cohort_id, self.pg)
-                    if not person_id:
-                        person_id = self.parse_person(row)
-                        insert_id_record(source_id, person_id, self.cohort_id, self.pg)
-                    id_map[source_id] = person_id
-            else:
-                person_id = self.parse_person(row)
-            #Parse the row
-            self.transform_row(row, person_id)
-            processed_records += 1
+                    person_id = self.parse_person(row)
+                #Parse the row
+                self.transform_row(row, person_id)
+                processed_records += 1
             except Exception as error:
                 # TODO: Use a logger and add this information in a file
                 print(f'Skipped record {index} due to an error:', str(error))
@@ -244,13 +244,13 @@ class DataParser:
             else:
                 source_variables = [value[SOURCE_VARIABLE]]
                 if value[ALTERNATIVES]:
-                    source_variables.extend(value[ALTERNATIVES].split('/'))
+                    source_variables.extend(value[ALTERNATIVES].split(DEFAULT_SEPARATOR))
                 # Check the first variable for the field that it's valid
                 valid_source_variable = None
                 for source_variable in source_variables:
                     if self.valid_row_value(source_variable, row):
                         valid_source_variable = source_variable
-                        if value[CONDITION] and row[source_variable] in value[CONDITION].split('/'):
+                        if value[CONDITION] and row[source_variable] in value[CONDITION].split(DEFAULT_SEPARATOR):
                             break
                 if valid_source_variable:
                     # TODO: improve the mapping between a variable and multiple

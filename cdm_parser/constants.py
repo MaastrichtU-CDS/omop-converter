@@ -49,10 +49,10 @@ CONDITION = 'condition'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
 DEFAULT_VALUE = '-'
+DEFAULT_SEPARATOR = '/'
 
 OBSERVATION = 'Observation'
 MEASUREMENT = 'Measurement'
-CONDITION = 'Condition'
 PERSON = 'Person'
 NOT_APPLICABLE = 'NA'
 
