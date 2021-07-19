@@ -6,7 +6,7 @@ from constants import *
 from utils import arrays_to_dict, parse_date, get_year_of_birth
 
 CDM_SQL = {
-    CONDITION: build_condition,
+    CONDITION_OCCURRENCE: build_condition,
     MEASUREMENT: build_measurement,
     OBSERVATION: build_observation
 }
@@ -242,21 +242,24 @@ class DataParser:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
                     self.warnings.append(key)
             else:
-                source_variables = [value[SOURCE_VARIABLE]]
-                if value[ALTERNATIVES]:
-                    source_variables.extend(value[ALTERNATIVES].split(DEFAULT_SEPARATOR))
-                # Check the first variable for the field that it's valid
-                valid_source_variable = None
-                for source_variable in source_variables:
-                    if self.valid_row_value(source_variable, row):
-                        valid_source_variable = source_variable
-                        if value[CONDITION] and row[source_variable] in value[CONDITION].split(DEFAULT_SEPARATOR):
-                            break
-                if valid_source_variable:
+                source_value = None
+                if value[SOURCE_VARIABLE]:
+                    source_variables = [value[SOURCE_VARIABLE]]
+                    if value[ALTERNATIVES]:
+                        source_variables.extend(value[ALTERNATIVES].split(DEFAULT_SEPARATOR))
+                    # Check the first variable for the field that it's valid
+                    for source_variable in source_variables:
+                        if self.valid_row_value(source_variable, row):
+                            source_value = row[source_variable]
+                            if value[CONDITION] and row[source_variable] in value[CONDITION].split(DEFAULT_SEPARATOR):
+                                break
+                elif value[STATIC_VALUE]:
+                    source_value = value[STATIC_VALUE]
+
+                if source_value:
                     # TODO: improve the mapping between a variable and multiple
                     # source variables
                     domain = self.destination_mapping[key][DOMAIN]
-                    source_value = row[valid_source_variable]
                     (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
                     if parsed_value != '_':
                         # Check if there is a specific date for the variable

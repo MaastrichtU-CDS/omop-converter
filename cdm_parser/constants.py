@@ -54,6 +54,7 @@ DEFAULT_SEPARATOR = '/'
 OBSERVATION = 'Observation'
 MEASUREMENT = 'Measurement'
 PERSON = 'Person'
+CONDITION_OCCURRENCE = 'Condition'
 NOT_APPLICABLE = 'NA'
 
 GENDER = 'sex'
