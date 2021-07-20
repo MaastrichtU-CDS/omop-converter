@@ -288,10 +288,10 @@ class DataParser:
                             if additional_info_value:
                                 named_args['additional_info'] = additional_info_value
                             else:
-                                additional_info_varible = self.source_mapping[additional_info][SOURCE_VARIABLE]
-                                if additional_info_varible and self.valid_row_value(additional_info_varible, row):
-                                    named_args['additional_info'] = f'{additional_info_varible}: \
-                                        {self.get_parsed_value(additional_info_varible, row[additional_info_varible])[1]}'
+                                additional_info_variable = self.source_mapping[additional_info][SOURCE_VARIABLE]
+                                if additional_info_variable and self.valid_row_value(additional_info_variable, row):
+                                    named_args['additional_info'] = f'{additional_info_variable}: \
+                                        {self.get_parsed_value(additional_info_variable, row[additional_info_variable])[1]}'
                         elif value[STATIC_VALUE]:
                             named_args['additional_info'] = value[STATIC_VALUE]
 
