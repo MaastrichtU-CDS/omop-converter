@@ -1,0 +1,1226 @@
+﻿Main category;EMIF-AD category;Variable name EMIF-AD;Variable name used;Variable Description ;Unity;Categories;Range or possible values;Units;Visit independent;Specific information for harmonisation;Domain;DVocabulary;Concept Id;Concept Id Link;Unit;Unit Concept Id;Vocabulary;Values;Values Concept Id;Vocabulary;Info;Date
+General;;;;;;;;;;;;;;;;;;;;;;
+;;;Data_saved;CSV/excel/SPSS/SAS/R/Phyton/other;factor;1 = CSV, 2 = excel, 3 = SPSS, 4 = SAS, 5 = R, 6 = Phyton, 7 = other;"1;7";;Yes;;;;;;;;;;;;;
+;;;Format_data;In long or in wide format;factor;1 = long, 0 = wide;;;Yes;;;;;;;;;;;;;
+;;;Cohort;Name of cohort;factor;1 = ADC, 2 = LASA, 3 = Maastricht Study, 4 = SMART, 5 = LLS, 6 = Rotterdam Study, 7 = Lifelines, 8 = EMIF twins, 9 = EMIF 90+, 10 = DCS;"0;10";;Yes;;;;;;;;;;;;;
+;;ID;ID;Participant ID;Character;;;;Yes;;;;;;;;;;;;;
+Demographics;Subject characteristics & demograhics;;;;;;;;;;;;;;;;;;;;;
+;Demographics;Birth year;Birth_year;Year of birth ;numeric;;>= 1900;;Yes;;Person;;;;;;;;;;;
+;Demographics;Age ;Age;Age at  assessment;numeric;;>= 0;years;No;;Observation;SNOMED;4265453;Athena-4265453;year;9448;UCUM;;;;;
+;Demographics;Sex;Sex;Sex;factor;"1= female; 0 = male";0,1;;Yes;;Person;;;;;;;male/female/-;8507/8532/8551;GENDER;;
+;Subject characteristics;Education_years;Education_years;Education level in years;numeric;;> = 0;years;Yes;Recode Verhaage score into education in years ('1'=5) ('2'=6) ('3'=8) ('4'=9) ('5'=10) ('6'=13) ('7'=17). CBS categories can also be converted to year;Observation;;2000000001;;year;9448;UCUM;;;;;
+;Subject characteristics;;Education_category;Education level categories;factor;"1 = high; 0 = low";0,1;;Yes;"Low: years <  7; High: years >= 7";Observation;SNOMED;4171617;Athena-4171617;;;;low/high;4267416/4328749;SNOMED;;
+;Subject characteristics;;Education_category;Education level categories;factor;;;;;Alternatively, include other categories according to availability in cohort;;;;;;;;;;;;
+Dementia;Clinical information & cognitive screening tests;;;;;;;;;;;;;;;;;;;;;
+;Diagnoses;Date Diagnosis;Date_diagnosis;Date of diagnosis ;date;;;;No;;;;;;;;;;;;;
+;;;Diagnosis;Diagnosis ;factor;"1 = normal cognition; 2 = subjective cognitive decline; 3 = mild cognitive impairment; 4 dementia";"0;4";;No;;;;;;;;;;;;;
+;;;normal_cognition_diagnosis;Normal Cognition Diagnosis;;;;;No;;Condition;SNOMED;42710016;Athena-42710016;;;;yes/no;4188539/_;SNOMED;;Date_diagnosis
+;;Subjective Cognitive Impairment;scd_diagnosis;Subjective Cognitive Decline;;;;;No;;Condition;;2000000002;;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;mci_diagnosis;Mild cognitive Impairment;;;;;No;;Condition;SNOMED;4297400;Athena-4297400;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;dementia_diagnosis;Dementia diagnosis;;;;;No;;Condition;SNOMED;4182210;Athena-4182210;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;no_normal_cognition_diagnosis;Normal Cognition Diagnosis;;;;;No;;Observation;SNOMED;42710016;Athena-42710016;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_scd_diagnosis;Subjective Cognitive Decline;;;;;No;;Observation;;2000000002;;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_mci_diagnosis;Mild cognitive Impairment;;;;;No;;Observation;SNOMED;4297400;Athena-4297400;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_dementia_diagnosis;Dementia diagnosis;;;;;No;;Observation;SNOMED;4182210;Athena-4182210;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;Dementia_type;Dementia type;factor;1 =  Alzheimer's dementia, 2 = Lewy body dementia, 3 = Vascular dementia, 4 = Frontotemporal dementia, 5 = Parkinson's dementia, 6 = Semantic dementia, 7 = Corticobasal syndrome, 8 = Progressive supranuclear palsey, 9 = Progressive non-fluent aphsia, 10 = Creutzfeldt-Jakob disease;"0;10";;No;;;;;;;;;;;;;
+;;;alzheimers_dementia;Alzheimer's dementia;;;;;No;;Condition;SNOMED;378419;Athena-378419;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;lewy_body_dementia;Lewy body dementia;;;;;No;;Condition;SNOMED;380701;Athena-380701;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;vascular_dementia;Vascular dementia;;;;;No;;Condition;SNOMED;443605;Athena-443605;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;frontotemporal_dementia;Frontotemporal dementia;;;;;No;;Condition;SNOMED;4043378;Athena-4043378;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;parkinsons_dementia;Parkinson's dementia;;;;;No;;Condition;SNOMED;4314734;Athena-4314734;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;semantic_dementia;Semantic dementia;;;;;No;;Condition;SNOMED;4046091;Athena-4046091;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;corticobasal_syndrome;Corticobasal syndrome;;;;;No;;Condition;SNOMED;4077904;Athena-4077904;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;psp;Progressive supranuclear palsey;;;;;No;;Condition;SNOMED;40391011;Athena-40391011;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;pnfa;Progressive non-fluent aphasia;;;;;No;;Condition;SNOMED;37396465;Athena-37396465;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;cjd;Creutzfeldt-Jakob disease;;;;;No;;Condition;SNOMED;372241;Athena-372241;;;;yes/no;4188539/_;;;Date_diagnosis
+;;;no_alzheimers_dementia;Alzheimer's dementia;;;;;No;;Observation;SNOMED;378419;Athena-378419;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_lewy_body_dementia;Lewy body dementia;;;;;No;;Observation;SNOMED;380701;Athena-380701;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_vascular_dementia;Vascular dementia;;;;;No;;Observation;SNOMED;443605;Athena-443605;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_frontotemporal_dementia;Frontotemporal dementia;;;;;No;;Observation;SNOMED;4043378;Athena-4043378;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_parkinsons_dementia;Parkinson's dementia;;;;;No;;Observation;SNOMED;4314734;Athena-4314734;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_semantic_dementia;Semantic dementia;;;;;No;;Observation;SNOMED;4046091;Athena-4046091;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_corticobasal_syndrome;Corticobasal syndrome;;;;;No;;Observation;SNOMED;4077904;Athena-4077904;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_psp;Progressive supranuclear palsey;;;;;No;;Observation;SNOMED;40391011;Athena-40391011;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_pnfa;Progressive non-fluent aphasia;;;;;No;;Observation;SNOMED;37396465;Athena-37396465;;;;yes/no;_/4132135;;;Date_diagnosis
+;;;no_cjd;Creutzfeldt-Jakob disease;;;;;No;;Observation;SNOMED;372241;Athena-372241;;;;yes/no;_/4132135;;;Date_diagnosis
+;Dates rating scales;Date of rating scales assessment;Date_CDR;Date Clinical Dementia Rating Scale assessment;date;;;;No;;;;;;;;;;;;;
+;Dementia rating scales;CDR total;CDR_total;Clinical Dementia Rating total score;numeric;;"0;3";;No;;Observation;SNOMED;36714811;Athena-36714811;;;;;;;;Date_CDR
+;;CDR sum of boxes;CDR_sum_of_boxes;Clinical Dementia Rating sum of boxes;numeric;;;;No;;Observation;;2000000003;;;;;;;;;Date_CDR
+Mortality;;;;;;;;;;;;;;;;;;;;;;
+;;;Mort_Date;Date of death;date;;;;Yes;;Person;;;;;;;;;;;
+;;;Live_Date;Last known date to be alive;date;;;;Yes;;Observation;;2000000004;;;;;;;;;
+;;;Mort;Mortality;factor;"1 = yes; 0 = no";0,1;;Yes;;Person;;;;;;;true/false;;;;
+Cardiovascular;Clinical information & Laboratory test results;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;Date_vitals;Date assessment vital signs;date;;;;No;;;;;;;;;;;;;
+;Vital Signs;SBP;SBP;Systolic blood pressure ;numeric;;> 30;mmHg;No;;Measurement;SNOMED;4152194;Athena-4152194;mmHg;8876;UCUM;;;;;Date_vitals
+;Vital Signs;DBP;DBP;Diastolic blood pressure;numeric;;> 30;mmHg;No;;Measurement;SNOMED;4154790;Athena-4154790;mmHg;8876;UCUM;;;;;Date_vitals
+;Vital Signs;Body Mass Index;BMI;BMI: weight/(bodylength_cm/100)^2);numeric;;> 0;kg/m^2;No;;Observation;SNOMED;4245997;Athena-4245997;kg/m2;9531;UCUM;;;;;Date_vitals
+;Vital Signs;Weight;Weight;Weight;numeric;;> 0;kg;No;;Observation;SNOMED;37111521;Athena-37111521;kg;9529;UCUM;;;;;Date_vitals
+;Vital Signs;Body length;Height;Height ;numeric;;> 0;cm;No;;Observation;SNOMED;4087492;Athena-4087492;cm;8582;UCUM;;;;;Date_vitals
+;;;;;;;;;;;;;;;;;;;;;;
+;;;Date_comorbidities;Date assessment comorbidities;date;;;;;;;;;;;;;;;;;
+;Cardiovascular Risk Factors;Hypertension;Hypertension;History of hypertension;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;4058286;Athena-4058286;;;;yes/no;4188539/4188540;;;Date_comorbidities
+;Cardiovascular Risk Factors;Hypercholesterolemia;Hypercholesterolemia;History of Hypercholesterolemia ;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;4185909;Athena-4185909;;;;yes/no;4188539/4188540;;;Date_comorbidities
+;Endocrine disorders;Diabetes_Mellitus;DM_1;Diabetes Mellitus type 1 ;factor;"1 = yes; 0 = no";0,1;;No;;Condition;SNOMED;201254;Athena-201254;;;;yes/no;4188539/_;;;Date_comorbidities
+;Endocrine disorders;Diabetes_Mellitus;DM_2;Diabetes Mellitus type 2;factor;"1 = yes; 0 = no";0,1;;No;;Condition;SNOMED;201826;Athena-201826;;;;yes/no;4188539/_;;;Date_comorbidities
+;Cardiovascular Disorders;Myocardial infarction ;Myocardial_infarction;Myocardial infarction ;factor;"1 = yes; 0 = no";0,1;;No;;Condition;SNOMED;4329847;Athena-4329847;;;;yes/no;4188539/_;;;Date_comorbidities
+;Other cardiac disorders ;Heart failure ;Heart_failure;Heart failure ;factor;"1 = yes; 0 = no";0,1;;No;;Condition;SNOMED;316139;Athena-316139;;;;yes/no;4188539/_;;;Date_comorbidities
+;Cerebrovascular disorders;Stroke;Stroke;Stroke ;factor;"1 = yes; 0 = no";0,1;;No;;Condition;SNOMED;381316;Athena-381316;;;;yes/no;4188539/_;;;Date_comorbidities
+;Endocrine disorders;Diabetes_Mellitus;no_DM_1;Diabetes Mellitus type 1 ;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;201254;Athena-201254;;;;yes/no;_/4132135;;;Date_comorbidities
+;Endocrine disorders;Diabetes_Mellitus;no_DM_2;Diabetes Mellitus type 2;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;201826;Athena-201826;;;;yes/no;_/4132135;;;Date_comorbidities
+;Cardiovascular Disorders;Myocardial infarction ;no_Myocardial_infarction;Myocardial infarction ;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;4329847;Athena-4329847;;;;yes/no;_/4132135;;;Date_comorbidities
+;Other cardiac disorders ;Heart failure ;no_Heart_failure;Heart failure ;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;316139;Athena-316139;;;;yes/no;_/4132135;;;Date_comorbidities
+;Cerebrovascular disorders;Stroke;no_Stroke;Stroke ;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;381316;Athena-381316;;;;yes/no;_/4132135;;;Date_comorbidities
+;Cardiovascular drugs;Anti-hypertensive drugs;Drugs_hypertension;Anti-hypertensive drugs;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000005;;;;;yes/no;4188539/4188540;;;Date_comorbidities
+;Cardiovascular drugs;Cholesterol-lowering Drugs;Drugs_hypercholesterolemia;Hypercholesterolemia medication;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000006;;;;;yes/no;4188539/4188540;;;Date_comorbidities
+;Hormonal therapy;Anti-diabetic drugs;Drugs_diabetes;Diabetes Mellitus  type 2 medication ;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000007;;;;;yes/no;4188539/4188540;;;Date_comorbidities
+;;;;;;;;;;;;;;;;;;;;;;
+;Blood dates;Date Blood Collection;Date_blood;Date blood collection;date; ;;;No;;;;;;;;;;;;;
+;Blood measures;Fasted glucose;Glucose_fasted;Fasted glucose blood;numeric;;> 0 ;;No;;Measurement;SNOMED;4156660;Athena-4156660;;;;;;;;Date_blood
+;Blood measures;Non-fasted glucose ;Glucose_nonfasted;Non-fasted glucose blood;numeric;;> 0;;No;;Measurement;;2000000008;;;;;;;;;Date_blood
+;Blood measures;;Glucose_abnormal;Glucose dichotomized;factor;"1 = yes; 0 = no";;;No;;Condition;SNOMED;4042728;Athena-4042728;;;;yes/no;4188539/_;;Glucose_cutoff;Date_blood
+;Blood measures;;no_Glucose_abnormal;Glucose dichotomized;factor;"1 = yes; 0 = no";;;No;;Observation;SNOMED;4042728;Athena-4042728;;;;yes/no;_/4132135;;Glucose_cutoff;Date_blood
+;Blood measures;;Glucose_cutoff;Cutoff used ;0<…, 1>=…;;;;No;;NA;;;;;;;;;;;Date_blood
+;Blood measures;HDL cholesterol;HDL;High density lipoprotein cholesterol;numeric;;> 0 ;mmol/L;No;;Measurement;SNOMED;4101713;Athena-4101713;mmol/L;8753;UCUM;;;;;Date_blood
+;Blood measures;LDL cholesterol ;LDL;Low density lipoprotein cholesterol;numeric;;> 0;mmol/L;No;;Measurement;SNOMED;4012479;Athena-4012479;mmol/L;8753;UCUM;;;;;Date_blood
+;Blood measures;CRP;CRP;C-reactive protein;numeric;;> 0;;No;;Measurement;SNOMED;4208414;Athena-4208414;;;;;;;;Date_blood
+;;;;;;;;;;;;;;;;;;;;;;
+;;;Date_habits;Date assessment alcohol and smoking habits;date;;;;No;;;;;;;;;;;;;
+;Alcohol use;Alcohol;Alcohol;Current alcohol use ;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;4074035;Athena-4074035;;;;yes/no;4188539/4188540;;;Date_habits
+;Smoking habits;Smoking;Smoking;Current/past (= < 10 years ago) / never smoking ;factor;2 = current, 1 = past, 0 = never;"0;2";;No;;Observation;SNOMED;37208405;Athena-37208405;;;;yes/no;4188539/4188540;;;Date_habits
+APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;
+;Pharmocogenetics findings;;APOE_Date;Date of assessment APOE;date;;;;yes;;;;;;;;;;;;;
+;Pharmocogenetics findings;APOE4 carrier;APOE_carrier;APOE e4 carrier ;factor;"1 = yes; 0 = no";0,1;;yes;;Observation;;2000000009;;;;;yes/no;4188539/4188540;;;APOE_Date
+;Pharmocogenetics findings;ApoE Genotype;APOE_genotype;APOE genotype;character;"1=2/2;2=2/3;3= 3/3;4=3/4;5=2/4;6=4/4";"1;6";;yes;;Observation;;2000000010;;;;;;;;;APOE_Date
+Amyloid/(P)Tau;Imaging & Laboratory test results;;;;;;;;;;;;;;;;;;;;;
+;CSF dates;Date CSF collection;Date_LP;Date lumbar puncture;date;;;;No;;;;;;;;;;;;;
+;CSF;CSF Assay;CSF_assay_amyloid;CSF Assay Amyloid;factor;"1 = luminex; 2 = innogetics Elisa; 3 = Elecsys; 4 = Innotest";"1;4";;No;;Observation;;2000000011;;;;;;;;;Date_LP
+;CSF;;CSF_ab;Amyloid beta in CSF ;numeric;;> 0;pg/ml;No;Priority for 1. Amyloid Beta 1-42 in pg/ml                                                    2. Ratio Amyloid Beta 42/40                                                                                  3. Amyloid Beta 1-38 in pg/ml;;;;;;;;;;;;Date_LP
+;CSF;Amyloid Beta 1-42 (pg/mL);CSF_ab_total_1_42;Amyloid Beta 1-42 in pg/ml ;numeric;;> 0;pg/ml;No;;Measurement;;2000000012;;pg/mL;8845;UCUM;;;;;Date_LP
+;CSF;Amyloid Beta 42/40;CSF_ab_total_ratio_42_40;Ratio Amyloid Beta 42/40   ;numeric;;> 0;pg/ml;No;;Measurement;;2000000013;;pg/mL;8846;UCUM;;;;;Date_LP
+;CSF;Amyloid Beta 1-38 (pg/mL);CSF_ab_total_1_38;Amyloid Beta 1-38 in pg/ml;numeric;;> 0;pg/ml;No;;Measurement;;2000000014;;pg/mL;8847;UCUM;;;;;Date_LP
+;CSF;;Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Condition;;2000000015;;;;;yes/no;4188539/_;;Amy_cutoff;Date_LP
+;CSF;;no_Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000015;;;;;yes/no;_/4132135;;Amy_cutoff;Date_LP
+;CSF;CSF Assay;CSF_assay_Tau;CSF Assay tau;factor;1 = luminex, 2 = innogetics Elisa, 3 = Elecsys, 4 = Innotest;"1;4";;No;;Observation;;2000000016;;;;;;;;;Date_LP
+;CSF;Total Tau;CSF_ttau;Total Tau ;numeric;;> 0;pg/mL;No;;Measurement;SNOMED;4260896;Athena-4260896;pg/mL;8847;UCUM;;;;;Date_LP
+;CSF;Total Tau Abnormal;Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Condition;;2000000017;;;;;yes/no;4188539/_;;Ttau_cutoff;Date_LP
+;CSF;Total Tau Abnormal;no_Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000017;;;;;yes/no;_/4188540;;Ttau_cutoff;Date_LP
+;CSF;Phosphorylated Tau;CSF_ptau;Phosphorylated Tau;numeric;;> 0;pg/ml;No;;Measurement;;2000000018;;pg/mL;8847;UCUM;;;;;Date_LP
+;CSF;Phosphorylated Tau abnormal ;Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";0,1;;No;;Condition;;2000000019;;;;;yes/no;4188539/_;;Ptau_cutoff;Date_LP
+;CSF;Phosphorylated Tau abnormal ;no_Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000019;;;;;yes/no;_/4132135;;Ptau_cutoff;Date_LP
+;CSF;Phosphorylated Tau cut-off;Ptau_cutoff;Cutoff used ;0<…, 1>=…;;;;No;;NA;;;;;;;;;;;Date_LP
+;Amyloid PET Dates;Date PET;Date_PET;Date PET scan;date;;;;No;;;;;;;;;;;;;
+;Amyloid PET protocol;Amyloid PET tracer ;PET_tracer;Tracer used during PET assessment;factor;1 = PiB, 2 = Florbetapir, 3 = AV-45;"0;3";;No;;Observation;;2000000020;;;;;;35623421;;;Date_PET
+;Amyloid PET protocol;Amyloid PET Method;PET_method;Method used to express amyloid uptake in PET ;factor;1 = SUVR, 2 = NPnD;;;No;;;;;;;;;;;;;Date_PET
+;;;Pet_assesment;Assessment of PET scan ;factor;1 = quantitative, 0 = visual;;;No;;Observation;;2000000021;;;;;;;;;Date_PET
+;;;PET_level;Result PET assessment, continuous;numeric;;> 0;;No;;;;;;;;;;;;;Date_PET
+;;;PET_level_suvr;Result PET assessment SUVR;numeric;;> 0;;No;;Observation;;2000000022;;;;;;;;;Date_PET
+;;;PET level_bpnd;Result PET assessment BPnd;numeric;;> 0;;No;;Observation;;2000000023;;;;;;;;;Date_PET
+;Amyloid PET;Amyloid PET abnormal;PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";0,1;;No;;Condition;;2000000024;;;;;yes/no;4188539/_;;;Date_PET
+;Amyloid PET;Amyloid PET abnormal;no_PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000024;;;;;yes/no;_/4132135;;;Date_PET
+Anxiety/depression;Clinical information & rating scales;;;;;;;;;;;;;;;;;;;;;
+;Dates rating scales;Date of rating scales assessment;Date_depression;Date assesment depression;date;;;;No;;;;;;;;;;;;;
+;Psychiatric disorders;;Depression_type;Assement type depression;factor;1 = clinical diagnosis, 2 = MINI, 3 = GDS-15, 4 = GDS, 5 = CES-D, 6 = other;"1;6";;No;Priority for 1. clinical diagnosis                                                                       2. MINI                                                                                                                             3. GDS-15                                                                                                                                4. GDS                                                                                                                           5. CES-D                                                                                                                             6. If not available, please provide alternative if possible   ;;;;;;;;;;;;Date_depression
+;;;Depression_rating_mini;Depression Rating from MINI;numerical;;> 0;;No;;Measurement;;2000000025;;;;;;;;;Date_depression
+;;GDS-15;Depression_rating_gds_15;Depression Rating from GDS-15;numerical;;> 0;;No;;Measurement;SNOMED;40482001;Athena-40482001;;;;;;;;Date_depression
+;;GDS-30;Depression_rating_gds;Depression Rating from GDS;numerical;;> 0;;No;;Measurement;SNOMED;4159706;Athena-4159706;;;;;;;;Date_depression
+;;CES-D;Depression_rating_ces_d;Depression Rating from CES-D;numerical;;> 0;;No;;Measurement;;2000000026;;;;;;;;;Date_depression
+;;;Depression_rating_other;Depression Rating from another alternative;numerical;;> 0;;No;;;;;;;;;;;;;Date_depression
+;Rating scales;;Depression_rating;Result assesment depression: rating scale;numerical;;> 0;;No;;;;;;;;;;;;;Date_depression
+;Psychiatric disorders;Depression;Depression;Result assesment depression: yes/no;factor;"1 = yes; 0 = no";0,1;;No;;Condition;SNOMED;35817792;Athena-35817792;;;;yes/no;4188539/_;;Depression_cutoff;Date_depression
+;Psychiatric disorders;Depression;no_Depression;Result assesment depression: yes/no;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;35817792;Athena-35817792;;;;yes/no;_/4132135;;Depression_cutoff;Date_depression
+;;;Depression_cutoff;Cutoff used ;0<…, 1>=…, cd;;;;No;;NA;;;;;;;;;;;Date_depression
+;;;;;;;;;;;;;;;;;;;;;;
+;Dates rating scales;Date of rating scales assessment;Date_anxiety;Date assessment anxiety;date;;;;No;;;;;;;;;;;;;
+;Psychiatric disorders;;Anxiety_type;Assessment type anxiety;factor;1 = clinical diagnosis, 2 = MINI, 3 = BECK anxiety, 4 = State-Trate anxiety inventory, 5 = Hospital anxiety and depresson scale, 6 = other;"1;6";;No;Priority for 1. clinical diagnosis                                                                         2.  MINI                                                                                                                          3. Beck anxiety                                                                                                             4.  State-Trait anxiety inventory                                                                        5. Hospital anxiety and depresson scale                                                             6. If not available, please provide alternative if possible;;;;;;;;;;;;Date_anxiety
+;;MINI Anxiety Interview;Anxiety_rating_mini;Anxiety Rating from MINI;numerical;;> 0;;No;;Measurement;;2000000027;;;;;;;;;Date_anxiety
+;;BECK Anxiety;Anxiety_rating_beck_anxiety;Anxiety Rating from Beck anxiety;numerical;;> 0;;No;;Measurement;SNOMED;4128244;Athena-4128244;;;;;;;;Date_anxiety
+;;STAI;Anxiety_rating_state_trait;Anxiety Rating from State-Trait anxiety inventory ;numerical;;> 0;;No;;Measurement;SNOMED;4169477;Athena-4169477;;;;;;;;Date_anxiety
+;;;Anxiety_rating_hospital_scale;Anxiety Rating from Hospital anxiety and depresson scale ;numerical;;> 0;;No;;Measurement;SNOMED;4165145;Athena-4165145;;;;;;;;Date_anxiety
+;;;Anxiety_rating_other;Anxiety Rating from another alternative;numerical;;> 0;;No;;;;;;;;;;;;;Date_anxiety
+;Psychiatric disorders;;Anxiety_rating;Result assesment anxiety: rating scale;numerical;;> 0;;No;;;;;;;;;;;;;Date_anxiety
+;Psychiatric disorders;Anxiety;Anxiety;Result assesment anxiety: yes/no;factor;"1 = yes; 0 = no";0,1;;No;;Condition;SNOMED;441542;Athena-441542;;;;yes/no;4188539/_;;Anxiety_cutoff;Date_anxiety
+;Psychiatric disorders;Anxiety;no_Anxiety;Result assesment anxiety: yes/no;factor;"1 = yes; 0 = no";0,1;;No;;Observation;SNOMED;441542;Athena-441542;;;;yes/no;_/4132135;;Anxiety_cutoff;Date_anxiety
+;;;Anxiety_cutoff;Cutoff used ;0<…, 1>=…, cd;;;;No;;NA;;;;;;;;;;;Date_anxiety
+Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;
+;Cognitive screening tests;Date MMSE;Date_MMSE;Date MMSE assessment;date;;;;No;;;;;;;;;;;;;
+;Cognitive screening tests;MMSE total score;MMSE_total;MMSE total score;numeric;;"0;30";;No;;Measurement;SNOMED;4169175;Athena-4169175;;;;;;;;Date_MMSE
+;Dates Neuropsychological evaluation;Date neuropsychological evaluation;Date_NPE;Date of neuropsychological examination ;Date;;;;No;;;;;;;;;;;;;
+;Priority Attention Test;Priority attention Type;Priority_attention_type;Priority test for attention;factor; 1 = Trail Making Test A, 2 = Stroop 1, 3 = Stroop 2, 4 = Symbol Digit Substitution Task, 5 = other;"1;5";;No;"Priority for 1. Trail Making Test A 
+2. Stroop 1
+3. Stroop 2                                                                                                 
+5. Symbol Digit Substitution Task                                                                                               9.  If not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
+;;TMT-A;Attention_test_tmt_a;Attention score from Trail Making Test Part  A ;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;;;Attention_test_tmt_a_time;Attention score from Trail Making Test Part  A - Time;numeric;;> 0;;No;;Measurement;;2000000028;;;;;;;;;Date_NPE
+;;;Attention_test_tmt_a_errors;Attention score from Trail Making Test Part  A - Errors;numeric;;> 0;;No;;Measurement;;2000000029;;;;;;;;;Date_NPE
+;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1;numeric;;> 0;;No;;Measurement;;2000000030;;;;;;;;;Date_NPE
+;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2;numeric;;> 0;;No;;Measurement;;2000000031;;;;;;;;;Date_NPE
+;;SDST;Attention_test_sdst;Attention score from Symbol Digit Substitution Task        ;numeric;;> 0;;No;;Measurement;;2000000032;;;;;;;;;Date_NPE
+;;;Attention_test_other;Attention score from another alternative;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority Attention Test;Priority attention ;Priority_attention;raw scores;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority Attention Test;Priority attention z-score;Priority_attention_z ;z-score;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority memory Test;priority memory type;Priority_memory_type;Priority test for  memory;factor ;1 = RAVLT,  2 = CERAD, 3 = Grober-Buschke FCSRT, 4 = Story recall test, 5 = Logical memory, 6 = Hopkins, 7 = VAT, 8 = Story recall Brescia, 9 = Recall Rey figure, 10 = MMSE, 11 =ADAS-Cog, 12 = 10 word list, 13 = immediate recall 10 word list, 14 = other;"1;14";;No;"Priority for 1. Ray Auditory Verbal Learning Test (RAVLT)
+2. CERAD
+3. Grober-Buschke FCSRT
+4. Story recall test
+5. Logical memory
+6. Hopkins
+7. VAT
+8. Story recall Brescia
+9. Recall Rey figure
+10. MMSE
+11. ADAS-Cog
+12. 10 word list
+13. immediate recall 10 word list                                                                    14. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
+;;AVLT Immediate;Priority_memory_im_ravlt;Priority test from RAVLT (immediate);numeric;;> 0;;No;;Measurement;;2000000033;;;;;;;;;Date_NPE
+;;CERAD WL Immediate;Priority_memory_im_cerad;Priority test from CERAD (immediate);numeric;;> 0;;No;;Measurement;;2000000034;;;;;;;;;Date_NPE
+;;;Priority_memory_im_gb;Priority test from Grober-Buschke FCSRT (immediate);numeric;;> 0;;No;;Measurement;;2000000035;;;;;;;;;Date_NPE
+;;SRT Immediate;Priority_memory_im_sct;Priority test from Story recall test (immediate);numeric;;> 0;;No;;Measurement;;2000000036;;;;;;;;;Date_NPE
+;;LM Immediate;Priority_memory_im_lm;Priority test from Logical memory (immediate);numeric;;> 0;;No;;Measurement;;2000000037;;;;;;;;;Date_NPE
+;;HVLT Immediate;Priority_memory_im_hopkins;Priority test from Hopkins (immediate);numeric;;> 0;;No;;Measurement;;2000000038;;;;;;;;;Date_NPE
+;;;Priority_memory_im_vat_a;Priority test from VAT A  (immediate);numeric;;> 0;;No;;Measurement;;2000000039;;;;;;;;;Date_NPE
+;;;Priority_memory_im_vat_b;Priority test from VAT B  (immediate);numeric;;> 0;;No;;Measurement;;2000000040;;;;;;;;;Date_NPE
+;;;Priority_memory_im_srb;Priority test from Story recall Brescia (immediate);numeric;;> 0;;No;;Measurement;;2000000041;;;;;;;;;Date_NPE
+;;;Priority_memory_im_rrf;Priority test from Recall Rey figure (immediate);numeric;;> 0;;No;;Measurement;;2000000042;;;;;;;;;Date_NPE
+;;;Priority_memory_im_mmse;Priority test from MMSE (immediate);numeric;;> 0;;No;;Measurement;;2000000043;;;;;;;;;Date_NPE
+;;;Priority_memory_im_adas;Priority test from ADAS-Cog (immediate);numeric;;> 0;;No;;Measurement;;2000000044;;;;;;;;;Date_NPE
+;;;Priority_memory_im_10_word_list;Priority test from 10 word list (immediate);numeric;;> 0;;No;;Measurement;;2000000045;;;;;;;;;Date_NPE
+;;;Priority_memory_im_recall_10_word_list;Priority test from  immediate recall 10 word list     (immediate)                       ;numeric;;> 0;;No;;Measurement;;2000000046;;;;;;;;;Date_NPE
+;;;Priority_memory_im_other;Priority test from another alternative  (immediate);numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority memory Test;Priority memory immediate;Priority_memory_im;raw scores;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority memory Test;Priority memory immediate z-score;Priority_memory_im_z;z-score;numeric;;-3 - +3 SD;;No;;;;;;;;;;;;;Date_NPE
+;;AVLT Delayed;Priority_memory_dr_ravlt;Priority test from RAVLT (delayed);numeric;;> 0;;No;;Measurement;;2000000047;;;;;;;;;Date_NPE
+;;CERAD WL Delayed;Priority_memory_dr_cerad;Priority test from CERAD (delayed);numeric;;> 0;;No;;Measurement;;2000000048;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_gb;Priority test from Grober-Buschke FCSRT (delayed);numeric;;> 0;;No;;Measurement;;2000000049;;;;;;;;;Date_NPE
+;;SRT Delayed;Priority_memory_dr_sct;Priority test from Story recall test (delayed);numeric;;> 0;;No;;Measurement;;2000000050;;;;;;;;;Date_NPE
+;;LM Delayed;Priority_memory_dr_lm;Priority test from Logical memory (delayed);numeric;;> 0;;No;;Measurement;;2000000051;;;;;;;;;Date_NPE
+;;HVLT Delayed;Priority_memory_dr_hopkins;Priority test from Hopkins (delayed);numeric;;> 0;;No;;Measurement;;2000000052;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_vat_a;Priority test from VAT A (delayed);numeric;;> 0;;No;;Measurement;;2000000053;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_vat_b;Priority test from VAT B  (delayed);numeric;;> 0;;No;;Measurement;;2000000054;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_srb;Priority test from Story recall Brescia (delayed);numeric;;> 0;;No;;Measurement;;2000000055;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_rrf;Priority test from Recall Rey figure (delayed);numeric;;> 0;;No;;Measurement;;2000000056;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_mmse;Priority test from MMSE (delayed);numeric;;> 0;;No;;Measurement;;2000000057;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;> 0;;No;;Measurement;;2000000058;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;> 0;;No;;Measurement;;2000000059;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;> 0;;No;;Measurement;;2000000060;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_other;Priority test from another alternative  (delayed);numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority memory Test;Priority memory delayed;Priority_memory_dr;raw scores ;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority memory Test;Priority memory delayed z -score;Priority_memory_dr_z;z-score;numeric;;-3 - +3 SD;;No;;;;;;;;;;;;;Date_NPE
+;Priority executive Test;Priority executive type;Priority_executive_type;Priority test for executive function;factor;1 = Trail Making Test B, 2 = Stroop 3, 3 = other;"1;3";;No;"Priority for 1. Trail Making Test B
+2. Stroop 3                                                                                                 3. Concept Shifting Test Part A                                                    4. Concept Shifting Test Part B                                                     5. Concept Shifting Test Part C                                                                                                                    6. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
+;;TMT-B;Priority_executive_TMT_b;Priority test for executive function score from TMT B;numeric;;;;No;;;;;;;;;;;;;Date_NPE
+;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;;;No;;Measurement;;2000000061;;;;;;;;;Date_NPE
+;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;;;No;;Measurement;;2000000062;;;;;;;;;Date_NPE
+;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3;numeric;;;;No;;Measurement;;2000000063;;;;;;;;;Date_NPE
+;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;;;No;;Measurement;;2000000064;;;;;;;;;Date_NPE
+;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE
+;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE
+;;;Priority_executive_other;Priority test for executive function score from another alternative;numeric;;;;No;;;;;;;;;;;;;Date_NPE
+;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;No;;;;;;;;;;;;;Date_NPE
+;Priority language test;Priority language type;Priority_language_type;Priority test for language;factor;1 = Animal Fluency 1 min, 2 = Category Fluency 1 min, 3 = Letter Fluency 1 min, 4 = Any type of fluency 2 min, 5 = Boston Naming Test (15/30/60 items), 6 = Any picture naming test. 7 = other;"1;7";;No;"Priority for 1. Animal Fluency 1 min
+2. Category Fluency 1 min
+3. Letter Fluency 1 min
+4. Any type of fluency 2 min
+5. Boston Naming Test (15/30/60 items)
+6. Any picture naming test                                                                                 7. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
+;;Animals Fluency 1 min;Priority_language_animal_fluency;Priority test for language from Animal Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000067;;;;;;;;;Date_NPE
+;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000068;;;;;;;;;Date_NPE
+;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000069;;;;;;;;;Date_NPE
+;;;Priority_language_any_fluency_2;Priority test for language from Any type of fluency 2 min;numeric;;> 0;;No;;Measurement;;2000000070;;;;;;;;;Date_NPE
+;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;> 0;;No;;Measurement;;2000000071;;;;;;;;;Date_NPE
+;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;> 0;;No;;Measurement;;2000000072;;;;;;;;;Date_NPE
+;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;> 0;;No;;Measurement;;2000000073;;;;;;;;;Date_NPE
+;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming test ;numeric;;> 0;;No;;Measurement;;2000000074;;;;;;;;;Date_NPE
+;;;Priority_language_other;Priority test for language from another alternative;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority language test;Priority language;Priority_language;raw scores;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE
+;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;;;No;;;;;;;;;;;;;Date_NPE
+Plasma;;;;;;;;;;;;;;;;;;;;;;
+;;;P-Tau;P-Tau in plasma;numeric;;> 0;;No;;Observation;SNOMED;4136437;Athena-4136437;;;;;;;;
+;;;Amyloid-B-42;Amyloid-B-42 in plasma;numeric;;> 0;;No;;Observation;SNOMED;45768724;Athena-45768724;pg/mL;8845;UCUM;;;;;
+;;;Amyloid-B-40;Amyloid-B-40 in plasma;numeric;;> 0;;No;;Observation;SNOMED;45768723;Athena-45768723;pg/mL;8845;UCUM;;;;;
+;;;GFAP;Glial Fibrillary acidic protein;numeric;;> 0;;No;;Observation;SNOMED;4079321;Athena-4079321;;;;;;;;
+;;;NFL;Neurofilament light;numeric;;> 0;;No;;Observation;SNOMED;4299446;Athena-4299446;;;;;;;;
+;;;E-Selectin;E-selectin (CD62E);numeric;;> 0;;No;;Observation;SNOMED;4012274;Athena-4012274;;;;;;;;
+;;;SAA;Serum Amyloid A;numeric;;> 0;;No;;Observation;SNOMED;4221816;Athena-4221816;;;;;;;;
+;;;VCAM;Vascular cellular adhesion molecule (CD106);numeric;;> 0;;No;;Observation;SNOMED;4012844;Athena-4012844;;;;;;;;
+;;;ICAM;Intercellular adhesion molecule (CD54);numeric;;> 0;;No;;Observation;SNOMED;4284103;Athena-4284103;;;;;;;;
+;;;Il6;Interleukin-6;numeric;;> 0;;No;;Measurement;SNOMED;4332015;Athena-4332015;;;;;;;;
+;;;Il8;Interleukin-8;numeric;;> 0;;No;;Measurement;SNOMED;4166200;Athena-4166200;;;;;;;;
+;;;Il-1b;Interleukin 1 beta;numeric;;> 0;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;
+;;;TNFalpha;Tumor necrosis factor alpa;numeric;;> 0;;No;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;
