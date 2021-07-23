@@ -68,6 +68,12 @@ def build_person(gender, year_of_birth, cohort_id, death_datetime):
         RETURNING person_id;
     """), (gender, year_of_birth, death_datetime, cohort_id))
 
+# def update_person(person_id, death_datetime):
+#     """ Build the sql statement for a person.
+#     """
+#     return (("""UPDATE PERSON SET death_datetime = %s WHERE person_id = %s;"""),
+#         (death_datetime, person_id))
+
 def build_observation(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None):
     """ Build the sql statement for an observation.

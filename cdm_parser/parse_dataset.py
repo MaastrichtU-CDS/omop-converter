@@ -88,7 +88,6 @@ class DataParser:
             'limit': limit,
         } 
 
-        reader = None
         if '.csv' in self.path:
             with open(self.path) as csv_file:
                 csv_reader = csv.DictReader(csv_file, delimiter=',')
@@ -109,8 +108,10 @@ class DataParser:
         parameter_format = None
         if parameter and parameter in self.source_mapping:
             parameter_source_variable = self.source_mapping[parameter][SOURCE_VARIABLE]
-            if with_format:
+            if with_format and self.source_mapping[parameter][FORMAT]:
                 parameter_format = self.source_mapping[parameter][FORMAT]
+            else:
+                raise Exception(f'Format required for variable: {parameter}')
         return (parameter_source_variable, parameter_format)
 
     def get_parsed_value(self, variable, value):
@@ -142,7 +143,7 @@ class DataParser:
             # variable isn't provided, the year of birth will be obtained from a variable indicating
             # the age for a particular date.
             # TODO: Use alternatives to have all the other variables instead of prefix
-            age_variables = [ k for k in self.destination_mapping.keys() if AGE_PREFIX in k ]
+            age_variables = [ k for k in self.destination_mapping.keys() if k.startswith(AGE_PREFIX) ]
             if len(age_variables) > 0:
                 for age_variable in age_variables:
                     age_source_variable = self.get_source_variable(age_variable)
@@ -151,7 +152,7 @@ class DataParser:
                     if all([var and self.valid_row_value(var, row) for var in [age_source_variable, age_date_variable]]):
                         try:
                             birth_year = get_year_of_birth(int(row[age_source_variable]), \
-                                row[age_date_variable], age_date_format or self.date_format)
+                                str(row[age_date_variable]), age_date_format or self.date_format)
                             break
                         except Exception as error:
                             print(f'Error parsing year of birth from variable {age_variable}')
@@ -164,7 +165,7 @@ class DataParser:
         death_time_source_variable = self.get_source_variable(DEATH_DATE)
         death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
         if death_time_source_variable and self.valid_row_value(death_time_source_variable, row):
-            death_datetime = parse_date(row[death_time_source_variable], self.date_format, DATE_FORMAT)
+            death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
         elif death_flag_source_variable and self.valid_row_value(death_flag_source_variable, row):
             (value_as_concept, parsed_value) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
             if parsed_value and parsed_value == 'True':
@@ -192,9 +193,9 @@ class DataParser:
             if limit > 0 and index - start >= limit:
                 break
             try:
-                # Check if the source id variable is provided. In that case,
-                # the link between the source id and the person id will be stored
-                # in a dictionary and in a temporary table.
+            # Check if the source id variable is provided. In that case,
+            # the link between the source id and the person id will be stored
+            # in a dictionary and in a temporary table.
                 person_id = None
                 if id_source_variable:
                     if not self.valid_row_value(id_source_variable, row):
@@ -216,7 +217,7 @@ class DataParser:
                 processed_records += 1
             except Exception as error:
                 # TODO: Use a logger and add this information in a file
-                print(f'Skipped record {index} due to an error:', str(error))
+                print(f'Skipped record {index} due to an error: {str(error)}')
                 skipped_records += 1
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
@@ -227,7 +228,7 @@ class DataParser:
         # TODO: Calculating the end data when provided with a period for the wave
         visit_id = None
         if self.date_source_variable in row:
-           visit_date = parse_date(row[self.date_source_variable], self.date_format, DATE_FORMAT)
+           visit_date = parse_date(str(row[self.date_source_variable]), self.date_format, DATE_FORMAT)
            visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
 
         # Parse the observations/measurements/conditions
@@ -265,9 +266,9 @@ class DataParser:
                         # Check if there is a specific date for the variable
                         date = DATE_DEFAULT
                         (source_date, source_date_format) = self.get_parameters(self.destination_mapping[key][DATE], with_format=True)
-                        if source_date and source_date in row[source_date]:
+                        if source_date and row[source_date]:
                             try:
-                                date = parse_date(row[source_date], source_date_format or self.date_format, DATE_FORMAT)
+                                date = parse_date(str(row[source_date]), source_date_format or self.date_format, DATE_FORMAT)
                             except Exception as error:
                                 print(f'Error parsing a malformated date for variable {key}:')
                                 print(error)
