@@ -125,6 +125,21 @@ class DataParser:
             raise Exception(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         return (False, value)
 
+    def get_death_datetimne(self, row):
+        """ Retrieve the death datetime if available. Otherwise, if a
+            flag is present, a default value will be used.
+        """
+        death_datetime = None
+        death_time_source_variable = self.get_source_variable(DEATH_DATE)
+        death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
+        if death_time_source_variable and self.valid_row_value(death_time_source_variable, row):
+            death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
+        elif death_flag_source_variable and self.valid_row_value(death_flag_source_variable, row):
+            (_, parsed_value) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
+            if parsed_value and parsed_value == 'True':
+                death_datetime = DATE_DEFAULT
+        return death_datetime
+
     def get_source_variable(self, variable):
         """ Check if there is a map for the source id.
         """
@@ -160,27 +175,23 @@ class DataParser:
         if not birth_year:
             raise Exception('Missing required information, the row should contain the year of birth.')
 
-        # Handling death information
-        death_datetime = None
-        death_time_source_variable = self.get_source_variable(DEATH_DATE)
-        death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
-        if death_time_source_variable and self.valid_row_value(death_time_source_variable, row):
-            death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
-        elif death_flag_source_variable and self.valid_row_value(death_flag_source_variable, row):
-            (value_as_concept, parsed_value) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
-            if parsed_value and parsed_value == 'True':
-                death_datetime = DATE_DEFAULT
-
         # Add a new entry for the person/patient
         person_sql = build_person(
             self.get_parsed_value(GENDER, row[sex_source_variable])[1],
             birth_year,
             self.cohort_id,
-            death_datetime,
+            self.get_death_datetimne(row),
         )
         person_id = self.pg.run_sql(*person_sql, fetch_one=True)
 
         return person_id
+
+    def update_person(self, person_id, row):
+        """ Update a person if new information is available.
+        """
+        death_datetime = self.get_death_datetimne(row)
+        if death_datetime:
+            self.pg.run_sql(*update_person(person_id, death_datetime))
 
     def transform_rows(self, iterator, start, limit):
         """ Transform each row in the dataset
@@ -203,10 +214,13 @@ class DataParser:
                     source_id = row[id_source_variable]
                     if source_id in id_map:
                         person_id = id_map[source_id]
+                        self.update_person(person_id, row)
                     else:
                         # First check if it's already included in the temporary table.
                         person_id = get_person_id(source_id, self.cohort_id, self.pg)
-                        if not person_id:
+                        if person_id:
+                            self.update_person(person_id, row)
+                        else:
                             person_id = self.parse_person(row)
                             insert_id_record(source_id, person_id, self.cohort_id, self.pg)
                         id_map[source_id] = person_id
