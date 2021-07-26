@@ -73,3 +73,23 @@ no_hypertension,316866,Observation,,,yes/no,_/4132135
 hypertension,h_t,0/1,no/yes
 no_hypertension,h_t,0/1,no/yes
 ```
+
+**Inserting the constraints**
+
+To make the process faster, when parsing the data to the OMOP CDM it's recommended to:
+1. Create the database and parse the data to the OMOP CDM;
+2. Insert the constraints;
+
+**Exporting the database**
+
+There may happend that you'll perform the data parsing in one environment (e.g. locally) but intend to have the database running in another location. For such a case it's recommended to:
+1. Create the database without the vocabularies;
+2. Parse the data to the OMOP CDM;
+3. Export the database;
+4. (Optional) Insert the vocabularies;
+5. (Optional) Insert the constraints;
+6. (Optional) Evaluate the data harmonisation process - QA;
+7. In the final location, create the database with the vocabularies;
+8. Import the data from the file created at 3;
+
+This will facilitate the process of exporting and transfering by generating a much smaller file.

@@ -38,7 +38,7 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
 @cli.command(help='Set up the CDM database')
-@click.option('--insert-voc', default=True, type=bool)
+@click.option('--insert-voc/--no-insert-voc', default=False, type=bool)
 @click.option('--sequence-start', default=1, type=int)
 def set_db(insert_voc, sequence_start):
     """ Set up the CDM database:
@@ -69,8 +69,8 @@ def insert_constraints():
 @click.option('--cohort-location')
 @click.option('--start', default=0, type=int)
 @click.option('--limit', default=-1, type=int)
-@click.option('--drop-temp-tables', default=True, type=bool)
-def parse_data(cohort_name, cohort_location, start, limit, drop_temp_tables):
+#@click.option('--drop-temp-tables', default=True, type=bool)
+def parse_data(cohort_name, cohort_location, start, limit):
     """ Parse the source dataset and populate the CDM database.
         
         Important: One or more temporary tables will be created to store information only required
@@ -126,7 +126,7 @@ def report():
 # Possibility to use allow_extra_args and make it more 'open'
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')
-@click.option('--data-only', default=False, help='Export only data and not the DDL', type=bool)
+@click.option('--data-only/--no-data-only', default=False, help='Export only data and not the DDL', type=bool)
 @cli.command()
 def export_db(file, data_only):
     """ Export the database to a file.
@@ -139,7 +139,7 @@ def export_db(file, data_only):
 
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the file to import')
-@click.option('--create-db', default=True, help='Create the database?', type=bool)
+@click.option('--create-db/--no-create-db', default=False, help='Create the database?', type=bool)
 @cli.command()
 def import_db(file, create_db):
     """ Create and build a database from a file.
