@@ -38,17 +38,22 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
 @cli.command(help='Set up the CDM database')
-def set_db():
+@click.option('--insert-voc', default=True, type=bool)
+@click.option('--sequence-start', default=1, type=int)
+def set_db(insert_voc, sequence_start):
     """ Set up the CDM database:
         * Create new database with the CDM schema;
-        * Insert the vocabulary if available;
+        * Create the sequences used to obtain de id's (a start value
+        can be provided, may be useful in a case where data from multiple
+        data sources will be parsed and used in the same database)
+        * Optionally: Insert the vocabulary if available;
     """
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     create_database()
     with PostgresManager() as pg:
         set_schema(pg)
-        create_sequences(pg)
-        if VOCABULARY_PATH in os.environ:
+        create_sequences(pg, sequence_start)
+        if insert_voc and VOCABULARY_PATH in os.environ:
             insert_vocabulary(pg)
 
 @cli.command()
@@ -118,26 +123,30 @@ def report():
         entry_count = count_entries(pg)
         print(f'{entry_count[0]} observations, {entry_count[1]} measurements, {entry_count[2]} conditions')
 
+# Possibility to use allow_extra_args and make it more 'open'
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')
+@click.option('--data-only', default=False, help='Export only data and not the DDL', type=bool)
 @cli.command()
-def export_db(file):
+def export_db(file, data_only):
     """ Export the database to a file.
     """
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
-    process = run_command(
-        ['pg_dump', '-d', PostgresManager.get_database_uri(), '-f', file],
+    run_command(
+        ['pg_dump', '-d', PostgresManager.get_database_uri(), '--data-only' if data_only else '', '-f', file],
         'Successfully exported the database.',
         'Failed to export the database.')
 
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the file to import')
+@click.option('--create-db', default=True, help='Create the database?', type=bool)
 @cli.command()
-def import_db(file):
+def import_db(file, create_db):
     """ Create and build a database from a file.
     """
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
-    create_database()
+    if create_db:
+        create_database()
     run_command(
         ['psql', '-d', PostgresManager.get_database_uri(), '-f', file],
         'Successfully imported the database.',

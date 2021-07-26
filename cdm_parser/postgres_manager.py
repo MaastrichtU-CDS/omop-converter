@@ -50,11 +50,16 @@ class PostgresManager:
         self.cursor.execute('CREATE DATABASE "{}";'.format(database_name))
         self.connection.commit()
 
-    def create_sequence(self, name):
+    def create_sequence(self, name, start=1):
         """ Create a new sequence.
         """
         self.cursor.execute('DROP SEQUENCE IF EXISTS {};'.format(name))
-        self.cursor.execute('CREATE SEQUENCE IF NOT EXISTS {} AS BIGINT INCREMENT BY 1 START WITH 1;'.format(name))
+        self.cursor.execute(
+            'CREATE SEQUENCE IF NOT EXISTS {} AS BIGINT INCREMENT BY 1 START WITH {};'.format(
+                name,
+                start,
+            )
+        )
         self.connection.commit()
 
     def drop_table(self, table):

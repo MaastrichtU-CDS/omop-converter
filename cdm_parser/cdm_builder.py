@@ -31,13 +31,13 @@ def set_constraints(pg):
     pg.execute_file(OMOP_CDM_PK_PATH)
     pg.execute_file(OMOP_CDM_CONSTRAINTS_PATH)
 
-def create_sequences(pg):
+def create_sequences(pg, sequence_start=1):
     """ Create the sequences needed.
     """
     print('Create sequences')
     for sequence in [PERSON_SEQUENCE, OBSERVATION_SEQUENCE, MEASUREMENT_SEQUENCE,
         CONDITION_SEQUENCE, CARE_SITE_SEQUENCE, VISIT_OCCURRENCE, LOCATION_SEQUENCE]:
-        pg.create_sequence(sequence)
+        pg.create_sequence(sequence, start=sequence_start)
 
 def create_id_table(pg):
     """ Create the table to store the link between person id and the source id.
