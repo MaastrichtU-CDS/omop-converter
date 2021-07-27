@@ -3,8 +3,8 @@ source_id,id,,,,,
 date,date,,,,,%d/%m/%Y
 mort_date,dd,,,,,%d/%m/%Y
 mort,df,,,true/false,True/False,
-age_1,age_neuro,,,,
-age_2,age_vitals,,,,,
+age,age_neuro,age_o,,,
+date_age,d_d,d_d_o,,,,
 birth_year,birth_year,,,,
 sex,gender,,,Male/Female/-,male/female/-
 bmi,body_mass_index,,,,,
@@ -14,7 +14,7 @@ dbp,d_b_p,,,,,,
 dementia_diagnosis,dementia_d,,,true/false,yes/no,,,
 no_dementia_diagnosis,dementia_d,,,true/false,yes/no,,,
 dementia_cutoff,,,,,,,dementia_cutoff > 0.5
-date_diagnosis,d_d,,,,,%d/%m/%Y
+date_diagnosis,d_d,d_d_o,,,,%d/%m/%Y
 date2,d_d_2,,,,,%d/%m/%Y
 drugs_hypertension,d_h_m,d_h_m_alt,true/0,true/false/0/1,yes/no/no/yes,,
 csf_assay_tau,,,,,,,assay

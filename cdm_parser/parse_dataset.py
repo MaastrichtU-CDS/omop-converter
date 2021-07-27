@@ -24,7 +24,7 @@ class DataParser:
 
         # Retrieve the necessary information from the mappings
         self.value_mapping = self.create_value_mapping()
-        (self.date_source_variable, self.date_format) = self.get_parameters(DATE, with_format=True)
+        (self.date_source_variables, self.date_format) = self.get_parameters(DATE, with_format=True)
 
     @staticmethod
     def variable_values_to_dict(keys, values, separator=DEFAULT_SEPARATOR):
@@ -104,15 +104,16 @@ class DataParser:
     def get_parameters(self, parameter, with_format=False):
         """ Returns the source variable and format for a parameter.
         """
-        parameter_source_variable = None
+        parameter_source_variables = None
         parameter_format = None
         if parameter and parameter in self.source_mapping:
-            parameter_source_variable = self.source_mapping[parameter][SOURCE_VARIABLE]
-            if with_format and self.source_mapping[parameter][FORMAT]:
+            parameter_source_variables = [self.source_mapping[parameter][SOURCE_VARIABLE]]
+            parameter_source_variables.extend(self.source_mapping[parameter][ALTERNATIVES].split(DEFAULT_SEPARATOR))
+            if self.source_mapping[parameter][FORMAT]:
                 parameter_format = self.source_mapping[parameter][FORMAT]
-            else:
+            elif with_format:
                 raise Exception(f'Format required for variable: {parameter}')
-        return (parameter_source_variable, parameter_format)
+        return (parameter_source_variables, parameter_format)
 
     def get_parsed_value(self, variable, value):
         """ Get the parsed value for a variable.
@@ -157,17 +158,15 @@ class DataParser:
             # The year of birth is required to create an entry for the person. In case that 
             # variable isn't provided, the year of birth will be obtained from a variable indicating
             # the age for a particular date.
-            # TODO: Use alternatives to have all the other variables instead of prefix
-            age_variables = [ k for k in self.destination_mapping.keys() if k.startswith(AGE_PREFIX) ]
-            if len(age_variables) > 0:
-                for age_variable in age_variables:
-                    age_source_variable = self.get_source_variable(age_variable)
-                    (age_date_variable, age_date_format) = self.get_parameters(
-                        self.destination_mapping[age_variable][DATE], with_format=True)
-                    if all([var and self.valid_row_value(var, row) for var in [age_source_variable, age_date_variable]]):
+            (age_variables, _) = self.get_parameters(AGE)
+            if age_variables:
+                for i, age_variable in enumerate(age_variables):
+                    (age_date_variables, age_date_format) = self.get_parameters(
+                        self.destination_mapping[AGE][DATE], with_format=False)
+                    if self.valid_row_value(age_variable, row) and age_date_variables:
                         try:
-                            birth_year = get_year_of_birth(int(row[age_source_variable]), \
-                                str(row[age_date_variable]), age_date_format or self.date_format)
+                            birth_year = get_year_of_birth(int(row[age_variable]), \
+                                str(row[age_date_variables[i]]), age_date_format if age_date_format else self.date_format)
                             break
                         except Exception as error:
                             print(f'Error parsing year of birth from variable {age_variable}')
@@ -230,9 +229,9 @@ class DataParser:
                 self.transform_row(row, person_id)
                 processed_records += 1
             except Exception as error:
-                # TODO: Use a logger and add this information in a file
-                print(f'Skipped record {index} due to an error: {str(error)}')
-                skipped_records += 1
+               # TODO: Use a logger and add this information in a file
+               print(f'Skipped record {index} due to an error: {str(error)}')
+               skipped_records += 1
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
     def transform_row(self, row, person_id):
@@ -241,9 +240,11 @@ class DataParser:
         # Parse the date for the observation/measurement/condition if available
         # TODO: Calculating the end data when provided with a period for the wave
         visit_id = None
-        if self.date_source_variable in row:
-           visit_date = parse_date(str(row[self.date_source_variable]), self.date_format, DATE_FORMAT)
-           visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
+        for date_source_variable in self.date_source_variables:
+            if date_source_variable in row:
+                visit_date = parse_date(str(row[date_source_variable]), self.date_format, DATE_FORMAT)
+                visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
+                break
 
         # Parse the observations/measurements/conditions
         for key, value in self.source_mapping.items():
@@ -279,13 +280,21 @@ class DataParser:
                     if parsed_value != '_':
                         # Check if there is a specific date for the variable
                         date = DATE_DEFAULT
-                        (source_date, source_date_format) = self.get_parameters(self.destination_mapping[key][DATE], with_format=True)
-                        if source_date and row[source_date]:
-                            try:
-                                date = parse_date(str(row[source_date]), source_date_format or self.date_format, DATE_FORMAT)
-                            except Exception as error:
-                                print(f'Error parsing a malformated date for variable {key}:')
-                                print(error)
+                        (source_dates, source_date_format) = self.get_parameters(
+                            self.destination_mapping[key][DATE])
+                        if source_dates:
+                            for source_date in source_dates:
+                                if source_date and row[source_date]:
+                                    try:
+                                        date = parse_date(
+                                            str(row[source_date]),
+                                            source_date_format or self.date_format,
+                                            DATE_FORMAT,
+                                        )
+                                        break
+                                    except Exception as error:
+                                        print(f'Error parsing a malformated date for variable {key} with source variable {source_date}:')
+                                        print(error)
                         # Create the necessary arguments to build the SQL statement
                         named_args = {
                             'source_value': source_value,
