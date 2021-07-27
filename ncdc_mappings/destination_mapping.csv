@@ -95,8 +95,8 @@ depression_rating_mini,2000000025,Measurement,,,,,,date_depression
 depression_rating_gds_15,40482001,Measurement,,,,,,date_depression
 depression_rating_gds,4159706,Measurement,,,,,,date_depression
 depression_rating_ces_d,2000000026,Measurement,,,,,,date_depression
-depression,35817792,Condition,,,yes/no,4188539/_,Depression_cutoff,date_depression
-no_depression,35817792,Observation,,,yes/no,_/4132135,Depression_cutoff,date_depression
+depression,440383,Condition,,,yes/no,4188539/_,Depression_cutoff,date_depression
+no_depression,440383,Observation,,,yes/no,_/4132135,Depression_cutoff,date_depression
 depression_cutoff,,NA,,,,,,date_depression
 anxiety_rating_mini,2000000027,Measurement,,,,,,date_anxiety
 anxiety_rating_beck_anxiety,4128244,Measurement,,,,,,date_anxiety
