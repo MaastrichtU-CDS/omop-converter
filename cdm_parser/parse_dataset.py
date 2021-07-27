@@ -40,7 +40,7 @@ class DataParser:
         """ Validate if the value exists and is not null
         """
         # TODO: Handling missing values in another way
-        return variable in row and row[variable] and not pd.isnull(row[variable])
+        return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != ''
 
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
@@ -78,7 +78,7 @@ class DataParser:
                 value_mapping[key] = self.map_variable_values(key, value)
         return value_mapping
 
-    def parse_dataset(self, start, limit):
+    def parse_dataset(self, start, limit, convert_categoricals):
         """ Parse the dataset to the CDM format.
         """
         print(f'Parse dataset from file {self.path}')
@@ -95,7 +95,7 @@ class DataParser:
                     next(csv_reader)
                 self.transform_rows(enumerate(csv_reader, start=start), **kwargs)
         elif '.sav' in self.path:
-            df = pd.read_spss(self.path)
+            df = pd.read_spss(self.path, convert_categoricals=convert_categoricals)
             self.transform_rows(df.loc[start:].iterrows(), **kwargs)
         elif '.sas' in self.path:
             df = pd.read_sas(self.path)
@@ -159,10 +159,10 @@ class DataParser:
             # variable isn't provided, the year of birth will be obtained from a variable indicating
             # the age for a particular date.
             (age_variables, _) = self.get_parameters(AGE)
-            if age_variables:
+            if AGE in self.destination_mapping and age_variables:
                 for i, age_variable in enumerate(age_variables):
                     (age_date_variables, age_date_format) = self.get_parameters(
-                        self.destination_mapping[AGE][DATE], with_format=False)
+                        self.destination_mapping[AGE][DATE])
                     if self.valid_row_value(age_variable, row) and age_date_variables:
                         try:
                             birth_year = get_year_of_birth(int(row[age_variable]), \
@@ -272,7 +272,7 @@ class DataParser:
                 elif value[STATIC_VALUE]:
                     source_value = value[STATIC_VALUE]
 
-                if source_value:
+                if source_value is not None:
                     # TODO: improve the mapping between a variable and multiple
                     # source variables
                     domain = self.destination_mapping[key][DOMAIN]

@@ -38,8 +38,18 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
 @cli.command(help='Set up the CDM database')
-@click.option('--insert-voc/--no-insert-voc', default=False, type=bool)
-@click.option('--sequence-start', default=1, type=int)
+@click.option(
+    '--insert-voc/--no-insert-voc',
+    default=False,
+    type=bool,
+    help='Insert the vocabulary?',
+)
+@click.option(
+    '--sequence-start',
+    default=1,
+    type=int,
+    help='Start value for the sequences that will be created (default 1)'
+)
 def set_db(insert_voc, sequence_start):
     """ Set up the CDM database:
         * Create new database with the CDM schema;
@@ -69,8 +79,14 @@ def insert_constraints():
 @click.option('--cohort-location')
 @click.option('--start', default=0, type=int)
 @click.option('--limit', default=-1, type=int)
+@click.option(
+    '--convert-categoricals/--no-convert-categoricals',
+    default=False,
+    type=bool,
+    help='Convert the caregories? Only valid for spss files'
+)
 #@click.option('--drop-temp-tables', default=True, type=bool)
-def parse_data(cohort_name, cohort_location, start, limit):
+def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals):
     """ Parse the source dataset and populate the CDM database.
         
         Important: One or more temporary tables will be created to store information only required
@@ -103,7 +119,7 @@ def parse_data(cohort_name, cohort_location, start, limit):
             cohort_id,
             pg
         )
-        parser.parse_dataset(start, limit)
+        parser.parse_dataset(start, limit, convert_categoricals)
 
         # Dropping the temporary tables
         # if drop_temp_tables:
@@ -123,7 +139,6 @@ def report():
         entry_count = count_entries(pg)
         print(f'{entry_count[0]} observations, {entry_count[1]} measurements, {entry_count[2]} conditions')
 
-# Possibility to use allow_extra_args and make it more 'open'
 @click.option('-f', '--file', default='/mnt/data/omop_cdm_export.pgsql',
     help='Path for the output file')
 @click.option('--data-only/--no-data-only', default=False, help='Export only data and not the DDL', type=bool)
