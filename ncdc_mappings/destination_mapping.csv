@@ -6,6 +6,7 @@ age,4265453,Observation,year,9448,,,,date_age
 sex,,Person,,,male/female/-,8507/8532/8551,,
 education_years,2000000001,Observation,year,9448,,,,
 education_category,4171617,Observation,,,low/high,4267416/4328749,,
+education_category_3,2000000075,Observation,,,low/medium/high,4267416/4152518/4328749,,
 normal_cognition_diagnosis,42710016,Condition,,,yes/no,4188539/_,,date_diagnosis
 scd_diagnosis,2000000002,Condition,,,yes/no,4188539/_,,date_diagnosis
 mci_diagnosis,4297400,Condition,,,yes/no,4188539/_,,date_diagnosis

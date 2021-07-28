@@ -73,3 +73,4 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000072	priority_language_bnt_30	Measurement	Vocabulary	Measurement		Priority_language_bnt_30	20210101	20991231	
 2000000073	priority_language_bnt_60	Measurement	Vocabulary	Measurement		Priority_language_bnt_60	20210101	20991231	
 2000000074	priority_language_any_picture_naming_test	Measurement	Vocabulary	Measurement		Priority_language_any_picture_naming_test	20210101	20991231	
+2000000075	education_category_3	Observation	Vocabulary	Measurement		Education_category_3	20210101	20991231	
