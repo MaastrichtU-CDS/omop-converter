@@ -56,6 +56,7 @@ class DataParser:
                 self.destination_mapping[variable][VALUES],
                 self.destination_mapping[variable][VALUES_CONCEPT_ID]
             )
+            destination_values[DEFAULT_SKIP] = DEFAULT_SKIP
             mapping = {map_key: destination_values[map_value] \
                 for map_key, map_value in source_values.items()}
             mapping[VALUE_AS_CONCEPT_ID] = True
@@ -122,7 +123,7 @@ class DataParser:
             if str(value) in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value)])
             elif DEFAULT_VALUE in self.value_mapping[variable]:
-                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])
+                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])                
             raise Exception(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         return (False, value)
 
@@ -277,7 +278,7 @@ class DataParser:
                     # source variables
                     domain = self.destination_mapping[key][DOMAIN]
                     (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
-                    if parsed_value != '_':
+                    if parsed_value != DEFAULT_SKIP:
                         # Check if there is a specific date for the variable
                         date = DATE_DEFAULT
                         (source_dates, source_date_format) = self.get_parameters(

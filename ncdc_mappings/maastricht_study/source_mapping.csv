@@ -1,7 +1,7 @@
 variable,source_variable,alternatives,condition,values,values_parsed,format,static_value
 source_id,,,,,,,
 date,VISIT1_DATE,,,,,%Y-%m-%d,
-birth_year,,,,,,,
+birth_year,Year_of_birth,,,,,,
 age,Age,,,,,,
 date_age,VISIT1_DATE,,,,,%Y-%m-%d,
 sex,SEX,,,1.0/2.0/-,male/female/-,,
