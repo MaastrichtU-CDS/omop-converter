@@ -136,7 +136,8 @@ priority_memory_dr_hopkins,2000000052,Measurement,,,,,,date_npe
 priority_memory_dr_vat_a,2000000053,Measurement,,,,,,date_npe
 priority_memory_dr_vat_b,2000000054,Measurement,,,,,,date_npe
 priority_memory_dr_srb,2000000055,Measurement,,,,,,date_npe
-priority_memory_dr_rrf,2000000056,Measurement,,,,,,date_npe
+priority_memory_dr_rrf_3,2000000056,Measurement,,,,,,date_npe
+priority_memory_dr_rrf_20,2000000056,Measurement,,,,,,date_npe
 priority_memory_dr_mmse,2000000057,Measurement,,,,,,date_npe
 priority_memory_dr_adas,2000000058,Measurement,,,,,,date_npe
 priority_memory_dr_10_word_list,2000000059,Measurement,,,,,,date_npe

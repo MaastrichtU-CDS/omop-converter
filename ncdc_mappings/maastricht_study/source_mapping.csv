@@ -149,7 +149,8 @@ priority_memory_dr_hopkins,,,,,,,
 priority_memory_dr_vat_a,,,,,,,
 priority_memory_dr_vat_b,,,,,,,
 priority_memory_dr_srb,,,,,,,
-priority_memory_dr_rrf,,,,,,,
+priority_memory_dr_rrf_3,,,,,,,3
+priority_memory_dr_rrf_20,,,,,,,20
 priority_memory_dr_mmse,,,,,,,
 priority_memory_dr_adas,,,,,,,
 priority_memory_dr_10_word_list,,,,,,,
