@@ -1,9 +1,9 @@
 import csv
 import pandas as pd
-from postgres_manager import PostgresManager
 from cdm_builder import *
 from constants import *
 from utils import arrays_to_dict, parse_date, get_year_of_birth
+from exceptions import ParsingError
 
 CDM_SQL = {
     CONDITION_OCCURRENCE: build_condition,
@@ -73,9 +73,9 @@ class DataParser:
         for key, value in self.source_mapping.items():
             if value[VALUES]:
                 if not value[VALUES_PARSED]:
-                    raise Exception(f'Error in the source mapping for variable {key}')
+                    raise ParsingError(f'Error in the source mapping for variable {key}')
                 if key not in self.destination_mapping or VALUES_CONCEPT_ID not in self.destination_mapping[key]:
-                    raise Exception(f'Variable {key} is not correctly mapped in the destination mapping!')
+                    raise ParsingError(f'Variable {key} is not correctly mapped in the destination mapping!')
                 value_mapping[key] = self.map_variable_values(key, value)
         return value_mapping
 
@@ -113,7 +113,7 @@ class DataParser:
             if self.source_mapping[parameter][FORMAT]:
                 parameter_format = self.source_mapping[parameter][FORMAT]
             elif with_format:
-                raise Exception(f'Format required for variable: {parameter}')
+                raise ParsingError(f'Format required for variable: {parameter}')
         return (parameter_source_variables, parameter_format)
 
     def get_parsed_value(self, variable, value):
@@ -124,7 +124,7 @@ class DataParser:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value)])
             elif DEFAULT_VALUE in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])                
-            raise Exception(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
+            raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         return (False, value)
 
     def get_death_datetimne(self, row):
@@ -170,10 +170,11 @@ class DataParser:
                                 str(row[age_date_variables[i]]), age_date_format if age_date_format else self.date_format)
                             break
                         except Exception as error:
-                            print(f'Error parsing year of birth from variable {age_variable}')
-                            print(str(error))
+                            raise ParsingError(
+                                f'Error parsing year of birth from variable {age_variable}: {str(error)}')
+
         if not birth_year:
-            raise Exception('Missing required information, the row should contain the year of birth.')
+            raise ParsingError('Missing required information, the row should contain the year of birth.')
 
         # Add a new entry for the person/patient
         person_sql = build_person(
@@ -229,7 +230,7 @@ class DataParser:
                 #Parse the row
                 self.transform_row(row, person_id)
                 processed_records += 1
-            except Exception as error:
+            except ParsingError as error:
                # TODO: Use a logger and add this information in a file
                print(f'Skipped record {index} due to an error: {str(error)}')
                skipped_records += 1
@@ -294,8 +295,10 @@ class DataParser:
                                         )
                                         break
                                     except Exception as error:
-                                        print(f'Error parsing a malformated date for variable {key} with source variable {source_date}:')
-                                        print(error)
+                                        raise ParsingError(
+                                            f'Error parsing a malformated date for variable {key} \
+                                                with source variable {source_date}: {str(error)})'
+                                        )
                         # Create the necessary arguments to build the SQL statement
                         named_args = {
                             'source_value': source_value,
