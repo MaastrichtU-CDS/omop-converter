@@ -285,7 +285,7 @@ class DataParser:
                             self.destination_mapping[key][DATE])
                         if source_dates:
                             for source_date in source_dates:
-                                if source_date and row[source_date]:
+                                if source_date and self.valid_row_value(source_date, row):
                                     try:
                                         date = parse_date(
                                             str(row[source_date]),

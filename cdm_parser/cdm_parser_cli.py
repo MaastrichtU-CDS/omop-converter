@@ -67,6 +67,13 @@ def set_db(insert_voc, sequence_start):
             insert_vocabulary(pg)
 
 @cli.command()
+def drop_db():
+    """ Drop the CDM database.
+    """
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    drop_database()
+
+@cli.command()
 def insert_constraints():
     """ Set the CDM primary keys and constraints.
     """
@@ -147,8 +154,11 @@ def export_db(file, data_only):
     """ Export the database to a file.
     """
     if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    command = ['pg_dump', '-d', PostgresManager.get_database_uri(), '-f', file]
+    if data_only:
+        command.append('--data-only')
     run_command(
-        ['pg_dump', '-d', PostgresManager.get_database_uri(), '--data-only' if data_only else '', '-f', file],
+        command,
         'Successfully exported the database.',
         'Failed to export the database.')
 

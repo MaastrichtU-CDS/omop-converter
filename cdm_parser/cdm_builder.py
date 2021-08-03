@@ -10,6 +10,13 @@ def create_database():
     with PostgresManager(default_db=True, isolation_level=ISOLATION_LEVEL_AUTOCOMMIT) as pg:
         pg.create_database(os.environ[DB_DATABASE])
 
+def drop_database():
+    """ Drop the CDM database.
+    """
+    print(f'Dropping the database {os.environ[DB_DATABASE]}')
+    with PostgresManager(default_db=True, isolation_level=ISOLATION_LEVEL_AUTOCOMMIT) as pg:
+        pg.run_sql(f'DROP DATABASE "{os.environ[DB_DATABASE]}";')
+
 def set_schema(pg):
     """ Set the CDM schema for the database.
     """
