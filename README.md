@@ -82,7 +82,9 @@ To make the process faster, when parsing the data to the OMOP CDM it's recommend
 
 **Exporting the database**
 
-There may happend that you'll perform the data parsing in one environment (e.g. locally) but intend to have the database running in another location. For such a case it's recommended to:
+The data harmonisation process can be executed in a different number of ways depending on the resources available. It can be performed in a local environment and later transferred to the final location (recommended since it allows more control to validate and check potential problems) or directly done in the final location. For the first case, there is also the possibility of creating a "light weight database" (without the vocabularies) so that the exported file can be more easily transferred (including the vocabularies may represent an overhead of around 1GB). Additionally, there is also the possibility to export only the data (avoid the statements that create the CDM schema), this may be useful when inserting data from multiple sources in the same database.
+
+In a case where you'll perform the data parsing in one environment (e.g. locally) but intend to have the database running in another location, it's recommended to:
 1. Create the database without the vocabularies;
 2. Parse the data to the OMOP CDM;
 3. Export the database;
