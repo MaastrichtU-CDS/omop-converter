@@ -46,6 +46,16 @@ def create_sequences(pg, sequence_start=1):
         CONDITION_SEQUENCE, CARE_SITE_SEQUENCE, VISIT_OCCURRENCE, LOCATION_SEQUENCE]:
         pg.create_sequence(sequence, start=sequence_start)
 
+def set_cdm_source(pg, cdm_release_date):
+    """ Set the necessary information in the CDM Source table.
+    """
+    pg.run_sql(
+        """INSERT INTO CDM_SOURCE (cdm_source_name,cdm_holder,source_description,source_documentation_reference,
+            cdm_etl_reference,cdm_release_date,cdm_version,vocabulary_version) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)""",
+        parameters=(os.getenv(SOURCE_NAME), os.getenv(HOLDER), os.getenv(DESCRIPTION), os.getenv(REFERENCE),
+        os.getenv(ETL_REFERENCE), cdm_release_date, os.getenv(CDM_VERSION), os.getenv(VOCABULARY_VERSION))
+    )
+
 def create_id_table(pg):
     """ Create the table to store the link between person id and the source id.
     """

@@ -1,5 +1,7 @@
 import click
 import os
+from datetime import datetime
+
 from utils import export_config, import_config, run_command
 from constants import *
 from cdm_builder import *
@@ -62,6 +64,8 @@ def set_db(insert_voc, sequence_start):
     create_database()
     with PostgresManager() as pg:
         set_schema(pg)
+        if os.getenv(SOURCE_NAME):
+            set_cdm_source(pg, datetime.today().strftime('%Y-%m-%d'))
         create_sequences(pg, sequence_start)
         if insert_voc and VOCABULARY_PATH in os.environ:
             insert_vocabulary(pg)
