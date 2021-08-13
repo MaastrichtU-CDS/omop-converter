@@ -115,8 +115,8 @@ anxiety_rating_mini,,,,,,,
 anxiety_rating_beck_anxiety,,,,,,,
 anxiety_rating_state_trait,,,,,,,
 anxiety_rating_hospital_scale,,,,,,,
-anxiety,MINIcurrpanic,MINIagora/MINIphobia,1,1.0/0.0,yes/no,,2000000025
-no_anxiety,MINIcurrpanic,MINIagora/MINIphobia,1,1.0/0.0,yes/no,,2000000025
+anxiety,MINIcurrpanic,MINIagora/MINIphobia,1.0,1.0/0.0,yes/no,,2000000025
+no_anxiety,MINIcurrpanic,MINIagora/MINIphobia,1.0,1.0/0.0,yes/no,,2000000025
 anxiety_cutoff,,,,,,,
 date_mmse,VISIT2_DATE,,,,,%Y-%m-%d,
 mmse_total,MMSEscore,,,,,,
