@@ -186,3 +186,35 @@ def count_entries(pg):
     for key, value in entries.items():
         count.append(pg.run_sql(f'SELECT count({value}) FROM {key};', fetch_one=True))
     return count
+
+def get_visit_occurrences(pg):
+    """ Get all visit occurences.
+    """
+    #keys = ['visit_id', 'person_id', 'year_of_birth', 'gender_concept_id', 'death_datetime']
+    return pg.run_sql("""SELECT v.visit_occurrence_id, v.visit_start_datetime, p.person_id, p.year_of_birth,
+        p.gender_concept_id, p.death_datetime FROM VISIT_OCCURRENCE AS v JOIN PERSON AS p ON 
+        p.person_id = v.person_id""", fetch_all=True)
+
+def get_observations_by_visit_id(pg, visit_id):
+    """ Get observation by visit id and person id.
+    """
+    return pg.run_sql(f"""SELECT observation_concept_id, observation_datetime, value_as_string, value_as_concept_id 
+        FROM OBSERVATION WHERE visit_occurrence_id = {visit_id};""", fetch_all=True)
+
+def get_measurements_by_visit_id(pg, visit_id):
+    """ Get observation by visit id and person id.
+    """
+    return pg.run_sql(f"""SELECT measurement_concept_id, measurement_datetime, value_as_number 
+        FROM MEASUREMENT WHERE visit_occurrence_id = {visit_id};""", fetch_all=True)
+
+def get_conditions_by_visit_id(pg, visit_id):
+    """ Get observation by visit id and person id.
+    """
+    return pg.run_sql(f"""SELECT condition_concept_id, condition_start_datetime 
+        FROM CONDITION_OCCURRENCE WHERE visit_occurrence_id = {visit_id};""", fetch_all=True)
+
+def insert_values(pg, table_name, columns):
+    """
+    """
+    return pg.run_sql(f"""INSERT INTO {table_name} ({', '.join(columns.keys())}) 
+        VALUES ({', '.join([f"'{str(val)}'" if str(val) else 'NULL' for val in columns.values()])})""")

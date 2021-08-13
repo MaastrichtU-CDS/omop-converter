@@ -8,6 +8,7 @@ from cdm_builder import *
 from parser import parse_csv_mapping
 from parse_dataset import DataParser
 from postgres_manager import PostgresManager
+from parse_mapping import parse_mapping_to_columns, parse_visit
 
 @click.group()
 def cli():
@@ -135,6 +136,35 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals)
         # Dropping the temporary tables
         # if drop_temp_tables:
         #    pg.drop_table(ID_TABLE)
+
+@click.option('-n', '--name')
+@cli.command()
+def parse_omop_to_plane(name):
+    """ Parse the OMOP content to a plane/simpified table. Available to 
+        facilitate the first contact with SQL databases and querying. However,
+        it's recommended to use the OMOP table (and develop any scripts or algorithms 
+        for the OMOP schema) since it represents the primary source of data and
+        a standard clinical model.
+    """
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
+    destination_mapping = parse_csv_mapping(os.getenv(DESTINATION_MAPPING_PATH))
+    with PostgresManager() as pg:
+        pg.drop_table(name)
+        # Transform the mapping variables into columns and create the table
+        columns = parse_mapping_to_columns(destination_mapping)
+        pg.drop_table(name)
+        pg.create_table(name, columns.values())
+        print(f'Table {name} created successfully')
+        # Parse the data from OMOP to the simplified table
+        visits = get_visit_occurrences(pg)
+        for visit in visits:
+            observations = get_observations_by_visit_id(pg, visit[0])
+            measurements = get_measurements_by_visit_id(pg, visit[0])
+            conditions = get_conditions_by_visit_id(pg, visit[0])
+            visit_values = parse_visit(
+                destination_mapping, columns, visit, observations, measurements, conditions)
+            insert_values(pg, name, visit_values)
+            
 
 @cli.command()
 def report():

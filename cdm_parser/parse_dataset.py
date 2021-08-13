@@ -74,6 +74,7 @@ class DataParser:
             if value[VALUES]:
                 if not value[VALUES_PARSED]:
                     raise ParsingError(f'Error in the source mapping for variable {key}')
+                # TODO: VALUES_CONCEPT_ID not in self.destination_mapping[key] can be removed?
                 if key not in self.destination_mapping or VALUES_CONCEPT_ID not in self.destination_mapping[key]:
                     raise ParsingError(f'Variable {key} is not correctly mapped in the destination mapping!')
                 value_mapping[key] = self.map_variable_values(key, value)

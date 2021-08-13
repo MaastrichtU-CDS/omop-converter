@@ -53,10 +53,11 @@ ADDITIONAL_INFO = 'additional_info'
 STATIC_VALUE = 'static_value'
 ALTERNATIVES = 'alternatives'
 CONDITION = 'condition'
+NCDC_MAP = 'ncdc_map'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
 DEFAULT_VALUE = '-'
-DEFAULT_SEPARATOR = '/'
+DEFAULT_SEPARATOR = ';'
 DEFAULT_SKIP = '_'
 
 OBSERVATION = 'Observation'
@@ -75,6 +76,8 @@ DEATH_FLAG = 'mort'
 
 DATE_FORMAT = '%Y%m%d %H:%M:%S'
 DATE_DEFAULT = '19700101 00:00:00'
+ID = 'ID'
+TIMESTAMP = 'TIMESTAMP'
 
 VOCABULARY_FILES = {
     'DRUG_STRENGTH': 'DRUG_STRENGTH.csv',
