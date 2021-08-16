@@ -3,7 +3,7 @@ source_id,,Person,,,,,,,
 date,,Person,,,,,,,
 birth_year,,Person,,,,,,,>= 1900
 age,4265453,Observation,year,9448,,,,date_age,>= 0
-sex,,Person,,,male;female;-,8507;8532;8551,,,0;1
+sex,,Person,,,male;female;-,8507;8532;8551,,,0;1;_
 education_years,2000000001,Observation,year,9448,,,,,> = 0
 education_category,4171617,Observation,,,low;high,4267416;4328749,,,0;1
 education_category_3,2000000075,Observation,,,low;medium;high,4267416;4152518;4328749,,,0;1;2
@@ -77,28 +77,28 @@ csf_assay_amyloid,2000000011,Observation,,,1;2;3;4,,,date_lp,1;2;3;4
 csf_ab_total_1_42,2000000012,Measurement,pg/mL,8845,,,,date_lp,> 0
 csf_ab_total_ratio_42_40,2000000013,Measurement,pg/mL,8846,,,,date_lp,> 0
 csf_ab_total_1_38,2000000014,Measurement,pg/mL,8847,,,,date_lp,> 0
-amy_abnormal,2000000015,Condition,,,yes;no,4188539;_,Amy_cutoff,date_lp,"0,1"
-no_amy_abnormal,2000000015,Observation,,,yes;no,_;4132135,Amy_cutoff,date_lp,"0,1"
+amy_abnormal,2000000015,Condition,,,yes;no,4188539;_,Amy_cutoff,date_lp,1;0
+no_amy_abnormal,2000000015,Observation,,,yes;no,_;4132135,Amy_cutoff,date_lp,1;0
 csf_assay_tau,2000000016,Observation,,,,,,date_lp,1;4
 csf_ttau,4260896,Measurement,pg/mL,8847,,,,date_lp,> 0
-ttau_abnormal,2000000017,Condition,,,yes;no,4188539;_,Ttau_cutoff,date_lp,"0,1"
-no_ttau_abnormal,2000000017,Observation,,,yes;no,_;4188540,Ttau_cutoff,date_lp,"0,1"
+ttau_abnormal,2000000017,Condition,,,yes;no,4188539;_,Ttau_cutoff,date_lp,1;0
+no_ttau_abnormal,2000000017,Observation,,,yes;no,_;4188540,Ttau_cutoff,date_lp,1;0
 csf_ptau,2000000018,Measurement,pg/mL,8847,,,,date_lp,> 0
-ptau_abnormal,2000000019,Condition,,,yes;no,4188539;_,Ptau_cutoff,date_lp,"0,1"
-no_ptau_abnormal,2000000019,Observation,,,yes;no,_;4132135,Ptau_cutoff,date_lp,"0,1"
+ptau_abnormal,2000000019,Condition,,,yes;no,4188539;_,Ptau_cutoff,date_lp,1;0
+no_ptau_abnormal,2000000019,Observation,,,yes;no,_;4132135,Ptau_cutoff,date_lp,1;0
 ptau_cutoff,,NA,,,,,,date_lp,
 pet_tracer,2000000020,Observation,,,,35623421,,date_pet,0;3
 pet_assesment,2000000021,Observation,,,,,,date_pet,
 pet_level_suvr,2000000022,Observation,,,,,,date_pet,> 0
 pet_level_bpnd,2000000023,Observation,,,,,,date_pet,> 0
-pet_abnormal,2000000024,Condition,,,yes;no,4188539;_,,date_pet,"0,1"
-no_pet_abnormal,2000000024,Observation,,,yes;no,_;4132135,,date_pet,"0,1"
+pet_abnormal,2000000024,Condition,,,yes;no,4188539;_,,date_pet,1;0
+no_pet_abnormal,2000000024,Observation,,,yes;no,_;4132135,,date_pet,1;0
 depression_rating_mini,2000000025,Measurement,,,,,,date_depression,> 0
 depression_rating_gds_15,40482001,Measurement,,,,,,date_depression,> 0
 depression_rating_gds,4159706,Measurement,,,,,,date_depression,> 0
 depression_rating_ces_d,2000000026,Measurement,,,,,,date_depression,> 0
-depression,35817792,Condition,,,yes;no,4188539;_,Depression_cutoff,date_depression,1;0
-no_depression,35817792,Observation,,,yes;no,_;4132135,Depression_cutoff,date_depression,1;0
+depression,440383,Condition,,,yes;no,4188539;_,Depression_cutoff,date_depression,1;0
+no_depression,440383,Observation,,,yes;no,_;4132135,Depression_cutoff,date_depression,1;0
 depression_cutoff,,NA,,,,,,date_depression,
 anxiety_rating_mini,2000000027,Measurement,,,,,,date_anxiety,> 0
 anxiety_rating_beck_anxiety,4128244,Measurement,,,,,,date_anxiety,> 0

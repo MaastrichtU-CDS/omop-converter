@@ -136,8 +136,8 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;;CES-D;Depression_rating_ces_d;Depression Rating from CES-D;numerical;;> 0;;No;;Measurement;;2000000026;;;;;;;;;Date_depression;
 ;;;Depression_rating_other;Depression Rating from another alternative;numerical;;> 0;;No;;;;;;;;;;;;;Date_depression;
 ;Rating scales;;Depression_rating;Result assesment depression: rating scale;numerical;;> 0;;No;;;;;;;;;;;;;Date_depression;
-;Psychiatric disorders;Depression;Depression;"Result assesment depression: yes;no";factor;"1 = yes; 0 = no";"1;0";;No;;Condition;SNOMED;35817792;Athena-35817792;;;;"yes;no";"4188539;_";;Depression_cutoff;Date_depression;Depression_cutoff
-;Psychiatric disorders;Depression;no_Depression;"Result assesment depression: yes;no";factor;"1 = yes; 0 = no";"1;0";;No;;Observation;SNOMED;35817792;Athena-35817792;;;;"yes;no";"_;4132135";;Depression_cutoff;Date_depression;Depression_cutoff
+;Psychiatric disorders;Depression;Depression;"Result assesment depression: yes;no";factor;"1 = yes; 0 = no";"1;0";;No;;Condition;SNOMED;440383;Athena-440383;;;;"yes;no";"4188539;_";;Depression_cutoff;Date_depression;Depression_cutoff
+;Psychiatric disorders;Depression;no_Depression;"Result assesment depression: yes;no";factor;"1 = yes; 0 = no";"1;0";;No;;Observation;SNOMED;440383;Athena-440383;;;;"yes;no";"_;4132135";;Depression_cutoff;Date_depression;Depression_cutoff
 ;;;Depression_cutoff;Cutoff used ;0<…, 1>=…, cd;;;;No;;NA;;;;;;;;;;;Date_depression;
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;Dates rating scales;Date of rating scales assessment;Date_anxiety;Date assessment anxiety;date;;;;No;;;;;;;;;;;;;;

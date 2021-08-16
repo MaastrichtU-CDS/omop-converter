@@ -195,6 +195,23 @@ class DataParser:
         if death_datetime:
             self.pg.run_sql(*update_person(person_id, death_datetime))
 
+    def get_visit_id(self, row, person_id):
+        """ Parse the visit date and create a new visit
+        """
+        # Parse the date for the observation/measurement/condition if available
+        # TODO: Calculating the end data when provided with a period for the wave
+        visit_id = None
+        for date_source_variable in self.date_source_variables:
+            if date_source_variable in row:
+                visit_date = parse_date(str(row[date_source_variable]), self.date_format, DATE_FORMAT)
+                visit_id = get_visit_by_person_and_date(self.pg, person_id, visit_date)
+                if not visit_id:
+                    visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
+                break
+        if not visit_id:
+            raise ParsingError(f'No visit date found for person with id {person_id}')
+        return visit_id
+
     def transform_rows(self, iterator, start, limit):
         """ Transform each row in the dataset
         """
@@ -229,26 +246,20 @@ class DataParser:
                 else:
                     person_id = self.parse_person(row)
                 #Parse the row
-                self.transform_row(row, person_id)
+                visit_id = self.get_visit_id(row, person_id)
+                self.transform_row(row, person_id, visit_id)
                 processed_records += 1
+                if processed_records % 1000 == 0:
+                    print(f'Processed {processed_records} records')
             except ParsingError as error:
                # TODO: Use a logger and add this information in a file
                print(f'Skipped record {index} due to an error: {str(error)}')
                skipped_records += 1
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
-    def transform_row(self, row, person_id):
+    def transform_row(self, row, person_id, visit_id):
         """ Transform each row and insert in the database.
         """
-        # Parse the date for the observation/measurement/condition if available
-        # TODO: Calculating the end data when provided with a period for the wave
-        visit_id = None
-        for date_source_variable in self.date_source_variables:
-            if date_source_variable in row:
-                visit_date = parse_date(str(row[date_source_variable]), self.date_format, DATE_FORMAT)
-                visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
-                break
-
         # Parse the observations/measurements/conditions
         for key, value in self.source_mapping.items():
             if key not in self.destination_mapping:
