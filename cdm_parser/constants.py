@@ -56,7 +56,7 @@ CONDITION = 'condition'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
 DEFAULT_VALUE = '-'
-DEFAULT_SEPARATOR = '/'
+DEFAULT_SEPARATOR = ';'
 DEFAULT_SKIP = '_'
 
 OBSERVATION = 'Observation'

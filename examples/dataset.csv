@@ -2,5 +2,5 @@ id,gender,age_neuro,age_o,dd,d_d_o,df,birth_year,education_years,apoe_genotype,h
 001,,78,,,,,1943,9,Heterozygote,0,22,26/01/2004,no,past,5.4,4,no,0,129,,23/01/2004,false,,true,23/01/2004,true,1
 002,Female,80.9,,,,true,1941,13,Homozygote,1,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004,1,true
 001,,,,11/09/2008,,true,,,,1,23,28/07/2004,yes,,6.4,,no,1,153,,21/7/2004,true,0,false,,,
-003,Female,75,,,,,,13,Homozygote,10,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004,1,,
+003,Female,75,,,,,,13,Homozygote,1,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004,1,,
 004,Male,,91,,5/05/2005,,,6,Homozygote,1,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,,1,,
