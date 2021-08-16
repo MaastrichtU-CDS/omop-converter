@@ -90,7 +90,7 @@ ptau_cutoff,,NA,,,,,,date_lp,
 pet_tracer,2000000020,Observation,,,,35623421,,date_pet,0;3
 pet_assesment,2000000021,Observation,,,,,,date_pet,
 pet_level_suvr,2000000022,Observation,,,,,,date_pet,> 0
-pet level_bpnd,2000000023,Observation,,,,,,date_pet,> 0
+pet_level_bpnd,2000000023,Observation,,,,,,date_pet,> 0
 pet_abnormal,2000000024,Condition,,,yes;no,4188539;_,,date_pet,"0,1"
 no_pet_abnormal,2000000024,Observation,,,yes;no,_;4132135,,date_pet,"0,1"
 depression_rating_mini,2000000025,Measurement,,,,,,date_depression,> 0
@@ -156,15 +156,15 @@ priority_language_bnt_15,2000000071,Measurement,,,,,,date_npe,> 0
 priority_language_bnt_30,2000000072,Measurement,,,,,,date_npe,> 0
 priority_language_bnt_60,2000000073,Measurement,,,,,,date_npe,> 0
 priority_language_any_picture_naming_test,2000000074,Measurement,,,,,,date_npe,> 0
-p-tau,4136437,Observation,,,,,,,> 0
-amyloid-b-42,45768724,Observation,pg/mL,8845,,,,,> 0
-amyloid-b-40,45768723,Observation,pg/mL,8845,,,,,> 0
+p_tau,4136437,Observation,,,,,,,> 0
+amyloid_b_42,45768724,Observation,pg/mL,8845,,,,,> 0
+amyloid_b_40,45768723,Observation,pg/mL,8845,,,,,> 0
 gfap,4079321,Observation,,,,,,,> 0
 nfl,4299446,Observation,,,,,,,> 0
-e-selectin,4012274,Observation,,,,,,,> 0
+e_selectin,4012274,Observation,,,,,,,> 0
 saa,4221816,Observation,,,,,,,> 0
 vcam,4012844,Observation,,,,,,,> 0
 icam,4284103,Observation,,,,,,,> 0
 il6,4332015,Measurement,,,,,,,> 0
 il8,4166200,Measurement,,,,,,,> 0
-il-1b,4282774,Measurement,,,,,,,> 0
+il_1b,4282774,Measurement,,,,,,,> 0

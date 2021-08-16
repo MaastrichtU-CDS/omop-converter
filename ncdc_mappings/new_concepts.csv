@@ -21,7 +21,7 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000020	pet_tracer	Observation	Vocabulary	Observation		PET_tracer	20210101	20991231	
 2000000021	pet_assesment	Observation	Vocabulary	Observation		Pet_assesment	20210101	20991231	
 2000000022	pet_level_suvr	Observation	Vocabulary	Observation		PET_level_suvr	20210101	20991231	
-2000000023	pet level_bpnd	Observation	Vocabulary	Observation		PET level_bpnd	20210101	20991231	
+2000000023	pet_level_bpnd	Observation	Vocabulary	Observation		PET_level_bpnd	20210101	20991231	
 2000000024	pet_abnormal	Condition	Vocabulary	Condition		PET_abnormal	20210101	20991231	
 2000000025	depression_rating_mini	Measurement	Vocabulary	Measurement		Depression_rating_mini	20210101	20991231	
 2000000026	depression_rating_ces_d	Measurement	Vocabulary	Measurement		Depression_rating_ces_d	20210101	20991231	
