@@ -6,8 +6,8 @@ age,4265453,Observation,year,9448,,,,date_age,>= 0
 sex,,Person,,,male;female;-,8507;8532;8551,,,0;1;_
 education_years,2000000001,Observation,year,9448,,,,,> = 0
 education_category,4171617,Observation,,,low;high,4267416;4328749,,,0;1
-education_category_3,2000000075,Observation,,,low;medium;high,4267416;4152518;4328749,,,0;1;2
-education_category_verhage,2000000076,Observation,,,,,,,
+education_category_3,2000000077,Observation,,,low;medium;high,4267416;4152518;4328749,,,0;1;2
+education_category_verhage,2000000078,Observation,,,,,,,
 normal_cognition_diagnosis,42710016,Condition,,,yes;no,4188539;_,,date_diagnosis,1;0
 scd_diagnosis,2000000002,Condition,,,yes;no,4188539;_,,date_diagnosis,1;0
 mci_diagnosis,4297400,Condition,,,yes;no,4188539;_,,date_diagnosis,1;0
@@ -136,26 +136,26 @@ priority_memory_dr_hopkins,2000000052,Measurement,,,,,,date_npe,> 0
 priority_memory_dr_vat_a,2000000053,Measurement,,,,,,date_npe,> 0
 priority_memory_dr_vat_b,2000000054,Measurement,,,,,,date_npe,> 0
 priority_memory_dr_srb,2000000055,Measurement,,,,,,date_npe,> 0
-priority_memory_dr_rrf_3,2000000056,Measurement,,,,,,date_npe,> 0
-priority_memory_dr_rrf_20,2000000056,Measurement,,,,,,date_npe,> 0
-priority_memory_dr_mmse,2000000057,Measurement,,,,,,date_npe,> 0
-priority_memory_dr_adas,2000000058,Measurement,,,,,,date_npe,> 0
-priority_memory_dr_10_word_list,2000000059,Measurement,,,,,,date_npe,> 0
-priority_memory_dr_recall_10_word_list,2000000060,Measurement,,,,,,date_npe,> 0
-priority_executive_tmt_b_time,2000000061,Measurement,,,,,,date_npe,
-priority_executive_tmt_b_errors,2000000062,Measurement,,,,,,date_npe,
-priority_executive_stroop_3,2000000063,Measurement,,,,,,date_npe,
-priority_executive_cst_a,2000000064,Measurement,,,,,,date_npe,
-priority_executive_cst_b,2000000065,Measurement,,,,,,date_npe,
-priority_executive_cst_c,2000000066,Measurement,,,,,,date_npe,
-priority_language_animal_fluency,2000000067,Measurement,,,,,,date_npe,> 0
-priority_language_category_fluency_1,2000000068,Measurement,,,,,,date_npe,> 0
-priority_language_letter_fluency_1,2000000069,Measurement,,,,,,date_npe,> 0
-priority_language_any_fluency_2,2000000070,Measurement,,,,,,date_npe,> 0
-priority_language_bnt_15,2000000071,Measurement,,,,,,date_npe,> 0
-priority_language_bnt_30,2000000072,Measurement,,,,,,date_npe,> 0
-priority_language_bnt_60,2000000073,Measurement,,,,,,date_npe,> 0
-priority_language_any_picture_naming_test,2000000074,Measurement,,,,,,date_npe,> 0
+priority_memory_dr_rrf_short,2000000056,Measurement,,,,,,date_npe,> 0
+priority_memory_dr_rrf_long,2000000057,Measurement,,,,,,date_npe,> 0
+priority_memory_dr_mmse,2000000058,Measurement,,,,,,date_npe,> 0
+priority_memory_dr_adas,2000000059,Measurement,,,,,,date_npe,> 0
+priority_memory_dr_10_word_list,2000000060,Measurement,,,,,,date_npe,> 0
+priority_memory_dr_recall_10_word_list,2000000061,Measurement,,,,,,date_npe,> 0
+priority_executive_tmt_b_time,2000000062,Measurement,,,,,,date_npe,
+priority_executive_tmt_b_errors,2000000063,Measurement,,,,,,date_npe,
+priority_executive_stroop_3,2000000064,Measurement,,,,,,date_npe,
+priority_executive_cst_a,2000000065,Measurement,,,,,,date_npe,
+priority_executive_cst_b,2000000066,Measurement,,,,,,date_npe,
+priority_executive_cst_c,2000000067,Measurement,,,,,,date_npe,
+priority_language_animal_fluency,2000000068,Measurement,,,,,,date_npe,> 0
+priority_language_category_fluency_1,2000000069,Measurement,,,,,,date_npe,> 0
+priority_language_letter_fluency_1,2000000070,Measurement,,,,,,date_npe,> 0
+priority_language_any_fluency_2,2000000071,Measurement,,,,,,date_npe,> 0
+priority_language_bnt_15,2000000072,Measurement,,,,,,date_npe,> 0
+priority_language_bnt_30,2000000073,Measurement,,,,,,date_npe,> 0
+priority_language_bnt_60,2000000074,Measurement,,,,,,date_npe,> 0
+priority_language_any_picture_naming_test,2000000075,Measurement,,,,,,date_npe,> 0
 p_tau,4136437,Observation,,,,,,,> 0
 amyloid_b_42,45768724,Observation,pg/mL,8845,,,,,> 0
 amyloid_b_40,45768723,Observation,pg/mL,8845,,,,,> 0
@@ -168,3 +168,4 @@ icam,4284103,Observation,,,,,,,> 0
 il6,4332015,Measurement,,,,,,,> 0
 il8,4166200,Measurement,,,,,,,> 0
 il_1b,4282774,Measurement,,,,,,,> 0
+tnfalpha,2000000076,Measurement,,,,,,,> 0

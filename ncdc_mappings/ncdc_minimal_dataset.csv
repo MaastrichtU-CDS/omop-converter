@@ -1,4 +1,4 @@
-﻿Main category;EMIF-AD category;Variable name EMIF-AD;Variable name used;Variable Description ;Unity;Categories;Range or possible values;Units;Visit independent;Specific information for harmonisation;Domain;Vocabulary;Concept Id;Concept Id Link;Unit;Unit Concept Id;Vocabulary;Values;Values Concept Id;Vocabulary;Info;Date;Type
+﻿Main category;EMIF-AD category;Variable name EMIF-AD;Variable name used;Variable Description ;Unity;Categories;Range or possible values;Units;Visit independent;Specific information for harmonisation;Domain;DVocabulary;Concept Id;Concept Id Link;Unit;Unit Concept Id;Vocabulary;Values;Values Concept Id;Vocabulary;Info;Date;Type
 General;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Data_saved;"CSV;excel;SPSS;SAS;R;Phyton;other";factor;1 = CSV, 2 = excel, 3 = SPSS, 4 = SAS, 5 = R, 6 = Phyton, 7 = other;"1;7";;Yes;;;;;;;;;;;;;;
 ;;;Format_data;In long or in wide format;factor;1 = long, 0 = wide;;;Yes;;;;;;;;;;;;;;
@@ -7,18 +7,18 @@ General;;;;;;;;;;;;;;;;;;;;;;;
 Demographics;Subject characteristics & demograhics;;;;;;;;;;;;;;;;;;;;;;
 ;Demographics;Birth year;Birth_year;Year of birth ;numeric;;>= 1900;;Yes;;Person;;;;;;;;;;;;
 ;Demographics;Age ;Age;Age at  assessment;numeric;;>= 0;years;No;;Observation;SNOMED;4265453;Athena-4265453;year;9448;UCUM;;;;;date_age;
-;Demographics;Sex;Sex;Sex;factor;"2 = unknown; 1= female; 0 = male";"0;1";;Yes;;Person;;;;;;;"male;female;-";"8507;8532;8551";GENDER;;;
+;Demographics;Sex;Sex;Sex;factor;"1= female; 0 = male";"0;1;_";;Yes;;Person;;;;;;;"male;female;-";"8507;8532;8551";GENDER;;;
 ;Subject characteristics;Education_years;Education_years;Education level in years;numeric;;> = 0;years;Yes;Recode Verhaage score into education in years ('1'=5) ('2'=6) ('3'=8) ('4'=9) ('5'=10) ('6'=13) ('7'=17). CBS categories can also be converted to year;Observation;;2000000001;;year;9448;UCUM;;;;;;
 ;Subject characteristics;;Education_category;Education level categories (2 categories);factor;"1 = high; 0 = low";"0;1";;Yes;"Low: years <  7; High: years >= 7";Observation;SNOMED;4171617;Athena-4171617;;;;"low;high";"4267416;4328749";SNOMED;;;
 ;Subject characteristics;;Education_category;Education level categories;factor;;;;;Alternatively, include other categories according to availability in cohort;;;;;;;;;;;;;
-;;;Education_category_3;Education level categories (3 categories);factor;"2 = high; 1 = medium; 0 = low";"0;1;2";;;"Low(1) = No education, (un)completed primary education, or lower vocational education; Medium(2) = Intermediate vocational education or higher secondary education; High(3) = Higher vocational education or university education.";Observation;;2000000075;;;;;"low;medium;high";"4267416;4152518;4328749";;;;
+;;;Education_category_3;Education level categories (3 categories);factor;"2 = high; 1 = medium; 0 = low";"0;1;2";;;"Low(1) = No education, (un)completed primary education, or lower vocational education; Medium(2) = Intermediate vocational education or higher secondary education; High(3) = Higher vocational education or university education.";Observation;;2000000077;;;;;"low;medium;high";"4267416;4152518;4328749";;;;
 ;;;Education_category_verhage;Education category Verhaage;factor;"1;2;3;4;5;6;7";;;;"1. Less than 6 years of primary education
 2. Finished primary education
 3. Primary education and less than 2 years of low-level secondary education
 4. Finished low-level secondary education
 5. Finished average-level secondary education
 6. Finished high level secondary education 
-7. University degree";Observation;;2000000076;;;;;;;;;;
+7. University degree";Observation;;2000000078;;;;;;;;;;
 Dementia;Clinical information & cognitive screening tests;;;;;;;;;;;;;;;;;;;;;;
 ;Diagnoses;Date Diagnosis;Date_diagnosis;Date of diagnosis ;date;;;;No;;;;;;;;;;;;;;
 ;;;Diagnosis;Diagnosis ;factor;"1 = normal cognition; 2 = subjective cognitive decline; 3 = mild cognitive impairment; 4 dementia";"0;4";;No;;;;;;;;;;;;;;
@@ -108,15 +108,15 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;CSF;"Amyloid Beta 1-42 (pg;mL)";CSF_ab_total_1_42;"Amyloid Beta 1-42 in pg;ml ";numeric;;> 0;"pg;ml";No;;Measurement;;2000000012;;pg/mL;8845;UCUM;;;;;Date_LP;
 ;CSF;"Amyloid Beta 42;40";CSF_ab_total_ratio_42_40;"Ratio Amyloid Beta 42;40   ";numeric;;> 0;"pg;ml";No;;Measurement;;2000000013;;pg/mL;8846;UCUM;;;;;Date_LP;
 ;CSF;"Amyloid Beta 1-38 (pg;mL)";CSF_ab_total_1_38;"Amyloid Beta 1-38 in pg;ml";numeric;;> 0;"pg;ml";No;;Measurement;;2000000014;;pg/mL;8847;UCUM;;;;;Date_LP;
-;CSF;;Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Condition;;2000000015;;;;;"yes;no";"4188539;_";;Amy_cutoff;Date_LP;Amy_cutoff
-;CSF;;no_Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000015;;;;;"yes;no";"_;4132135";;Amy_cutoff;Date_LP;Amy_cutoff
+;CSF;;Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";"1;0";;No;;Condition;;2000000015;;;;;"yes;no";"4188539;_";;Amy_cutoff;Date_LP;Amy_cutoff
+;CSF;;no_Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";"1;0";;No;;Observation;;2000000015;;;;;"yes;no";"_;4132135";;Amy_cutoff;Date_LP;Amy_cutoff
 ;CSF;CSF Assay;CSF_assay_Tau;CSF Assay tau;factor;1 = luminex, 2 = innogetics Elisa, 3 = Elecsys, 4 = Innotest;"1;4";;No;;Observation;;2000000016;;;;;;;;;Date_LP;
 ;CSF;Total Tau;CSF_ttau;Total Tau ;numeric;;> 0;"pg;mL";No;;Measurement;SNOMED;4260896;Athena-4260896;pg/mL;8847;UCUM;;;;;Date_LP;
-;CSF;Total Tau Abnormal;Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Condition;;2000000017;;;;;"yes;no";"4188539;_";;Ttau_cutoff;Date_LP;Ttau_cutoff
-;CSF;Total Tau Abnormal;no_Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000017;;;;;"yes;no";"_;4188540";;Ttau_cutoff;Date_LP;Ttau_cutoff
+;CSF;Total Tau Abnormal;Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";"1;0";;No;;Condition;;2000000017;;;;;"yes;no";"4188539;_";;Ttau_cutoff;Date_LP;Ttau_cutoff
+;CSF;Total Tau Abnormal;no_Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";"1;0";;No;;Observation;;2000000017;;;;;"yes;no";"_;4188540";;Ttau_cutoff;Date_LP;Ttau_cutoff
 ;CSF;Phosphorylated Tau;CSF_ptau;Phosphorylated Tau;numeric;;> 0;"pg;ml";No;;Measurement;;2000000018;;pg/mL;8847;UCUM;;;;;Date_LP;
-;CSF;Phosphorylated Tau abnormal ;Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";0,1;;No;;Condition;;2000000019;;;;;"yes;no";"4188539;_";;Ptau_cutoff;Date_LP;Ptau_cutoff
-;CSF;Phosphorylated Tau abnormal ;no_Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";0,1;;No;;Observation;;2000000019;;;;;"yes;no";"_;4132135";;Ptau_cutoff;Date_LP;Ptau_cutoff
+;CSF;Phosphorylated Tau abnormal ;Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";"1;0";;No;;Condition;;2000000019;;;;;"yes;no";"4188539;_";;Ptau_cutoff;Date_LP;Ptau_cutoff
+;CSF;Phosphorylated Tau abnormal ;no_Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";"1;0";;No;;Observation;;2000000019;;;;;"yes;no";"_;4132135";;Ptau_cutoff;Date_LP;Ptau_cutoff
 ;CSF;Phosphorylated Tau cut-off;Ptau_cutoff;Cutoff used ;0<…, 1>=…;;;;No;;NA;;;;;;;;;;;Date_LP;
 ;Amyloid PET Dates;Date PET;Date_PET;Date PET scan;date;;;;No;;;;;;;;;;;;;;
 ;Amyloid PET protocol;Amyloid PET tracer ;PET_tracer;Tracer used during PET assessment;factor;1 = PiB, 2 = Florbetapir, 3 = AV-45;"0;3";;No;;Observation;;2000000020;;;;;;35623421;;;Date_PET;
@@ -125,8 +125,8 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;;;PET_level;Result PET assessment, continuous;numeric;;> 0;;No;;;;;;;;;;;;;Date_PET;
 ;;;PET_level_suvr;Result PET assessment SUVR;numeric;;> 0;;No;;Observation;;2000000022;;;;;;;;;Date_PET;
 ;;;PET_level_bpnd;Result PET assessment BPnd;numeric;;> 0;;No;;Observation;;2000000023;;;;;;;;;Date_PET;
-;Amyloid PET;Amyloid PET abnormal;PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";0,1;"1;0";No;;Condition;;2000000024;;;;;"yes;no";"4188539;_";;;Date_PET;
-;Amyloid PET;Amyloid PET abnormal;no_PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";0,1;"1;0";No;;Observation;;2000000024;;;;;"yes;no";"_;4132135";;;Date_PET;
+;Amyloid PET;Amyloid PET abnormal;PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";"1;0";;No;;Condition;;2000000024;;;;;"yes;no";"4188539;_";;;Date_PET;
+;Amyloid PET;Amyloid PET abnormal;no_PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";"1;0";;No;;Observation;;2000000024;;;;;"yes;no";"_;4132135";;;Date_PET;
 "Anxiety;depression";Clinical information & rating scales;;;;;;;;;;;;;;;;;;;;;;
 ;Dates rating scales;Date of rating scales assessment;Date_depression;Date assesment depression;date;;;;No;;;;;;;;;;;;;;
 ;Psychiatric disorders;;Depression_type;Assement type depression;factor;1 = clinical diagnosis, 2 = MINI, 3 = GDS-15, 4 = GDS, 5 = CES-D, 6 = other;"1;6";;No;Priority for 1. clinical diagnosis                                                                       2. MINI                                                                                                                             3. GDS-15                                                                                                                                4. GDS                                                                                                                           5. CES-D                                                                                                                             6. If not available, please provide alternative if possible   ;;;;;;;;;;;;Date_depression;
@@ -207,24 +207,24 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;;Priority_memory_dr_vat_a;Priority test from VAT A (delayed);numeric;;> 0;;No;;Measurement;;2000000053;;;;;;;;;Date_NPE;
 ;;;Priority_memory_dr_vat_b;Priority test from VAT B  (delayed);numeric;;> 0;;No;;Measurement;;2000000054;;;;;;;;;Date_NPE;
 ;;;Priority_memory_dr_srb;Priority test from Story recall Brescia (delayed);numeric;;> 0;;No;;Measurement;;2000000055;;;;;;;;;Date_NPE;
-;;;Priority_memory_dr_rrf_3;Priority test from Recall Rey figure (delayed) - 3 min;numeric;;> 0;;No;;Measurement;;2000000056;;;;;;;;;Date_NPE;
-;;;Priority_memory_dr_rrf_20;Priority test from Recall Rey figure (delayed) - 20 min;numeric;;> 0;;No;;Measurement;;2000000056;;;;;;;;;Date_NPE;
-;;;Priority_memory_dr_mmse;Priority test from MMSE (delayed);numeric;;> 0;;No;;Measurement;;2000000057;;;;;;;;;Date_NPE;
-;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;> 0;;No;;Measurement;;2000000058;;;;;;;;;Date_NPE;
-;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;> 0;;No;;Measurement;;2000000059;;;;;;;;;Date_NPE;
-;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;> 0;;No;;Measurement;;2000000060;;;;;;;;;Date_NPE;
+;;;Priority_memory_dr_rrf_short;Priority test from Recall Rey figure (short delay);numeric;;> 0;;No;;Measurement;;2000000056;;;;;;;;;Date_NPE;
+;;;Priority_memory_dr_rrf_long;Priority test from Recall Rey figure (long delay);numeric;;> 0;;No;;Measurement;;2000000057;;;;;;;;;Date_NPE;
+;;;Priority_memory_dr_mmse;Priority test from MMSE (delayed);numeric;;> 0;;No;;Measurement;;2000000058;;;;;;;;;Date_NPE;
+;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;> 0;;No;;Measurement;;2000000059;;;;;;;;;Date_NPE;
+;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;> 0;;No;;Measurement;;2000000060;;;;;;;;;Date_NPE;
+;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;> 0;;No;;Measurement;;2000000061;;;;;;;;;Date_NPE;
 ;;;Priority_memory_dr_other;Priority test from another alternative  (delayed);numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE;
 ;Priority memory Test;Priority memory delayed;Priority_memory_dr;raw scores ;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE;
 ;Priority memory Test;Priority memory delayed z -score;Priority_memory_dr_z;z-score;numeric;;-3 - +3 SD;;No;;;;;;;;;;;;;Date_NPE;
 ;Priority executive Test;Priority executive type;Priority_executive_type;Priority test for executive function;factor;1 = Trail Making Test B, 2 = Stroop 3, 3 = other;"1;3";;No;"Priority for 1. Trail Making Test B
 2. Stroop 3                                                                                                 3. Concept Shifting Test Part A                                                    4. Concept Shifting Test Part B                                                     5. Concept Shifting Test Part C                                                                                                                    6. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE;
 ;;TMT-B;Priority_executive_TMT_b;Priority test for executive function score from TMT B;numeric;;;;No;;;;;;;;;;;;;Date_NPE;
-;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;;;No;;Measurement;;2000000061;;;;;;;;;Date_NPE;
-;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;;;No;;Measurement;;2000000062;;;;;;;;;Date_NPE;
-;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3;numeric;;;;No;;Measurement;;2000000063;;;;;;;;;Date_NPE;
-;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;;;No;;Measurement;;2000000064;;;;;;;;;Date_NPE;
-;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE;
-;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE;
+;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;;;No;;Measurement;;2000000062;;;;;;;;;Date_NPE;
+;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;;;No;;Measurement;;2000000063;;;;;;;;;Date_NPE;
+;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3;numeric;;;;No;;Measurement;;2000000064;;;;;;;;;Date_NPE;
+;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE;
+;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE;
+;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;;;No;;Measurement;;2000000067;;;;;;;;;Date_NPE;
 ;;;Priority_executive_other;Priority test for executive function score from another alternative;numeric;;;;No;;;;;;;;;;;;;Date_NPE;
 ;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE;
 ;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;No;;;;;;;;;;;;;Date_NPE;
@@ -234,14 +234,14 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 4. Any type of fluency 2 min
 5. Boston Naming Test (15;30;60 items)
 6. Any picture naming test                                                                                 7. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE;
-;;Animals Fluency 1 min;Priority_language_animal_fluency;Priority test for language from Animal Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000067;;;;;;;;;Date_NPE;
-;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000068;;;;;;;;;Date_NPE;
-;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000069;;;;;;;;;Date_NPE;
-;;;Priority_language_any_fluency_2;Priority test for language from Any type of fluency 2 min;numeric;;> 0;;No;;Measurement;;2000000070;;;;;;;;;Date_NPE;
-;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;> 0;;No;;Measurement;;2000000071;;;;;;;;;Date_NPE;
-;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;> 0;;No;;Measurement;;2000000072;;;;;;;;;Date_NPE;
-;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;> 0;;No;;Measurement;;2000000073;;;;;;;;;Date_NPE;
-;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming test ;numeric;;> 0;;No;;Measurement;;2000000074;;;;;;;;;Date_NPE;
+;;Animals Fluency 1 min;Priority_language_animal_fluency;Priority test for language from Animal Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000068;;;;;;;;;Date_NPE;
+;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000069;;;;;;;;;Date_NPE;
+;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;> 0;;No;;Measurement;;2000000070;;;;;;;;;Date_NPE;
+;;;Priority_language_any_fluency_2;Priority test for language from Any type of fluency 2 min;numeric;;> 0;;No;;Measurement;;2000000071;;;;;;;;;Date_NPE;
+;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;> 0;;No;;Measurement;;2000000072;;;;;;;;;Date_NPE;
+;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;> 0;;No;;Measurement;;2000000073;;;;;;;;;Date_NPE;
+;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;> 0;;No;;Measurement;;2000000074;;;;;;;;;Date_NPE;
+;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming test ;numeric;;> 0;;No;;Measurement;;2000000075;;;;;;;;;Date_NPE;
 ;;;Priority_language_other;Priority test for language from another alternative;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE;
 ;Priority language test;Priority language;Priority_language;raw scores;numeric;;> 0;;No;;;;;;;;;;;;;Date_NPE;
 ;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;;;No;;;;;;;;;;;;;Date_NPE;
@@ -258,4 +258,4 @@ Plasma;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Il6;Interleukin-6;numeric;;> 0;;No;;Measurement;SNOMED;4332015;Athena-4332015;;;;;;;;;
 ;;;Il8;Interleukin-8;numeric;;> 0;;No;;Measurement;SNOMED;4166200;Athena-4166200;;;;;;;;;
 ;;;Il_1b;Interleukin 1 beta;numeric;;> 0;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;;
-;;;TNFalpha;Tumor necrosis factor alpa;numeric;;> 0;;No;;;;;;;;;;;;;;
+;;;TNFalpha;Tumor necrosis factor alpa;numeric;;> 0;;No;;Measurement;;2000000076;;;;;;;;;;

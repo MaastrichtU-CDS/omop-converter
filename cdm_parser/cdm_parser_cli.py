@@ -168,8 +168,8 @@ def parse_omop_to_plane(table_name):
             visit_values = parse_visit(
                 destination_mapping, columns, visit, observations, measurements, conditions)
             insert_values(pg, table_name, visit_values)
-            if count % 1000 == 0:
-                print(f'Processed {count} visits from {len(visits)}')
+            if (count + 1) % 1000 == 0:
+                print(f'Processed {count + 1} visits from {len(visits)}')
 
 @cli.command()
 def report():
