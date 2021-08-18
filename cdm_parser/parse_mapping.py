@@ -2,11 +2,23 @@ from constants import *
 from exceptions import ParsingError
 from parse_dataset import DataParser
 
+TYPE_INT = 'int'
+TYPE_NUMERIC = 'num'
+TYPE_TEXT = 'text'
+TYPE_BOOL = 'bool'
+
 SQL_INTEGER = 'INTEGER'
 SQL_NUMERIC = 'NUMERIC'
 SQL_VARCHAR = 'VARCHAR ( 50 )'
+SQL_DATE = 'DATE'
+SQL_BOOLEAN = 'BOOLEAN'
 
 COLUMN_TYPE = {
+    DATE: SQL_DATE,
+    TYPE_INT: SQL_INTEGER,
+    TYPE_NUMERIC: SQL_NUMERIC,
+    TYPE_TEXT: SQL_VARCHAR,
+    TYPE_BOOL: SQL_BOOLEAN,
     PERSON: SQL_INTEGER,
     OBSERVATION: SQL_VARCHAR,
     MEASUREMENT: SQL_NUMERIC,
@@ -26,10 +38,10 @@ def get_parsed_value(mapping, value):
         raise ParsingError('Error parsing the values for the NCDC plane table')
     return value
 
-def get_column_statement(column_name, domain=OBSERVATION):
+def get_column_statement(column_name, type, domain=OBSERVATION):
     """ Build the sql statement for the column.
     """
-    return f'{column_name} {"DATE" if DATE in column_name else COLUMN_TYPE[domain]}'
+    return f'{column_name} {COLUMN_TYPE[type] if type else COLUMN_TYPE[domain]}'
 
 def parse_mapping_to_columns(mapping):
     """ Parse a CDM mapping to SQL columns.
@@ -39,9 +51,9 @@ def parse_mapping_to_columns(mapping):
     }
     for key, value in mapping.items():
         if key not in columns and key not in [SOURCE_ID] and 'no_' not in key:
-            columns[key] = get_column_statement(key, value[DOMAIN])
+            columns[key] = get_column_statement(key, value[TYPE], value[DOMAIN])
         if value[DATE] and value[DATE] not in columns:
-            columns[value[DATE]] = get_column_statement(value[DATE])
+            columns[value[DATE]] = get_column_statement(value[DATE], DATE)
     columns['pk'] = 'PRIMARY KEY (id, date)'
     return columns
 

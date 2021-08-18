@@ -54,6 +54,7 @@ STATIC_VALUE = 'static_value'
 ALTERNATIVES = 'alternatives'
 CONDITION = 'condition'
 NCDC_MAP = 'ncdc_map'
+TYPE = 'type'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
 DEFAULT_VALUE = '-'
