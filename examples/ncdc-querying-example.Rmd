@@ -30,7 +30,7 @@ con <- dbConnect(
   dbname = "CDM",
   host = "localhost",
   port = 5432,
-  password = "G95UzqXk5KJ",
+  password = "",
   user = "postgres"
 )
 ```
