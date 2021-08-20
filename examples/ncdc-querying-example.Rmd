@@ -20,17 +20,18 @@ The NCDC project takes leverage of the OMOP CDM model to represent the data from
 - MEASUREMENT: “structured values (numerical or categorical) obtained through systematic and standardized examination or testing of a Person or Person’s sample”
 - CONDITION_OCCURRENCE: "suggesting the presence of a disease or medical condition stated as a diagnosis, a sign, or a symptom"
 
-```{r}
+```{r, echo=-5}
 # Creating the database client using the "DBI" library
 # Change the parameters accordingly
 library(DBI)
 library(RPostgres)
+password <- ""
 con <- dbConnect(
   RPostgres::Postgres(),
   dbname = "CDM",
   host = "localhost",
   port = 5432,
-  password = "",
+  password = password,
   user = "postgres"
 )
 ```
