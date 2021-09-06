@@ -1,9 +1,9 @@
 ---
 title: "NCDC Data Harmonization"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 
 The NCDC project takes leverage of multiple sources of data by using a federated infrastructure. Being able to use these sources of data requires a data harmonization process to make the data interoperable.
@@ -15,10 +15,12 @@ A clinical model defines a structure and relationships that allow representing d
 The OMOP (Observational Medical Outcomes Partnership) CDM (Common Data Model) emerges in this context, presenting a clinical model that consistently grew to accommodate more types of clinical data. Its structure also includes standard vocabularies obtained from known sources, such as SNOMED.
 
 The NCDC project takes leverage of the OMOP CDM model to represent the data from each source and mantain the source data. Although OMOP represents a more complex data structure, the NCDC project mainly uses the following tables to represent the data (https://ohdsi.github.io/CommonDataModel/cdm60.html):
+
 - PERSON: “central identity management for all Persons in the database … uniquely identify each person or patient, and some demographic information.”
 - OBSERVATION: “clinical facts about a Person obtained in the context of examination, questioning or a procedure.”
 - MEASUREMENT: “structured values (numerical or categorical) obtained through systematic and standardized examination or testing of a Person or Person’s sample”
 - CONDITION_OCCURRENCE: "suggesting the presence of a disease or medical condition stated as a diagnosis, a sign, or a symptom"
+
 
 ```{r, echo=-5}
 # Creating the database client using the "DBI" library
@@ -91,9 +93,10 @@ dbClearResult(query)
 # Selecting the average age for all persons with a dementia diagnosis
 #
 # NCDC variable for dementia: "dementia_diagnosis"
-# NCDC coding: 1 - yes/true, 0 - no/false
+# NCDC coding: TRUE ('1'), FALSE ('0')
 sql_statement <- "SELECT AVG(date_part('year', now()) - birth_year) 
-FROM ncdc WHERE dementia_diagnosis = 1"
+FROM ncdc WHERE dementia_diagnosis IS TRUE"
+# Alternative: dementia_diagnosis = '1'
 query <- dbSendQuery(con, sql_statement)
 dbFetch(query)
 dbClearResult(query)
