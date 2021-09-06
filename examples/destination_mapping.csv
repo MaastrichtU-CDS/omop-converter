@@ -10,7 +10,7 @@ education_years,2000000001,Observation,year,9448,,,,,
 education_category,4171617,Observation,,,low;high,4267416;4328749,,,
 dementia_diagnosis,4182210,Condition,,,yes;no,4188539;_,dementia_cutoff,date_diagnosis,1;0
 no_dementia_diagnosis,4182210,Observation,,,yes;no,_;4132135,dementia_cutoff,date_diagnosis,1;0
-hypertension,4058286,Observation,,,yes;no,4188539;4188540,,date_comorbidities,
+hypertension,4058286,Observation,,,yes;no,4188539;4188540,,date_comorbidities,1;0
 dementia_cutoff,,NA,,,,,,,
 cdr_total,36714811,Observation,,,,,,date_CDR,
 sbp,4152194,Measurement,mmHg,8876,,,,date_vitals,
