@@ -62,6 +62,14 @@ class PostgresManager:
         )
         self.connection.commit()
 
+    def create_table(self, table_name, columns, ):
+        """ Create a new table.
+        """
+        self.cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (
+            {', '.join(columns)}
+        );""")
+        self.connection.commit()
+
     def drop_table(self, table):
         """ Drop a table from the database.
         """

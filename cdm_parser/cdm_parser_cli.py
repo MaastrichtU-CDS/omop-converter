@@ -8,10 +8,12 @@ from cdm_builder import *
 from parser import parse_csv_mapping
 from parse_dataset import DataParser
 from postgres_manager import PostgresManager
+from parse_mapping import parse_mapping_to_columns, parse_visit
 
 @click.group()
 def cli():
     click.echo('OMOP parser CLI')
+    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
 
 @cli.command(help='Set up the configurations when using the CLI without docker.')
 @click.option('--user', prompt=True)
@@ -60,7 +62,6 @@ def set_db(insert_voc, sequence_start):
         data sources will be parsed and used in the same database)
         * Optionally: Insert the vocabulary if available;
     """
-    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     create_database()
     with PostgresManager() as pg:
         set_schema(pg)
@@ -71,17 +72,23 @@ def set_db(insert_voc, sequence_start):
             insert_vocabulary(pg)
 
 @cli.command()
+def insert_voc():
+    """ Insert the vocabularies.
+    """
+    with PostgresManager() as pg:
+        if VOCABULARY_PATH in os.environ:
+            insert_vocabulary(pg)
+
+@cli.command()
 def drop_db():
     """ Drop the CDM database.
     """
-    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     drop_database()
 
 @cli.command()
 def insert_constraints():
     """ Set the CDM primary keys and constraints.
     """
-    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     with PostgresManager() as pg:
         set_constraints(pg)
 
@@ -106,7 +113,6 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals)
         Nonetheless, in any case, the tables should not exist after parsing all the data and 
         it's recommended to manually check if all tables with prefix 'temp' were removed successfully.
     """
-    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     destination_mapping = parse_csv_mapping(os.getenv(DESTINATION_MAPPING_PATH))
     source_mapping = parse_csv_mapping(os.getenv(SOURCE_MAPPING_PATH))
 
@@ -136,11 +142,39 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals)
         # if drop_temp_tables:
         #    pg.drop_table(ID_TABLE)
 
+@click.option('--table-name', prompt=True)
+@cli.command()
+def parse_omop_to_plane(table_name):
+    """ Parse the OMOP content to a plane/simpified table. Available to 
+        facilitate the first contact with SQL databases and querying. However,
+        it's recommended to use the OMOP table (and develop any scripts or algorithms 
+        for the OMOP schema) since it represents the primary source of data and
+        a standard clinical model.
+    """
+    destination_mapping = parse_csv_mapping(os.getenv(DESTINATION_MAPPING_PATH))
+    with PostgresManager() as pg:
+        pg.drop_table(table_name)
+        # Transform the mapping variables into columns and create the table
+        columns = parse_mapping_to_columns(destination_mapping)
+        pg.create_table(table_name, columns.values())
+        print(f'Table {table_name} created successfully')
+        # Parse the data from OMOP to the simplified table
+        print('Parsing the OMOP CDM data to the plane table')
+        visits = get_visit_occurrences(pg)
+        for count, visit in enumerate(visits):
+            observations = get_observations_by_visit_id(pg, visit[0])
+            measurements = get_measurements_by_visit_id(pg, visit[0])
+            conditions = get_conditions_by_visit_id(pg, visit[0])
+            visit_values = parse_visit(
+                destination_mapping, columns, visit, observations, measurements, conditions)
+            insert_values(pg, table_name, visit_values)
+            if (count + 1) % 1000 == 0:
+                print(f'Processed {count + 1} visits from {len(visits)}')
+
 @cli.command()
 def report():
     """ Returns information that can be use for quality control.
     """
-    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     with PostgresManager() as pg:
         persons = get_number_of_persons(pg)
         if persons:
@@ -157,7 +191,6 @@ def report():
 def export_db(file, data_only):
     """ Export the database to a file.
     """
-    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     command = ['pg_dump', '-d', PostgresManager.get_database_uri(), '-f', file]
     if data_only:
         command.append('--data-only')
@@ -173,7 +206,6 @@ def export_db(file, data_only):
 def import_db(file, create_db):
     """ Create and build a database from a file.
     """
-    if DOCKER_ENV not in os.environ: import_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION)
     if create_db:
         create_database()
     run_command(

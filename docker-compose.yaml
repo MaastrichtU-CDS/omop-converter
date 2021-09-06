@@ -14,7 +14,7 @@ services:
       - db
 
   memorabel-parser:
-    image: pmateus/memorabel-data-harmonization:1.0.0
+    image: pmateus/memorabel-data-harmonization:1.1.0
     stdin_open: true
     tty: true
     environment:

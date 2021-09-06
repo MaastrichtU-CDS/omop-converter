@@ -15,7 +15,7 @@ def import_config(path, section):
         for key, value in parser[section].items():
             os.environ[key.upper()] = value
     else:
-        raise Exception('Section {0} not found in the configuration file'.format(section))
+        print('Section {0} not found in the configuration file'.format(section))
 
 def export_config(path, section, configurations):
     """ Export the configuration variables to a file.
