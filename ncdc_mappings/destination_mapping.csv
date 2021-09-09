@@ -70,7 +70,8 @@ hdl,4101713,Measurement,mmol/L,8753,,,,date_blood,> 0 ,num
 ldl,4012479,Measurement,mmol/L,8753,,,,date_blood,> 0,num
 crp,4208414,Measurement,,,,,,date_blood,> 0,num
 alcohol,4074035,Observation,,,yes;no,4188539;4188540,,date_habits,1;0,bool
-smoking,4275495,Observation,,,current;past;never,4034855;4132507;763692,,date_habits,2;1;0,int
+smoking_behavior,4275495,Observation,,,current;past;never,4034855;4132507;763692,,date_habits,2;1;0,int
+smoker,4298794,Observation,,,yes;no,4188539;4188540,,date_habits,1;0,bool
 apoe_carrier,2000000009,Observation,,,yes;no,4188539;4188540,,apoe_date,1;0,bool
 apoe_genotype,2000000010,Observation,,,2/2;2/3;3/3;3/4;2/4;4/4,,,apoe_date,1;2;3;4;5;6,int
 csf_assay_amyloid,2000000011,Observation,,,luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun,,,date_lp,1;2;3;4;5,int
