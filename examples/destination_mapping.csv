@@ -3,7 +3,7 @@ source_id,,Person,,,,,,,,int
 date,,Person,,,,,,,,date
 birth_year,,Person,,,,,,,,int
 age,4265453,Observation,year,9448,,,,date_age,
-sex,,Person,,,male;female;-,8507;8532;8551,,,0;1;_,bool
+sex,,Person,,,male;female;-,8507;8532;8551,,,0;1;_,int
 mort_date,,Person,,,,,,,,date
 mort,,Person,,,true;false,,,,
 education_years,2000000001,Observation,year,9448,,,,,

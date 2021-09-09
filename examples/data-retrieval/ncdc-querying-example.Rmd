@@ -8,7 +8,7 @@ output:
 
 The NCDC project takes leverage of multiple sources of data by using a federated infrastructure. Being able to use these sources of data requires a data harmonization process to make the data interoperable.
 
-### OMOP CDM
+## OMOP CDM
 
 A clinical model defines a structure and relationships that allow representing different types of clinical data. In combination with standard vocabularies, it becomes possible to achieve a higher degree of interoperability, metadata description, and sustainability.
 
@@ -38,10 +38,31 @@ con <- dbConnect(
 )
 ```
 
-#### Querying the OMOP CDM
+## Data Extraction and Querying
 
-Some examples on how to query the OMOP CDM are given below.
+### OMOP CDM
+
+
+Some examples on how to extract data and query the OMOP CDM are given below.
 To write a new query it may be useful to use both the NCDC mapping information and the OMOP CDM v6.0 definition (https://ohdsi.github.io/CommonDataModel/cdm60.html).
+
+```{r}
+# Extracting data to a dataframe
+#
+# Reading the table 'Person' to a dataframe and getting the average
+# year of birth
+df <- dbGetQuery(con, 'SELECT * FROM PERSON')
+# summary(df)
+mean(df$year_of_birth)  
+
+# Another use case would be to already use the SQL query to make a sub-selection
+# of the data to retrieve. For example, extracting all observation for persons 
+# with more than 75 years and a negative dementia diagnosis
+df <- dbGetQuery(con, "SELECT * FROM OBSERVATION AS o WHERE o.person_id IN 
+    (SELECT DISTINCT p.person_id FROM PERSON AS p JOIN OBSERVATION as o ON 
+    p.person_id = o.person_id WHERE o.observation_concept_id = '4182210' AND 
+    (date_part('year', now()) - p.year_of_birth) > 75);")
+```
 
 ```{r}
 # Select the max, min, and average year of birth for all persons in the database by gender
@@ -72,7 +93,23 @@ dbClearResult(query)
 
 ### Simplified Table
 
+
 One of the drawbacks of using a clinical model can be the higher complexity in its model definition. This is the case with the OMOP CDM, it requires more knowledge about its schema and the querying can be more difficult, especially when taking the first steps. Although we recommend using the OMOP CDM, it's also possible to use a simplified table that mimics most of the representations used from the source data, a plane table with an entry by visit.
+
+```{r}
+# Extracting data to a pandas dataframe
+#
+# Reading the table 'NCDC' to a pandas dataframe and getting the average
+# year of birth
+df <- dbGetQuery(con, 'SELECT * FROM NCDC')
+mean(df[!duplicated(df['id']),]$birth_year)  
+
+# Extracting all observation for persons with more than 75 years and a 
+# negative dementia diagnosis
+df <- dbGetQuery(con, "SELECT * FROM NCDC2 WHERE dementia_diagnosis IS FALSE AND 
+    (date_part('year', now()) - birth_year) > 75")
+```
+
 
 ```{r}
 # Select the max, min, and average year of birth for all persons in the database by gender
@@ -81,9 +118,10 @@ One of the drawbacks of using a clinical model can be the higher complexity in i
 #  - 0: Male
 #  - 1: Female
 #  - NULL: Unknown
-sql_statement <- "SELECT sex, COUNT(id), 
-MAX(birth_year), MIN(birth_year), AVG(birth_year) FROM ncdc 
-GROUP BY sex"
+sql_statement <- "SELECT t.sex, COUNT(t.id), 
+MAX(t.birth_year), MIN(t.birth_year), AVG(t.birth_year) FROM 
+(SELECT DISTINCT id, sex, birth_year FROM ncdc) AS t
+GROUP BY t.sex"
 query <- dbSendQuery(con, sql_statement)
 dbFetch(query)
 dbClearResult(query)
@@ -94,8 +132,9 @@ dbClearResult(query)
 #
 # NCDC variable for dementia: "dementia_diagnosis"
 # NCDC coding: TRUE ('1'), FALSE ('0')
-sql_statement <- "SELECT AVG(date_part('year', now()) - birth_year) 
-FROM ncdc WHERE dementia_diagnosis IS TRUE"
+sql_statement <- "SELECT AVG(date_part('year', now()) - birth_year) FROM ncdc 
+  WHERE id IN (SELECT DISTINCT id FROM ncdc 
+  WHERE dementia_diagnosis IS TRUE)"
 # Alternative: dementia_diagnosis = '1'
 query <- dbSendQuery(con, sql_statement)
 dbFetch(query)
