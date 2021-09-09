@@ -77,7 +77,10 @@ class DataParser:
                 # TODO: VALUES_CONCEPT_ID not in self.destination_mapping[key] can be removed?
                 if key not in self.destination_mapping or VALUES_CONCEPT_ID not in self.destination_mapping[key]:
                     raise ParsingError(f'Variable {key} is not correctly mapped in the destination mapping!')
-                value_mapping[key] = self.map_variable_values(key, value)
+                try:
+                    value_mapping[key] = self.map_variable_values(key, value)
+                except Exception as error:
+                    raise ParsingError(f'Error creating the value mapping for variable {key}: {str(error)}')
         return value_mapping
 
     def parse_dataset(self, start, limit, convert_categoricals):

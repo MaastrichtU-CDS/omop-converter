@@ -73,7 +73,7 @@ class PostgresManager:
     def drop_table(self, table):
         """ Drop a table from the database.
         """
-        self.run_sql(f'DROP TABLE IF EXISTS {table}')
+        self.run_sql(f'DROP TABLE IF EXISTS {table};')
 
     def run_sql(self, statement, parameters=None, fetch_one=False, fetch_all=False):
         self.cursor.execute(statement, parameters)
