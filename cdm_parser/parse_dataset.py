@@ -226,13 +226,14 @@ class DataParser:
             if limit > 0 and index - start >= limit:
                 break
             try:
-            # Check if the source id variable is provided. In that case,
-            # the link between the source id and the person id will be stored
-            # in a dictionary and in a temporary table.
+                # Check if the source id variable is provided. In that case,
+                # the link between the source id and the person id will be stored
+                # in a dictionary and in a temporary table.
                 person_id = None
                 if id_source_variable:
                     if not self.valid_row_value(id_source_variable, row):
-                        raise Exception('Error when parsing the source id.')
+                        raise ParsingError(
+                            f'Error when parsing the source id for record number {index}.')
                     source_id = row[id_source_variable]
                     if source_id in id_map:
                         person_id = id_map[source_id]
