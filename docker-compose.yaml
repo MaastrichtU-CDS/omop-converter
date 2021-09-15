@@ -14,7 +14,7 @@ services:
       - db
 
   memorabel-parser:
-    image: pmateus/memorabel-data-harmonization:1.1.0
+    image: pmateus/memorabel-data-harmonization:1.1.2
     stdin_open: true
     tty: true
     environment:
@@ -28,6 +28,7 @@ services:
       DESTINATION_MAPPING_PATH: /mnt/mappings/destination_mapping.csv
       SOURCE_MAPPING_PATH: /mnt/mappings/source_mapping.csv
       DATASET_PATH: /mnt/data/dataset.csv
+      DATASET_DELIMITER: ","
       SOURCE_NAME: CDM database for Cohort 1
       HOLDER: Cohort 1 Administrator
       DESCRIPTION:

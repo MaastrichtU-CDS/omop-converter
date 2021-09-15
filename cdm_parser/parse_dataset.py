@@ -39,7 +39,6 @@ class DataParser:
     def valid_row_value(variable, row):
         """ Validate if the value exists and is not null
         """
-        # TODO: Handling missing values in another way
         return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != ''
 
     def map_variable_values(self, variable, specification):
@@ -83,7 +82,7 @@ class DataParser:
                     raise ParsingError(f'Error creating the value mapping for variable {key}: {str(error)}')
         return value_mapping
 
-    def parse_dataset(self, start, limit, convert_categoricals):
+    def parse_dataset(self, start, limit, convert_categoricals, delimiter):
         """ Parse the dataset to the CDM format.
         """
         print(f'Parse dataset from file {self.path}')
@@ -95,7 +94,7 @@ class DataParser:
 
         if '.csv' in self.path:
             with open(self.path) as csv_file:
-                csv_reader = csv.DictReader(csv_file, delimiter=',')
+                csv_reader = csv.DictReader(csv_file, delimiter=delimiter)
                 for i in range(start):
                     next(csv_reader)
                 self.transform_rows(enumerate(csv_reader, start=start), **kwargs)

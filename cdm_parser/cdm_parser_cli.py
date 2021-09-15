@@ -25,7 +25,9 @@ def cli():
 @click.option('--destination-mapping', prompt=True, default=DESTINATION_MAPPING_DEFAULT_PATH)
 @click.option('--source-mapping', prompt=True, default=SOURCE_MAPPING_DEFAULT_PATH)
 @click.option('--dataset', prompt=True)
-def set_up(user, password, host, port, database_name, vocabulary_path, destination_mapping, source_mapping, dataset):
+@click.option('--dataset-delimiter', prompt=False, default=DEFAULT_DELIMITER)
+def set_up(user, password, host, port, database_name, vocabulary_path, destination_mapping,
+    source_mapping, dataset, dataset_delimiter):
     """ Set up the configurations needed.
     """
     configurations = {
@@ -37,7 +39,8 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
         VOCABULARY_PATH: vocabulary_path,
         DESTINATION_MAPPING_PATH: destination_mapping,
         SOURCE_MAPPING_PATH: source_mapping,
-        DATASET_PATH: dataset
+        DATASET_PATH: dataset,
+        DATASET_DELIMITER: dataset_delimiter,
     }
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
@@ -136,7 +139,12 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
             cohort_id,
             pg
         )
-        parser.parse_dataset(start, limit, convert_categoricals)
+        parser.parse_dataset(
+            start, 
+            limit, 
+            convert_categoricals, 
+            delimiter=os.getenv(DATASET_DELIMITER) or DEFAULT_DELIMITER,
+        )
 
         # Dropping the temporary tables
         if drop_temp_tables:
