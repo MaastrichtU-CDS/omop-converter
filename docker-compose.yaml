@@ -14,7 +14,7 @@ services:
       - db
 
   memorabel-parser:
-    image: pmateus/memorabel-data-harmonization:1.1.2
+    image: pmateus/memorabel-data-harmonization:2.0.0
     stdin_open: true
     tty: true
     environment:
@@ -36,6 +36,7 @@ services:
       ETL_REFERENCE: https://gitlab.com/UM-CDS/projects/memorabel/-/tree/master/data_harmonization
       CDM_VERSION: 6.0
       VOCABULARY_VERSION: 1.0
+      FOLLOW_UP_SUFFIX: "_FU1;_FU2"
     volumes:
       - $PWD/mappings:/mnt/mappings
       - $PWD/data:/mnt/data

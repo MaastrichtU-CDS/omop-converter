@@ -26,8 +26,9 @@ def cli():
 @click.option('--source-mapping', prompt=True, default=SOURCE_MAPPING_DEFAULT_PATH)
 @click.option('--dataset', prompt=True)
 @click.option('--dataset-delimiter', prompt=False, default=DEFAULT_DELIMITER)
+@click.option('--follow-up-suffix', prompt=False, default=None)
 def set_up(user, password, host, port, database_name, vocabulary_path, destination_mapping,
-    source_mapping, dataset, dataset_delimiter):
+    source_mapping, dataset, dataset_delimiter, follow_up_suffix):
     """ Set up the configurations needed.
     """
     configurations = {
@@ -41,6 +42,7 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
         SOURCE_MAPPING_PATH: source_mapping,
         DATASET_PATH: dataset,
         DATASET_DELIMITER: dataset_delimiter,
+        FOLLOW_UP_SUFFIX: follow_up_suffix,
     }
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
@@ -136,6 +138,7 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
             os.getenv(DATASET_PATH),
             source_mapping,
             destination_mapping,
+            os.getenv(FOLLOW_UP_SUFFIX),
             cohort_id,
             pg
         )
