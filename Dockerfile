@@ -9,8 +9,12 @@ RUN apt update
 RUN apt-get -y install python3-pip postgresql-client-12 libpq-dev curl zip
 ENV PATH="${PATH}:/usr/lib/postgresql/12/bin"
 
+# Copying the scripts to transform the dataset
 COPY ./cdm_parser ./cdm_parser
-COPY requirements.txt vocabulary.zip init.sh ./
+# Copy additonal files - the vocabularies that will be used (can be downloaded
+# from Athena) and the postgres files with the SQL statements to create the
+# OMOP databse.
+COPY requirements.txt vocabularies.zip init.sh postgresql.zip ./
 
 # Install the requirements for the CDM parser
 RUN pip3 install --no-cache-dir -r requirements.txt

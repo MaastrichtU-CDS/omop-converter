@@ -1,9 +1,9 @@
 DB_CONFIGURATION_PATH = '../database.ini'
 DB_CONFIGURATION_SECTION = 'postgresql'
 
-OMOP_CDM_DDL_PATH = '../omop_scripts/v6/OMOP_CDM_postgresql_ddl.txt'
-OMOP_CDM_PK_PATH = '../omop_scripts/v6/OMOP_CDM_postgresql_pk_indexes.txt'
-OMOP_CDM_CONSTRAINTS_PATH = '../omop_scripts/v6/OMOP_CDM_postgresql_constraints.txt'
+OMOP_CDM_DDL_PATH = '../postgresql/OMOP_CDM_postgresql_ddl.txt'
+OMOP_CDM_PK_PATH = '../postgresql/OMOP_CDM_postgresql_pk_indexes.txt'
+OMOP_CDM_CONSTRAINTS_PATH = '../postgresql/OMOP_CDM_postgresql_constraints.txt'
 
 VOCABULARY_DEFAULT_PATH = '../vocabularies'
 DB_DEFAULT_NAME = 'CDM'
