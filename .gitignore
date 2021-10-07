@@ -3,6 +3,7 @@ database.ini
 *.pgsql
 omop_scripts/
 vocabularies/
-vocabulary*.zip
+vocabular*.zip
+postgresql.zip
 mappings/
 __MACOSX
