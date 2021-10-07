@@ -96,7 +96,8 @@ Cardiovascular;Clinical information & Laboratory test results;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Date_habits;Date assessment alcohol and smoking habits;date;;;date;;No;;;;;;;;;;;;;
 ;Alcohol use;Alcohol;Alcohol;Current alcohol use ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4074035;Athena-4074035;;;;"yes;no";"4188539;4188540";;;Date_habits
-;Smoking habits;Smoking;Smoking;"Current;past (= < 10 years ago) ; never smoking ";factor;2 = current, 1 = past, 0 = never;"2;1;0";int;;No;;Observation;SNOMED;4275495;Athena-4275495;;;;"current;past;never";"4034855;4132507;763692";;;Date_habits
+;Smoking habits;Smoking;Smoking_behavior;"Current;past (= < 10 years ago) ; never smoking ";factor;2 = current, 1 = past, 0 = never;"2;1;0";int;;No;;Observation;SNOMED;4275495;Athena-4275495;;;;"current;past;never";"4034855;4132507;763692";;;Date_habits
+;;;Smoker;Current smoker?;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4298794;Athena-4298794;;;;"yes;no";"4188539;4188540";;;Date_habits
 APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;Pharmocogenetics findings;;APOE_Date;Date of assessment APOE;date;;;date;;yes;;;;;;;;;;;;;
 ;Pharmocogenetics findings;APOE4 carrier;APOE_carrier;APOE e4 carrier ;factor;"1 = yes; 0 = no";"1;0";bool;;yes;;Observation;;2000000009;;;;;"yes;no";"4188539;4188540";;;APOE_Date
@@ -151,6 +152,10 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;Psychiatric disorders;Anxiety;Anxiety;"Result assesment anxiety: yes;no";factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;441542;Athena-441542;;;;"yes;no";"4188539;_";;Anxiety_cutoff;Date_anxiety
 ;Psychiatric disorders;Anxiety;no_Anxiety;"Result assesment anxiety: yes;no";factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;441542;Athena-441542;;;;"yes;no";"_;4132135";;Anxiety_cutoff;Date_anxiety
 ;;;Anxiety_cutoff;Cutoff used ;0<…, 1>=…, cd;;;text;;No;;NA;;;;;;;;;;;Date_anxiety
+;;;;;;;;;;;;;;;;;;;;;;;
+;;;mhi_5_questionnaire;MHI 5 questionnaire (Depression and Anxiety);numerical;;> 0;num;;No;;Measurement;;2000000079;;;;;;;;;Date_depression
+;;;lidas_questionnaire;LIDAS (Self Report - Depression);;;;;;;;Measurement;;2000000091;;;;;;;;;Date_depression
+;;;npi_questionnaire;NPI questionnairet (Anxiety);;;;;;;;Measurement;;2000000092;;;;;;;;;Date_depression
 Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;Cognitive screening tests;Date MMSE;Date_MMSE;Date MMSE assessment;date;;;date;;No;;;;;;;;;;;;;
 ;Cognitive screening tests;MMSE total score;MMSE_total;MMSE total score;numeric;;"0;30";num;;No;;Measurement;SNOMED;4169175;Athena-4169175;;;;;;;;Date_MMSE
@@ -164,7 +169,10 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;;Attention_test_tmt_a_errors;Attention score from Trail Making Test Part  A - Errors;numeric;;> 0;num;;No;;Measurement;;2000000029;;;;;;;;;Date_NPE
 ;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1;numeric;;> 0;num;;No;;Measurement;;2000000030;;;;;;;;;Date_NPE
 ;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2;numeric;;> 0;num;;No;;Measurement;;2000000031;;;;;;;;;Date_NPE
+;;;Attention_test_stroop_1_adj;Attention score from Stroop 1 - adjusted for number of errors;numeric;;> 0;num;;No;;Measurement;;2000000088;;;;;;;;;Date_NPE
+;;;Attention_test_stroop_2_adj;Attention score from Stroop 2 - adjusted for number of errors;numeric;;> 0;num;;No;;Measurement;;2000000089;;;;;;;;;Date_NPE
 ;;SDST;Attention_test_sdst;Attention score from Symbol Digit Substitution Task        ;numeric;;> 0;num;;No;;Measurement;;2000000032;;;;;;;;;Date_NPE
+;;;Attention_test_ldst;Attention score from Letter Digit Substitution Task        ;numeric;;> 0;num;;No;;Measurement;;2000000090;;;;;;;;;Date_NPE
 ;;;Attention_test_other;Attention score from another alternative;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority Attention Test;Priority attention ;Priority_attention;raw scores;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority Attention Test;Priority attention z-score;Priority_attention_z ;z-score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
@@ -195,6 +203,8 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;;Priority_memory_im_adas;Priority test from ADAS-Cog (immediate);numeric;;> 0;num;;No;;Measurement;;2000000044;;;;;;;;;Date_NPE
 ;;;Priority_memory_im_10_word_list;Priority test from 10 word list (immediate);numeric;;> 0;num;;No;;Measurement;;2000000045;;;;;;;;;Date_NPE
 ;;;Priority_memory_im_recall_10_word_list;Priority test from  immediate recall 10 word list     (immediate)                       ;numeric;;> 0;num;;No;;Measurement;;2000000046;;;;;;;;;Date_NPE
+;;;Priority_memory_im_15_word_list_correct;Priority test from 15 word list (immediate) - number of correct answers;numeric;;> 0;num;;No;;Measurement;;2000000080;;;;;;;;;Date_NPE
+;;;Priority_memory_im_15_word_list_incorrect;Priority test from 15 word list (immediate) - number of incorrect answers;numeric;;> 0;num;;No;;Measurement;;2000000081;;;;;;;;;Date_NPE
 ;;;Priority_memory_im_other;Priority test from another alternative  (immediate);numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority memory Test;Priority memory immediate;Priority_memory_im;raw scores;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority memory Test;Priority memory immediate z-score;Priority_memory_im_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
@@ -213,6 +223,8 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;> 0;num;;No;;Measurement;;2000000059;;;;;;;;;Date_NPE
 ;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;> 0;num;;No;;Measurement;;2000000060;;;;;;;;;Date_NPE
 ;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;> 0;num;;No;;Measurement;;2000000061;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_15_word_list_correct;Priority test from 15 word list (delayed) - number of correct answers;numeric;;> 0;num;;No;;Measurement;;2000000082;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_15_word_list_incorrect;Priority test from 15 word list (delayed) - number of incorrect answers;numeric;;> 0;num;;No;;Measurement;;2000000083;;;;;;;;;Date_NPE
 ;;;Priority_memory_dr_other;Priority test from another alternative  (delayed);numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority memory Test;Priority memory delayed;Priority_memory_dr;raw scores ;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority memory Test;Priority memory delayed z -score;Priority_memory_dr_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
@@ -225,6 +237,8 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;;num;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE
 ;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;;num;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE
 ;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;;num;;No;;Measurement;;2000000067;;;;;;;;;Date_NPE
+;;;Priority_executive_vet;Visual elevator test (0-10);numeric;;;num;;No;;Measurement;;2000000084;;;;;;;;;Date_NPE
+;;;Priority_executive_bat;Brixton anticipation task (0-54);numeric;;;num;;No;;Measurement;;2000000085;;;;;;;;;Date_NPE
 ;;;Priority_executive_other;Priority test for executive function score from another alternative;numeric;;;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
@@ -241,7 +255,9 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;> 0;num;;No;;Measurement;;2000000072;;;;;;;;;Date_NPE
 ;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;> 0;num;;No;;Measurement;;2000000073;;;;;;;;;Date_NPE
 ;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;> 0;num;;No;;Measurement;;2000000074;;;;;;;;;Date_NPE
-;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming test ;numeric;;> 0;num;;No;;Measurement;;2000000075;;;;;;;;;Date_NPE
+;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming  ;numeric;;> 0;num;;No;;Measurement;;2000000075;;;;;;;;;Date_NPE
+;;;Priority_language_animals_naming_1;Priority test for language from naming animals 1 min;numeric;;> 0;num;;No;;Measurement;;2000000087;;;;;;;;;Date_NPE
+;;;Priority_language_verbal_fluency_1;Priority test for verbal fluency 1 min;numeric;;> 0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_NPE
 ;;;Priority_language_other;Priority test for language from another alternative;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority language test;Priority language;Priority_language;raw scores;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;;;;No;;;;;;;;;;;;;Date_NPE

@@ -108,12 +108,18 @@ anxiety_rating_hospital_scale,4165145,Measurement,,,,,,date_anxiety,> 0,num
 anxiety,441542,Condition,,,yes;no,4188539;_,Anxiety_cutoff,date_anxiety,1;0,bool
 no_anxiety,441542,Observation,,,yes;no,_;4132135,Anxiety_cutoff,date_anxiety,1;0,bool
 anxiety_cutoff,,NA,,,,,,date_anxiety,,text
+mhi_5_questionnaire,2000000079,Measurement,,,,,,date_depression,> 0,num
+lidas_questionnaire,2000000091,Measurement,,,,,,date_depression,,num
+npi_questionnaire,2000000092,Measurement,,,,,,date_depression,,num
 mmse_total,4169175,Measurement,,,,,,date_mmse,0;30,num
 attention_test_tmt_a_time,2000000028,Measurement,,,,,,date_npe,> 0,num
 attention_test_tmt_a_errors,2000000029,Measurement,,,,,,date_npe,> 0,num
 attention_test_stroop_1,2000000030,Measurement,,,,,,date_npe,> 0,num
 attention_test_stroop_2,2000000031,Measurement,,,,,,date_npe,> 0,num
+attention_test_stroop_1_adj,2000000088,Measurement,,,,,,date_npe,> 0,num
+attention_test_stroop_2_adj,2000000089,Measurement,,,,,,date_npe,> 0,num
 attention_test_sdst,2000000032,Measurement,,,,,,date_npe,> 0,num
+attention_test_ldst,2000000090,Measurement,,,,,,date_npe,> 0,num
 priority_memory_im_ravlt,2000000033,Measurement,,,,,,date_npe,> 0,num
 priority_memory_im_cerad,2000000034,Measurement,,,,,,date_npe,> 0,num
 priority_memory_im_gb,2000000035,Measurement,,,,,,date_npe,> 0,num
@@ -128,6 +134,8 @@ priority_memory_im_mmse,2000000043,Measurement,,,,,,date_npe,> 0,num
 priority_memory_im_adas,2000000044,Measurement,,,,,,date_npe,> 0,num
 priority_memory_im_10_word_list,2000000045,Measurement,,,,,,date_npe,> 0,num
 priority_memory_im_recall_10_word_list,2000000046,Measurement,,,,,,date_npe,> 0,num
+priority_memory_im_15_word_list_correct,2000000080,Measurement,,,,,,date_npe,> 0,num
+priority_memory_im_15_word_list_incorrect,2000000081,Measurement,,,,,,date_npe,> 0,num
 priority_memory_dr_ravlt,2000000047,Measurement,,,,,,date_npe,> 0,num
 priority_memory_dr_cerad,2000000048,Measurement,,,,,,date_npe,> 0,num
 priority_memory_dr_gb,2000000049,Measurement,,,,,,date_npe,> 0,num
@@ -143,12 +151,16 @@ priority_memory_dr_mmse,2000000058,Measurement,,,,,,date_npe,> 0,num
 priority_memory_dr_adas,2000000059,Measurement,,,,,,date_npe,> 0,num
 priority_memory_dr_10_word_list,2000000060,Measurement,,,,,,date_npe,> 0,num
 priority_memory_dr_recall_10_word_list,2000000061,Measurement,,,,,,date_npe,> 0,num
+priority_memory_dr_15_word_list_correct,2000000082,Measurement,,,,,,date_npe,> 0,num
+priority_memory_dr_15_word_list_incorrect,2000000083,Measurement,,,,,,date_npe,> 0,num
 priority_executive_tmt_b_time,2000000062,Measurement,,,,,,date_npe,,num
 priority_executive_tmt_b_errors,2000000063,Measurement,,,,,,date_npe,,num
 priority_executive_stroop_3,2000000064,Measurement,,,,,,date_npe,,num
 priority_executive_cst_a,2000000065,Measurement,,,,,,date_npe,,num
 priority_executive_cst_b,2000000066,Measurement,,,,,,date_npe,,num
 priority_executive_cst_c,2000000067,Measurement,,,,,,date_npe,,num
+priority_executive_vet,2000000084,Measurement,,,,,,date_npe,,num
+priority_executive_bat,2000000085,Measurement,,,,,,date_npe,,num
 priority_language_animal_fluency,2000000068,Measurement,,,,,,date_npe,> 0,num
 priority_language_category_fluency_1,2000000069,Measurement,,,,,,date_npe,> 0,num
 priority_language_letter_fluency_1,2000000070,Measurement,,,,,,date_npe,> 0,num
@@ -157,6 +169,8 @@ priority_language_bnt_15,2000000072,Measurement,,,,,,date_npe,> 0,num
 priority_language_bnt_30,2000000073,Measurement,,,,,,date_npe,> 0,num
 priority_language_bnt_60,2000000074,Measurement,,,,,,date_npe,> 0,num
 priority_language_any_picture_naming_test,2000000075,Measurement,,,,,,date_npe,> 0,num
+priority_language_animals_naming_1,2000000087,Measurement,,,,,,date_npe,> 0,num
+priority_language_verbal_fluency_1,2000000086,Measurement,,,,,,date_npe,> 0,num
 p_tau,4136437,Observation,,,,,,,> 0,num
 amyloid_b_42,45768724,Observation,pg/mL,8845,,,,,> 0,num
 amyloid_b_40,45768723,Observation,pg/mL,8845,,,,,> 0,num
