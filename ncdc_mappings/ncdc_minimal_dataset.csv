@@ -1,4 +1,4 @@
-﻿Main category;EMIF-AD category;Variable name EMIF-AD;Variable name used;Variable Description ;Unity;Categories;Range or possible values;Type;Units;Visit independent;Specific information for harmonisation;Domain;DVocabulary;Concept Id;Concept Id Link;Unit;Unit Concept Id;Vocabulary;Values;Values Concept Id;Vocabulary;Info;Date
+﻿Main category;EMIF-AD category;Variable name EMIF-AD;Variable name used;Variable Description ;Unity;Categories;Range or possible values;Type;Units;Visit independent;Specific information for harmonisation;Domain;Domain Vocabulary;Concept Id;Concept Id Link;Unit;Unit Concept Id;Unit Vocabulary;Values;Values Concept Id;Values Vocabulary;Info;Date
 General;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Data_saved;"CSV;excel;SPSS;SAS;R;Phyton;other";factor;1 = CSV, 2 = excel, 3 = SPSS, 4 = SAS, 5 = R, 6 = Phyton, 7 = other;"1;7";;;Yes;;;;;;;;;;;;;
 ;;;Format_data;In long or in wide format;factor;1 = long, 0 = wide;;;;Yes;;;;;;;;;;;;;
@@ -96,7 +96,7 @@ Cardiovascular;Clinical information & Laboratory test results;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Date_habits;Date assessment alcohol and smoking habits;date;;;date;;No;;;;;;;;;;;;;
 ;Alcohol use;Alcohol;Alcohol;Current alcohol use ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4074035;Athena-4074035;;;;"yes;no";"4188539;4188540";;;Date_habits
-;Smoking habits;Smoking;Smoking_behavior;"Current;past (= < 10 years ago) ; never smoking ";factor;2 = current, 1 = past, 0 = never;"2;1;0";int;;No;;Observation;SNOMED;4275495;Athena-4275495;;;;"current;past;never";"4034855;4132507;763692";;;Date_habits
+;Smoking habits;Smoking;Smoking_behavior;"Current;past; never smoking ";factor;2 = current, 1 = past, 0 = never;"2;1;0";int;;No;;Observation;SNOMED;4275495;Athena-4275495;;;;"current;past;never";"4034855;4132507;763692";;;Date_habits
 ;;;Smoker;Current smoker?;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4298794;Athena-4298794;;;;"yes;no";"4188539;4188540";;;Date_habits
 APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;Pharmocogenetics findings;;APOE_Date;Date of assessment APOE;date;;;date;;yes;;;;;;;;;;;;;
@@ -154,8 +154,8 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;;;Anxiety_cutoff;Cutoff used ;0<…, 1>=…, cd;;;text;;No;;NA;;;;;;;;;;;Date_anxiety
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;;mhi_5_questionnaire;MHI 5 questionnaire (Depression and Anxiety);numerical;;> 0;num;;No;;Measurement;;2000000079;;;;;;;;;Date_depression
-;;;lidas_questionnaire;LIDAS (Self Report - Depression);;;;;;;;Measurement;;2000000091;;;;;;;;;Date_depression
-;;;npi_questionnaire;NPI questionnairet (Anxiety);;;;;;;;Measurement;;2000000092;;;;;;;;;Date_depression
+;;;lidas_questionnaire;LIDAS (Self Report - Depression);numerical;;> 0;num;;No;;Measurement;;2000000091;;;;;;;;;Date_depression
+;;;npi_questionnaire;NPI questionnairet (Anxiety);numerical;;> 0;num;;No;;Measurement;;2000000092;;;;;;;;;Date_depression
 Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;Cognitive screening tests;Date MMSE;Date_MMSE;Date MMSE assessment;date;;;date;;No;;;;;;;;;;;;;
 ;Cognitive screening tests;MMSE total score;MMSE_total;MMSE total score;numeric;;"0;30";num;;No;;Measurement;SNOMED;4169175;Athena-4169175;;;;;;;;Date_MMSE
@@ -262,15 +262,15 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;Priority language test;Priority language;Priority_language;raw scores;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;;;;No;;;;;;;;;;;;;Date_NPE
 Plasma;;;;;;;;;;;;;;;;;;;;;;;
-;;;P_Tau;P-Tau in plasma;numeric;;> 0;num;;No;;Observation;SNOMED;4136437;Athena-4136437;;;;;;;;
-;;;Amyloid_B_42;Amyloid-B-42 in plasma;numeric;;> 0;num;;No;;Observation;SNOMED;45768724;Athena-45768724;pg/mL;8845;UCUM;;;;;
-;;;Amyloid_B_40;Amyloid-B-40 in plasma;numeric;;> 0;num;;No;;Observation;SNOMED;45768723;Athena-45768723;pg/mL;8845;UCUM;;;;;
-;;;GFAP;Glial Fibrillary acidic protein;numeric;;> 0;num;;No;;Observation;SNOMED;4079321;Athena-4079321;;;;;;;;
-;;;NFL;Neurofilament light;numeric;;> 0;num;;No;;Observation;SNOMED;4299446;Athena-4299446;;;;;;;;
-;;;E_Selectin;E-selectin (CD62E);numeric;;> 0;num;;No;;Observation;SNOMED;4012274;Athena-4012274;;;;;;;;
-;;;SAA;Serum Amyloid A;numeric;;> 0;num;;No;;Observation;SNOMED;4221816;Athena-4221816;;;;;;;;
-;;;VCAM;Vascular cellular adhesion molecule (CD106);numeric;;> 0;num;;No;;Observation;SNOMED;4012844;Athena-4012844;;;;;;;;
-;;;ICAM;Intercellular adhesion molecule (CD54);numeric;;> 0;num;;No;;Observation;SNOMED;4284103;Athena-4284103;;;;;;;;
+;;;P_Tau;P-Tau in plasma;numeric;;> 0;num;;No;;Measurement;SNOMED;44807681;Athena-44807681;;;;;;;;
+;;;Amyloid_B_42;Amyloid-B-42 in plasma;numeric;;> 0;num;;No;;Measurement;;2000000093;;pg/mL;8845;UCUM;;;;;
+;;;Amyloid_B_40;Amyloid-B-40 in plasma;numeric;;> 0;num;;No;;Measurement;;2000000094;;pg/mL;8845;UCUM;;;;;
+;;;GFAP;Glial Fibrillary acidic protein;numeric;;> 0;num;;No;;Measurement;;2000000095;;;;;;;;;
+;;;NFL;Neurofilament light;numeric;;> 0;num;;No;;Measurement;;2000000096;;;;;;;;;
+;;;E_Selectin;E-selectin (CD62E);numeric;;> 0;num;;No;;Measurement;;2000000097;;;;;;;;;
+;;;SAA;Serum Amyloid A;numeric;;> 0;num;;No;;Measurement;SNOMED;46284972;Athena-46284972;;;;;;;;
+;;;VCAM;Vascular cellular adhesion molecule (CD106);numeric;;> 0;num;;No;;Measurement;;2000000098;;;;;;;;;
+;;;ICAM;Intercellular adhesion molecule (CD54);numeric;;> 0;num;;No;;Measurement;;2000000099;;;;;;;;;
 ;;;Il6;Interleukin-6;numeric;;> 0;num;;No;;Measurement;SNOMED;4332015;Athena-4332015;;;;;;;;
 ;;;Il8;Interleukin-8;numeric;;> 0;num;;No;;Measurement;SNOMED;4166200;Athena-4166200;;;;;;;;
 ;;;Il_1b;Interleukin 1 beta;numeric;;> 0;num;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;

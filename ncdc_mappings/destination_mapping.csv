@@ -109,8 +109,8 @@ anxiety,441542,Condition,,,yes;no,4188539;_,Anxiety_cutoff,date_anxiety,1;0,bool
 no_anxiety,441542,Observation,,,yes;no,_;4132135,Anxiety_cutoff,date_anxiety,1;0,bool
 anxiety_cutoff,,NA,,,,,,date_anxiety,,text
 mhi_5_questionnaire,2000000079,Measurement,,,,,,date_depression,> 0,num
-lidas_questionnaire,2000000091,Measurement,,,,,,date_depression,,num
-npi_questionnaire,2000000092,Measurement,,,,,,date_depression,,num
+lidas_questionnaire,2000000091,Measurement,,,,,,date_depression,> 0,num
+npi_questionnaire,2000000092,Measurement,,,,,,date_depression,> 0,num
 mmse_total,4169175,Measurement,,,,,,date_mmse,0;30,num
 attention_test_tmt_a_time,2000000028,Measurement,,,,,,date_npe,> 0,num
 attention_test_tmt_a_errors,2000000029,Measurement,,,,,,date_npe,> 0,num
@@ -171,15 +171,15 @@ priority_language_bnt_60,2000000074,Measurement,,,,,,date_npe,> 0,num
 priority_language_any_picture_naming_test,2000000075,Measurement,,,,,,date_npe,> 0,num
 priority_language_animals_naming_1,2000000087,Measurement,,,,,,date_npe,> 0,num
 priority_language_verbal_fluency_1,2000000086,Measurement,,,,,,date_npe,> 0,num
-p_tau,4136437,Observation,,,,,,,> 0,num
-amyloid_b_42,45768724,Observation,pg/mL,8845,,,,,> 0,num
-amyloid_b_40,45768723,Observation,pg/mL,8845,,,,,> 0,num
-gfap,4079321,Observation,,,,,,,> 0,num
-nfl,4299446,Observation,,,,,,,> 0,num
-e_selectin,4012274,Observation,,,,,,,> 0,num
-saa,4221816,Observation,,,,,,,> 0,num
-vcam,4012844,Observation,,,,,,,> 0,num
-icam,4284103,Observation,,,,,,,> 0,num
+p_tau,44807681,Measurement,,,,,,,> 0,num
+amyloid_b_42,2000000093,Measurement,pg/mL,8845,,,,,> 0,num
+amyloid_b_40,2000000094,Measurement,pg/mL,8845,,,,,> 0,num
+gfap,2000000095,Measurement,,,,,,,> 0,num
+nfl,2000000096,Measurement,,,,,,,> 0,num
+e_selectin,2000000097,Measurement,,,,,,,> 0,num
+saa,46284972,Measurement,,,,,,,> 0,num
+vcam,2000000098,Measurement,,,,,,,> 0,num
+icam,2000000099,Measurement,,,,,,,> 0,num
 il6,4332015,Measurement,,,,,,,> 0,num
 il8,4166200,Measurement,,,,,,,> 0,num
 il_1b,4282774,Measurement,,,,,,,> 0,num
