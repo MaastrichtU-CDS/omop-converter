@@ -1,6 +1,6 @@
 # Data Harmonization
 
-Tools used for the data harmonization.
+Tools used for the data harmonization in the NCDC project.
 
 ## CDM Parser CLI
 
@@ -95,3 +95,12 @@ In a case where you'll perform the data parsing in one environment (e.g. locally
 8. Import the data from the file created at 3;
 
 This will facilitate the process of exporting and transfering by generating a much smaller file.
+
+**Plane table**
+
+A common data model provides a defined structure, usually encompassed in a sustainable environment to store and manage the data.
+However, such a model can also raise the complexity of the representation when comparing to the most common formats used by researchers (mostly plane formats such as csv or spss) and present a more time consuming learning curve.
+
+In the NCDC environment, it became important to also provide the harmonized data in a plane format as a starting point to interact with the federated infrastructure and as a faster pathway to analyse the data.
+The command `parse-omop-to-plane` defines a new table based on the variable names from the mapping (`destination_mapping`) used.
+This table is then populated with the data for each participant by visit from the database that follows the data model.
