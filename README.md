@@ -54,6 +54,59 @@ python3 cdm_parser_cli.py --help
 python3 cdm_parser_cli.py set-up
 ```
 
+### Mappings
+
+As previously described, there is the need to develop mappings that will establish the source variable that needs to be harmonized and in what way this should be done.
+
+**Destination Mapping**
+
+The destination mapping represents each variable that should be harmonized and optionally the standard used to represent it.
+
+The parameters used to do this representation are:
+- variable: identifier of the variable (the same that will be used in the `source mapping`);
+- concept_id: the concept id that will represent this variable in the OMOP CDM;
+- domain: the domain (equivalent to the table where it'll be inserted) to which this variable belongs;
+- unit: the units for the variable (if applicable);
+- unit_concept_id: the concept id that represents this unit;
+- values: used to map categorical values (`;` used to separate each value) to the standardized equivalent;
+- values_concept_id: the concept id (standardized equivalent) of each value;
+- additional_info: static information or another variable that provides additional information;
+- date: specific date representing the time when the value was obtained;
+- ncdc_map: the values that will be used in the plane table;
+- type: the type of the variable;
+  
+```
+variable,concept_id,domain,unit,unit_concept_id,values,values_concept_id,additional_info,date,ncdc_map,type
+education_category,4171617,Observation,,,low;high,4267416;4328749,,,0;1,int
+education_category_verhage,2000000078,Observation,,,1;2;3;4;5;6;7,,,,1;2;3;4;5;6;7,int
+```
+
+In the prior example:
+- the variable `education_category` will be harmonized to use the standard concept id `4171617`. The value `low` will be represented using the concept id `4267416` and the value `high` the concept id `4328749`. In the plane table, these values will be represented with `0` and `1` and the type will be `integer`
+- the variable `education_category_verhage` will be harmonized to a new concept with id `2000000078` that doesn't belong to one of the OHDSY vocabularies and was created for this project;
+
+**Source Mapping**
+
+The source mapping connects each variable that will be harmonized with the corresponding name in the source database.
+
+The parameters used to do this representation are:
+- variable: identifier of the variable;
+- source_variable: variable name in the source dataset;
+- alternatives: variable names from the source dataset that can be used as alternatives if the first one is empty;
+- condition: optional condition that represents one or more values that will be compared with the values from the source data;
+- values: used to map categorical values (`;` used to separate each value) to the values identifiers from the destination mapping;
+- values_parsed: values identifiers from the destination mapping;
+- format: format for the value (currently only used to parse dates);
+- static_value: static data that may be included;
+
+```
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value
+birth_year,year_of_birth,,,,,,
+date_age,visit1,,,,,%Y-%m-%d,
+sex,sex,,,1.0;2.0;-,male;female;-,,
+education_category_3,education_cat,,,3.0;2.0;1.0,low;medium;high,,
+```
+
 ### Notes
 
 **Representing negative information on a diagnosis**
