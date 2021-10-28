@@ -8,7 +8,7 @@ Demographics;Subject characteristics & demograhics;;;;;;;;;;;;;;;;;;;;;;
 ;Demographics;Birth year;Birth_year;Year of birth ;numeric;;>= 1900;int;;Yes;;Person;;;;;;;;;;;
 ;Demographics;Age ;Age;Age at  assessment;numeric;;>= 0;num;years;No;;Observation;SNOMED;4265453;Athena-4265453;year;9448;UCUM;;;;;date_age
 ;Demographics;Sex;Sex;Sex;factor;"1= female; 0 = male";"0;1;_";int;;Yes;;Person;;;;;;;"male;female;-";"8507;8532;8551";GENDER;;
-;Subject characteristics;Education_years;Education_years;Education level in years;numeric;;> = 0;int;years;Yes;Recode Verhaage score into education in years ('1'=5) ('2'=6) ('3'=8) ('4'=9) ('5'=10) ('6'=13) ('7'=17). CBS categories can also be converted to year;Observation;;2000000001;;year;9448;UCUM;;;;;
+;Subject characteristics;Education_years;Education_years;Education level in years;numeric;;> = 0;num;years;Yes;Recode Verhaage score into education in years ('1'=5) ('2'=6) ('3'=8) ('4'=9) ('5'=10) ('6'=13) ('7'=17). CBS categories can also be converted to year;Observation;;2000000001;;year;9448;UCUM;;;;;
 ;Subject characteristics;;Education_category;Education level categories (2 categories);factor;"1 = high; 0 = low";"0;1";int;;Yes;"Low: years <  7; High: years >= 7";Observation;SNOMED;4171617;Athena-4171617;;;;"low;high";"4267416;4328749";SNOMED;;
 ;Subject characteristics;;Education_category;Education level categories;factor;;;;;;Alternatively, include other categories according to availability in cohort;;;;;;;;;;;;
 ;;;Education_category_3;Education level categories (3 categories);factor;"2 = high; 1 = medium; 0 = low";"0;1;2";int;;;"Low(1) = No education, (un)completed primary education, or lower vocational education; Medium(2) = Intermediate vocational education or higher secondary education; High(3) = Higher vocational education or university education.";Observation;;2000000077;;;;;"low;medium;high";"4267416;4152518;4328749";;;
@@ -107,15 +107,17 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;CSF;CSF Assay;CSF_assay_amyloid;CSF Assay Amyloid;factor;"1 = luminex; 2 = innogetics Elisa; 3 = Elecsys; 4 = Innotest";"1;2;3;4;5";int;;No;;Observation;;2000000011;;;;;"luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun";;;;Date_LP
 ;CSF;;CSF_ab;Amyloid beta in CSF ;numeric;;> 0;;"pg;ml";No;"Priority for 1. Amyloid Beta 1-42 in pg;ml                                                    2. Ratio Amyloid Beta 42;40                                                                                  3. Amyloid Beta 1-38 in pg;ml";;;;;;;;;;;;Date_LP
 ;CSF;"Amyloid Beta 1-42 (pg;mL)";CSF_ab_total_1_42;"Amyloid Beta 1-42 in pg;ml ";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000012;;pg/mL;8845;UCUM;;;;;Date_LP
-;CSF;"Amyloid Beta 42;40";CSF_ab_total_ratio_42_40;"Ratio Amyloid Beta 42;40   ";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000013;;pg/mL;8846;UCUM;;;;;Date_LP
-;CSF;"Amyloid Beta 1-38 (pg;mL)";CSF_ab_total_1_38;"Amyloid Beta 1-38 in pg;ml";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000014;;pg/mL;8847;UCUM;;;;;Date_LP
+;CSF;"Amyloid Beta 42;40";CSF_ab_total_ratio_42_40;"Ratio Amyloid Beta 42;40   ";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000013;;pg/mL;8845;UCUM;;;;;Date_LP
+;CSF;"Amyloid Beta 1-38 (pg;mL)";CSF_ab_total_1_38;"Amyloid Beta 1-38 in pg;ml";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000014;;pg/mL;8845;UCUM;;;;;Date_LP
 ;CSF;;Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;;2000000015;;;;;"yes;no";"4188539;_";;Amy_cutoff;Date_LP
 ;CSF;;no_Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000015;;;;;"yes;no";"_;4132135";;Amy_cutoff;Date_LP
+;CSF;;Amy_cutoff;Cutoff used ;0<…, 1>=…;;;text;;No;;NA;;;;;;;;;;;Date_LP
 ;CSF;CSF Assay;CSF_assay_Tau;CSF Assay tau;factor;1 = luminex, 2 = innogetics Elisa, 3 = Elecsys, 4 = Innotest;"1;2;3;4;5";int;;No;;Observation;;2000000016;;;;;"luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun";;;;Date_LP
-;CSF;Total Tau;CSF_ttau;Total Tau ;numeric;;> 0;num;"pg;mL";No;;Measurement;SNOMED;4260896;Athena-4260896;pg/mL;8847;UCUM;;;;;Date_LP
+;CSF;Total Tau;CSF_ttau;Total Tau ;numeric;;> 0;num;"pg;mL";No;;Measurement;SNOMED;4260896;Athena-4260896;pg/mL;8845;UCUM;;;;;Date_LP
 ;CSF;Total Tau Abnormal;Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;;2000000017;;;;;"yes;no";"4188539;_";;Ttau_cutoff;Date_LP
 ;CSF;Total Tau Abnormal;no_Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000017;;;;;"yes;no";"_;4188540";;Ttau_cutoff;Date_LP
-;CSF;Phosphorylated Tau;CSF_ptau;Phosphorylated Tau;numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000018;;pg/mL;8847;UCUM;;;;;Date_LP
+;CSF;Total Tau Cut-off;Ttau_cutoff;Cutoff used ;0<…, 1>=…;;;text;;No;;NA;;;;;;;;;;;Date_LP
+;CSF;Phosphorylated Tau;CSF_ptau;Phosphorylated Tau;numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000018;;pg/mL;8845;UCUM;;;;;Date_LP
 ;CSF;Phosphorylated Tau abnormal ;Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;;2000000019;;;;;"yes;no";"4188539;_";;Ptau_cutoff;Date_LP
 ;CSF;Phosphorylated Tau abnormal ;no_Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000019;;;;;"yes;no";"_;4132135";;Ptau_cutoff;Date_LP
 ;CSF;Phosphorylated Tau cut-off;Ptau_cutoff;Cutoff used ;0<…, 1>=…;;;text;;No;;NA;;;;;;;;;;;Date_LP
