@@ -72,11 +72,11 @@ The parameters used to do this representation are:
 - values_concept_id: the concept id (standardized equivalent) of each value;
 - additional_info: static information or another variable that provides additional information;
 - date: specific date representing the time when the value was obtained;
-- ncdc_map: the values that will be used in the plane table;
+- flat_map: the values that will be used in the plane table;
 - type: the type of the variable;
   
 ```
-variable,concept_id,domain,unit,unit_concept_id,values,values_concept_id,additional_info,date,ncdc_map,type
+variable,concept_id,domain,unit,unit_concept_id,values,values_concept_id,additional_info,date,flat_map,type
 education_category,4171617,Observation,,,low;high,4267416;4328749,,,0;1,int
 education_category_verhage,2000000078,Observation,,,1;2;3;4;5;6;7,,,,1;2;3;4;5;6;7,int
 ```

@@ -56,7 +56,7 @@ ADDITIONAL_INFO = 'additional_info'
 STATIC_VALUE = 'static_value'
 ALTERNATIVES = 'alternatives'
 CONDITION = 'condition'
-NCDC_MAP = 'ncdc_map'
+FLAT_MAP = 'flat_map'
 TYPE = 'type'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'

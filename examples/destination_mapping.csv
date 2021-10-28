@@ -1,4 +1,4 @@
-variable,concept_id,domain,unit,unit_concept_id,values,values_concept_id,additional_info,date,ncdc_map,type
+variable,concept_id,domain,unit,unit_concept_id,values,values_concept_id,additional_info,date,flat_map,type
 source_id,,Person,,,,,,,,int
 date,,Person,,,,,,,,date
 birth_year,,Person,,,,,,,,int
