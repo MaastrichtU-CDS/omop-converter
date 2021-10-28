@@ -2,6 +2,9 @@ from constants import *
 from exceptions import ParsingError
 from parse_dataset import DataParser
 
+# TODO: Currently developed in a more strict association with ncdc constraints.
+# Refactor necessary to have a more generic solution for such a table.
+
 TYPE_INT = 'int'
 TYPE_NUMERIC = 'num'
 TYPE_TEXT = 'text'
@@ -29,13 +32,15 @@ COLUMN_TYPE = {
 def get_parsed_value(mapping, value):
     """ Get the parsed value for a variable.
     """
-    if len(mapping.keys()) > 0:
+    if value and len(mapping.keys()) > 0:
         if str(value) in mapping:
             if mapping[str(value)] == DEFAULT_SKIP:
                 return ''
             else:
                 return mapping[str(value)]
-        raise ParsingError('Error parsing the values for the NCDC plane table')
+        raise ParsingError(
+            f'Error parsing the values for the NCDC plane table: {value} not in {mapping.keys()}'
+        )
     return value
 
 def get_column_statement(column_name, type, domain=OBSERVATION):
@@ -88,7 +93,7 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
     for observation in observations:
         concept_map = concept_mapping[str(observation[0])]
         if concept_map[DOMAIN] == OBSERVATION:
-            column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map['mapping'], observation[3]) or observation[2]
+            column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map['mapping'], observation[3] or observation[2])
         elif concept_map[DOMAIN] == CONDITION_OCCURRENCE:
             column_value[concept_map[VARIABLE]] = 0
         else:

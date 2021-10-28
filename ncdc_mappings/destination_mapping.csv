@@ -4,7 +4,7 @@ date,,Person,,,,,,,,date
 birth_year,,Person,,,,,,,>= 1900,int
 age,4265453,Observation,year,9448,,,,date_age,>= 0,num
 sex,,Person,,,male;female;-,8507;8532;8551,,,0;1;_,int
-education_years,2000000001,Observation,year,9448,,,,,> = 0,int
+education_years,2000000001,Observation,year,9448,,,,,> = 0,num
 education_category,4171617,Observation,,,low;high,4267416;4328749,,,0;1,int
 education_category_3,2000000077,Observation,,,low;medium;high,4267416;4152518;4328749,,,0;1;2,int
 education_category_verhage,2000000078,Observation,,,1;2;3;4;5;6;7,,,,1;2;3;4;5;6;7,int
@@ -76,17 +76,17 @@ apoe_carrier,2000000009,Observation,,,yes;no,4188539;4188540,,apoe_date,1;0,bool
 apoe_genotype,2000000010,Observation,,,2/2;2/3;3/3;3/4;2/4;4/4,,,apoe_date,1;2;3;4;5;6,int
 csf_assay_amyloid,2000000011,Observation,,,luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun,,,date_lp,1;2;3;4;5,int
 csf_ab_total_1_42,2000000012,Measurement,pg/mL,8845,,,,date_lp,> 0,num
-csf_ab_total_ratio_42_40,2000000013,Measurement,pg/mL,8846,,,,date_lp,> 0,num
-csf_ab_total_1_38,2000000014,Measurement,pg/mL,8847,,,,date_lp,> 0,num
+csf_ab_total_ratio_42_40,2000000013,Measurement,pg/mL,8845,,,,date_lp,> 0,num
+csf_ab_total_1_38,2000000014,Measurement,pg/mL,8845,,,,date_lp,> 0,num
 amy_abnormal,2000000015,Condition,,,yes;no,4188539;_,amy_cutoff,date_lp,1;0,bool
 no_amy_abnormal,2000000015,Observation,,,yes;no,_;4132135,amy_cutoff,date_lp,1;0,bool
 amy_cutoff,,NA,,,,,,date_lp,,text
 csf_assay_tau,2000000016,Observation,,,luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun,,,date_lp,1;2;3;4;5,int
-csf_ttau,4260896,Measurement,pg/mL,8847,,,,date_lp,> 0,num
+csf_ttau,4260896,Measurement,pg/mL,8845,,,,date_lp,> 0,num
 ttau_abnormal,2000000017,Condition,,,yes;no,4188539;_,ttau_cutoff,date_lp,1;0,bool
 no_ttau_abnormal,2000000017,Observation,,,yes;no,_;4188540,ttau_cutoff,date_lp,1;0,bool
 ttau_cutoff,,NA,,,,,,date_lp,,text
-csf_ptau,2000000018,Measurement,pg/mL,8847,,,,date_lp,> 0,num
+csf_ptau,2000000018,Measurement,pg/mL,8845,,,,date_lp,> 0,num
 ptau_abnormal,2000000019,Condition,,,yes;no,4188539;_,ptau_cutoff,date_lp,1;0,bool
 no_ptau_abnormal,2000000019,Observation,,,yes;no,_;4132135,ptau_cutoff,date_lp,1;0,bool
 ptau_cutoff,,NA,,,,,,date_lp,,text
