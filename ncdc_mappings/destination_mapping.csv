@@ -63,8 +63,8 @@ drugs_hypercholesterolemia,2000000006,Observation,,,yes;no,4188539;4188540,,date
 drugs_diabetes,2000000007,Observation,,,yes;no,4188539;4188540,,date_comorbidities,1;0,bool
 glucose_fasted,4156660,Measurement,,,,,,date_blood,> 0 ,num
 glucose_nonfasted,2000000008,Measurement,,,,,,date_blood,> 0,num
-glucose_abnormal,4042728,Condition,,,yes;no,4188539;_,Glucose_cutoff,date_blood,1;0,bool
-no_glucose_abnormal,4042728,Observation,,,yes;no,_;4132135,Glucose_cutoff,date_blood,1;0,bool
+glucose_abnormal,4042728,Condition,,,yes;no,4188539;_,glucose_cutoff,date_blood,1;0,bool
+no_glucose_abnormal,4042728,Observation,,,yes;no,_;4132135,glucose_cutoff,date_blood,1;0,bool
 glucose_cutoff,,NA,,,,,,date_blood,,text
 hdl,4101713,Measurement,mmol/L,8753,,,,date_blood,> 0 ,num
 ldl,4012479,Measurement,mmol/L,8753,,,,date_blood,> 0,num
@@ -78,15 +78,17 @@ csf_assay_amyloid,2000000011,Observation,,,luminex;innogetics Elisa;Elecsys;Inno
 csf_ab_total_1_42,2000000012,Measurement,pg/mL,8845,,,,date_lp,> 0,num
 csf_ab_total_ratio_42_40,2000000013,Measurement,pg/mL,8846,,,,date_lp,> 0,num
 csf_ab_total_1_38,2000000014,Measurement,pg/mL,8847,,,,date_lp,> 0,num
-amy_abnormal,2000000015,Condition,,,yes;no,4188539;_,Amy_cutoff,date_lp,1;0,bool
-no_amy_abnormal,2000000015,Observation,,,yes;no,_;4132135,Amy_cutoff,date_lp,1;0,bool
+amy_abnormal,2000000015,Condition,,,yes;no,4188539;_,amy_cutoff,date_lp,1;0,bool
+no_amy_abnormal,2000000015,Observation,,,yes;no,_;4132135,amy_cutoff,date_lp,1;0,bool
+amy_cutoff,,NA,,,,,,date_lp,,text
 csf_assay_tau,2000000016,Observation,,,luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun,,,date_lp,1;2;3;4;5,int
 csf_ttau,4260896,Measurement,pg/mL,8847,,,,date_lp,> 0,num
-ttau_abnormal,2000000017,Condition,,,yes;no,4188539;_,Ttau_cutoff,date_lp,1;0,bool
-no_ttau_abnormal,2000000017,Observation,,,yes;no,_;4188540,Ttau_cutoff,date_lp,1;0,bool
+ttau_abnormal,2000000017,Condition,,,yes;no,4188539;_,ttau_cutoff,date_lp,1;0,bool
+no_ttau_abnormal,2000000017,Observation,,,yes;no,_;4188540,ttau_cutoff,date_lp,1;0,bool
+ttau_cutoff,,NA,,,,,,date_lp,,text
 csf_ptau,2000000018,Measurement,pg/mL,8847,,,,date_lp,> 0,num
-ptau_abnormal,2000000019,Condition,,,yes;no,4188539;_,Ptau_cutoff,date_lp,1;0,bool
-no_ptau_abnormal,2000000019,Observation,,,yes;no,_;4132135,Ptau_cutoff,date_lp,1;0,bool
+ptau_abnormal,2000000019,Condition,,,yes;no,4188539;_,ptau_cutoff,date_lp,1;0,bool
+no_ptau_abnormal,2000000019,Observation,,,yes;no,_;4132135,ptau_cutoff,date_lp,1;0,bool
 ptau_cutoff,,NA,,,,,,date_lp,,text
 pet_tracer,2000000020,Observation,,,PiB;Florbetapir;AV-45,,,date_pet,1;2;3,int
 pet_assesment,2000000021,Observation,,,quantitative;visual,4149267;4113286,,date_pet,1;0,int
@@ -98,15 +100,15 @@ depression_rating_mini,2000000025,Measurement,,,,,,date_depression,> 0,num
 depression_rating_gds_15,40482001,Measurement,,,,,,date_depression,> 0,num
 depression_rating_gds,4159706,Measurement,,,,,,date_depression,> 0,num
 depression_rating_ces_d,2000000026,Measurement,,,,,,date_depression,> 0,num
-depression,440383,Condition,,,yes;no,4188539;_,Depression_cutoff,date_depression,1;0,bool
-no_depression,440383,Observation,,,yes;no,_;4132135,Depression_cutoff,date_depression,1;0,bool
+depression,440383,Condition,,,yes;no,4188539;_,depression_cutoff,date_depression,1;0,bool
+no_depression,440383,Observation,,,yes;no,_;4132135,depression_cutoff,date_depression,1;0,bool
 depression_cutoff,,NA,,,,,,date_depression,,text
 anxiety_rating_mini,2000000027,Measurement,,,,,,date_anxiety,> 0,num
 anxiety_rating_beck_anxiety,4128244,Measurement,,,,,,date_anxiety,> 0,num
 anxiety_rating_state_trait,4169477,Measurement,,,,,,date_anxiety,> 0,num
 anxiety_rating_hospital_scale,4165145,Measurement,,,,,,date_anxiety,> 0,num
-anxiety,441542,Condition,,,yes;no,4188539;_,Anxiety_cutoff,date_anxiety,1;0,bool
-no_anxiety,441542,Observation,,,yes;no,_;4132135,Anxiety_cutoff,date_anxiety,1;0,bool
+anxiety,441542,Condition,,,yes;no,4188539;_,anxiety_cutoff,date_anxiety,1;0,bool
+no_anxiety,441542,Observation,,,yes;no,_;4132135,anxiety_cutoff,date_anxiety,1;0,bool
 anxiety_cutoff,,NA,,,,,,date_anxiety,,text
 mhi_5_questionnaire,2000000079,Measurement,,,,,,date_depression,> 0,num
 lidas_questionnaire,2000000091,Measurement,,,,,,date_depression,> 0,num
