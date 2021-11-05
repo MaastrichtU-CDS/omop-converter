@@ -37,7 +37,8 @@ services:
       CDM_VERSION: 6.0
       VOCABULARY_VERSION: 1.0
       FOLLOW_UP_SUFFIX: "_FU1;_FU2"
-      IGNORE_ENCODING_ERRORS: 1
+      IGNORE_ENCODING_ERRORS: 0
+      ENCODING: 'UTF-8'
     volumes:
       - $PWD/mappings:/mnt/mappings
       - $PWD/data:/mnt/data

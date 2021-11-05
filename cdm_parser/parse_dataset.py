@@ -96,11 +96,10 @@ class DataParser:
         kwargs = {
             'start': start,
             'limit': limit,
-        } 
-
+        }
+        error_handling = 'ignore' if os.getenv(IGNORE_ENCODING_ERRORS) else 'strict'
         if '.csv' in self.path:
-            error_handling = 'ignore' if os.getenv(IGNORE_ENCODING_ERRORS) else 'strict'
-            with open(self.path, 'r', errors=error_handling) as csv_file:
+            with open(self.path, 'r', errors=error_handling, encoding=os.getenv(ENCODING)) as csv_file:
                 csv_reader = csv.DictReader(csv_file, delimiter=delimiter)
                 for i in range(start):
                     next(csv_reader)
@@ -109,7 +108,7 @@ class DataParser:
             df = pd.read_spss(self.path, convert_categoricals=convert_categoricals)
             self.transform_rows(df.loc[start:].iterrows(), **kwargs)
         elif '.sas' in self.path:
-            df = pd.read_sas(self.path)
+            df = pd.read_sas(self.path, encoding=os.getenv(ENCODING))
             self.transform_rows(df.loc[start:].iterrows(), **kwargs)
 
     def get_parameters(self, parameter, with_format=False):

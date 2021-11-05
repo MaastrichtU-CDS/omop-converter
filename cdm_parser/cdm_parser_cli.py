@@ -27,8 +27,9 @@ def cli():
 @click.option('--dataset', prompt=True)
 @click.option('--dataset-delimiter', prompt=False, default=DEFAULT_DELIMITER)
 @click.option('--follow-up-suffix', prompt=False, default=None)
+@click.option('--encoding', prompt=False, default=None)
 def set_up(user, password, host, port, database_name, vocabulary_path, destination_mapping,
-    source_mapping, dataset, dataset_delimiter, follow_up_suffix):
+    source_mapping, dataset, dataset_delimiter, follow_up_suffix, encoding):
     """ Set up the configurations needed.
     """
     configurations = {
@@ -43,6 +44,7 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
         DATASET_PATH: dataset,
         DATASET_DELIMITER: dataset_delimiter,
         FOLLOW_UP_SUFFIX: follow_up_suffix,
+        ENCODING: encoding,
     }
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
