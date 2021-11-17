@@ -6,12 +6,12 @@ services:
     environment:
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-password}"
 
-  adminer:
-    image: adminer
-    ports:
-      - 8080:8080
-    depends_on:
-      - db
+  # adminer:
+  #   image: adminer
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - db
 
   memorabel-parser:
     image: pmateus/memorabel-data-harmonization:1.0.0
