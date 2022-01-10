@@ -127,10 +127,17 @@ class DataParser:
                 raise ParsingError(f'Format required for variable: {parameter}')
         return (parameter_source_variables, parameter_format)
 
-    def get_parsed_value(self, variable, value):
+    def get_parsed_value(self, variable, value, aggregate=None):
         """ Get the parsed value for a variable.
         """
-        if variable in self.value_mapping:
+        if aggregate:
+            aggregated_value = None
+            if aggregate == MEAN:
+                aggregated_value = sum(int(value))/len(value)
+            else:
+                raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
+            return (False, aggregated_value)
+        elif variable in self.value_mapping:
             if str(value) in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value)])
             elif DEFAULT_VALUE in self.value_mapping[variable]:
@@ -293,7 +300,7 @@ class DataParser:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
                     self.warnings.append(key)
             else:
-                source_value = None
+                source_value = []
                 if value[SOURCE_VARIABLE]:
                     source_variables = [value[SOURCE_VARIABLE]]
                     if value[ALTERNATIVES]:
@@ -302,18 +309,22 @@ class DataParser:
                     for source_variable in source_variables:
                         source_variable_suffixed = source_variable + suffix
                         if self.valid_row_value(source_variable_suffixed, row):
-                            source_value = row[source_variable_suffixed]
+                            source_value.append(row[source_variable_suffixed])
                             if not value[CONDITION] or row[source_variable_suffixed] in \
                                 value[CONDITION].split(DEFAULT_SEPARATOR):
                                 break
                 elif value[STATIC_VALUE]:
-                    source_value = value[STATIC_VALUE]
-                if source_value is not None:
+                    source_value = [value[STATIC_VALUE]]
+                if len(source_value) > 0:
                     # TODO: improve the mapping between a variable and multiple
                     # source variables
                     try:
                         domain = self.destination_mapping[key][DOMAIN]
-                        (value_as_concept, parsed_value) = self.get_parsed_value(key, source_value)
+                        (value_as_concept, parsed_value) = self.get_parsed_value(
+                            key,
+                            source_value if value[AGGREGATE] else source_value[0],
+                            value[AGGREGATE]
+                        )
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable
                             date = DATE_DEFAULT
@@ -337,7 +348,7 @@ class DataParser:
                                             )
                             # Create the necessary arguments to build the SQL statement
                             named_args = {
-                                'source_value': source_value,
+                                'source_value': ';'.join(source_value),
                                 'date': date,
                                 'visit_id': visit_id
                             }

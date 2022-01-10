@@ -59,6 +59,9 @@ ALTERNATIVES = 'alternatives'
 CONDITION = 'condition'
 FLAT_MAP = 'flat_map'
 TYPE = 'type'
+AGGREGATE = 'aggregate'
+
+MEAN = 'mean'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
 DEFAULT_VALUE = '-'
