@@ -28,8 +28,9 @@ def cli():
 @click.option('--dataset-delimiter', prompt=False, default=DEFAULT_DELIMITER)
 @click.option('--follow-up-suffix', prompt=False, default=None)
 @click.option('--encoding', prompt=False, default=None)
+@click.option('--missing-values', prompt=False, default=None)
 def set_up(user, password, host, port, database_name, vocabulary_path, destination_mapping,
-    source_mapping, dataset, dataset_delimiter, follow_up_suffix, encoding):
+    source_mapping, dataset, dataset_delimiter, follow_up_suffix, encoding, missing_values):
     """ Set up the configurations needed.
     """
     configurations = {
@@ -45,6 +46,7 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
         DATASET_DELIMITER: dataset_delimiter,
         FOLLOW_UP_SUFFIX: follow_up_suffix,
         ENCODING: encoding,
+        MISSING_VALUES: missing_values,
     }
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 
@@ -142,6 +144,7 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
             destination_mapping,
             os.getenv(FOLLOW_UP_SUFFIX),
             cohort_id,
+            os.getenv(MISSING_VALUES),
             pg
         )
         parser.parse_dataset(

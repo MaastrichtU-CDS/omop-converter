@@ -15,13 +15,16 @@ class DataParser:
     """ Parses the dataset to the OMOP CDM.
     """
     def __init__(self, path, source_mapping, destination_mapping,
-        fu_suffix, cohort_id, pg):
+        fu_suffix, cohort_id, missing_values, pg):
         self.path = path
         self.source_mapping = source_mapping
         self.destination_mapping = destination_mapping
         self.cohort_id = cohort_id
         self.pg = pg
         self.warnings = []
+
+        # Keywords used as missing values
+        self.missing_values = missing_values.split(';') if missing_values else []
 
         # Build the array with the follow up suffixes
         self.fu_suffix = ['']
@@ -42,10 +45,11 @@ class DataParser:
         )
     
     @staticmethod
-    def valid_row_value(variable, row):
+    def valid_row_value(variable, row, ignore_values=[]):
         """ Validate if the value exists and is not null
         """
-        return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != ''
+        return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != '' \
+            and str(row[variable]) not in ignore_values
 
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
@@ -308,7 +312,7 @@ class DataParser:
                     # Check the first variable for the field that it's valid
                     for source_variable in source_variables:
                         source_variable_suffixed = source_variable + suffix
-                        if self.valid_row_value(source_variable_suffixed, row):
+                        if self.valid_row_value(source_variable_suffixed, row, self.missing_values):
                             source_value.append(row[source_variable_suffixed])
                             if not value[CONDITION] or row[source_variable_suffixed] in \
                                 value[CONDITION].split(DEFAULT_SEPARATOR):
