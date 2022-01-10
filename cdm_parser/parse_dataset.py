@@ -131,23 +131,24 @@ class DataParser:
                 raise ParsingError(f'Format required for variable: {parameter}')
         return (parameter_source_variables, parameter_format)
 
-    def get_parsed_value(self, variable, value, aggregate=None):
+    def get_parsed_value(self, variable, value, aggregate=None, conversion=None):
         """ Get the parsed value for a variable.
         """
-        if aggregate:
-            aggregated_value = None
-            if aggregate == MEAN:
-                aggregated_value = sum(int(value))/len(value)
-            else:
-                raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
-            return (False, aggregated_value)
-        elif variable in self.value_mapping:
+        if variable in self.value_mapping:
             if str(value) in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value)])
             elif DEFAULT_VALUE in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])                
             raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
-        return (False, value)
+        elif aggregate:
+            aggregated_value = None
+            values = [float(value) * conversion] if conversion else int(value)
+            if aggregate == MEAN:
+                aggregated_value = sum(values)/len(value)
+            else:
+                raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
+            return (False, aggregated_value)
+        return (False, float(value) * conversion if conversion else value)
 
     def get_death_datetimne(self, row):
         """ Retrieve the death datetime if available. Otherwise, if a
@@ -327,7 +328,8 @@ class DataParser:
                         (value_as_concept, parsed_value) = self.get_parsed_value(
                             key,
                             source_value if value[AGGREGATE] else source_value[0],
-                            value[AGGREGATE]
+                            aggregate=value[AGGREGATE],
+                            conversion=float(value[CONVERSION]),
                         )
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable

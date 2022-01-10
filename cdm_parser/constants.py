@@ -61,6 +61,7 @@ CONDITION = 'condition'
 FLAT_MAP = 'flat_map'
 TYPE = 'type'
 AGGREGATE = 'aggregate'
+CONVERSION = 'conversion'
 
 MEAN = 'mean'
 
