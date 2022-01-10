@@ -165,7 +165,7 @@ class DataParser:
         birth_year_source_variable = self.get_source_variable(YEAR_OF_BIRTH)
         birth_year = None
         if birth_year_source_variable and self.valid_row_value(birth_year_source_variable, row):
-            birth_year = row[birth_year_source_variable]
+            birth_year = int(float(row[birth_year_source_variable]))
         else:
             # The year of birth is required to create an entry for the person. In case that 
             # variable isn't provided, the year of birth will be obtained from a variable indicating
