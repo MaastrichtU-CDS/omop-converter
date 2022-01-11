@@ -62,6 +62,8 @@ FLAT_MAP = 'flat_map'
 TYPE = 'type'
 AGGREGATE = 'aggregate'
 CONVERSION = 'conversion'
+THRESHOLD = 'threshold'
+VALIDATION = 'validation'
 
 MEAN = 'mean'
 

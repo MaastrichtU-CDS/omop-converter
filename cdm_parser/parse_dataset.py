@@ -45,26 +45,18 @@ class DataParser:
         )
     
     @staticmethod
-    def valid_row_value(variable, row, ignore_values=[]):
+    def valid_row_value(variable, row, ignore_values=[], validation=None):
         """ Validate if the value exists and is not null
         """
-        return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != '' \
-            and str(row[variable]) not in ignore_values
-
-    @staticmethod
-    def parse_condition(condition):
-        """ Return a lambda to validate the values according to the conditions
-            provided.
-        """
-        condition_parsed = condition.split(DEFAULT_SEPARATOR)
-        conditions = {
+        validation_functions = {
+            '>=0': lambda value: value >= 0,
             '>0': lambda value: value > 0,
-            '<0': lambda value: value < 0
+            '<0': lambda value: value < 0,
+            '<=0': lambda value: value <= 0
         }
-        if len(condition_parsed) > 1 or condition_parsed[0] not in conditions.keys():
-            return lambda value: value in condition_parsed
-        else:
-            return conditions[condition_parsed[0]]
+        return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != '' \
+            and str(row[variable]) not in ignore_values and (not validation or \
+                validation_functions[validation](row[variable]))
 
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
@@ -146,24 +138,25 @@ class DataParser:
                 raise ParsingError(f'Format required for variable: {parameter}')
         return (parameter_source_variables, parameter_format)
 
-    def get_parsed_value(self, variable, value, aggregate=None, conversion=None):
+    def get_parsed_value(self, variable, value, aggregate=None, conversion=None, threshold=None):
         """ Get the parsed value for a variable.
         """
+        value_parsed = float(value) > float(threshold) if threshold else value
         if variable in self.value_mapping:
-            if str(value) in self.value_mapping[variable]:
-                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value)])
+            if str(value_parsed) in self.value_mapping[variable]:
+                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value_parsed)])
             elif DEFAULT_VALUE in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])                
             raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         elif aggregate:
             aggregated_value = None
-            values = [float(value) * conversion] if conversion else int(value)
+            values = [float(value) * float(conversion)] if conversion else int(value)
             if aggregate == MEAN:
                 aggregated_value = sum(values)/len(value)
             else:
                 raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
             return (False, aggregated_value)
-        return (False, float(value) * conversion if conversion else value)
+        return (False, float(value) * float(conversion) if conversion else value_parsed)
 
     def get_death_datetimne(self, row):
         """ Retrieve the death datetime if available. Otherwise, if a
@@ -326,12 +319,14 @@ class DataParser:
                     if value[ALTERNATIVES]:
                         source_variables.extend(value[ALTERNATIVES].split(DEFAULT_SEPARATOR))
                     # Check the first variable for the field that it's valid
-                    condition_lambda = value[CONDITION] and self.parse_condition(value[CONDITION])
                     for source_variable in source_variables:
                         source_variable_suffixed = source_variable + suffix
-                        if self.valid_row_value(source_variable_suffixed, row, self.missing_values):
-                            source_value.append(row[source_variable_suffixed])
-                            if not value[CONDITION] or condition_lambda(row[source_variable_suffixed]):
+                        # Validate source value
+                        # Check if it's not null, not a missing value, and (if provided) apply a condition.
+                        if self.valid_row_value(source_variable_suffixed, row, self.missing_values, value[VALIDATION]):
+                            source_value.insert(0, row[source_variable_suffixed])
+                            if not value[CONDITION] or row[source_variable_suffixed] \
+                                in value[CONDITION].split(DEFAULT_SEPARATOR):
                                 break
                 elif value[STATIC_VALUE]:
                     source_value = [value[STATIC_VALUE]]
@@ -344,7 +339,8 @@ class DataParser:
                             key,
                             source_value if value[AGGREGATE] else source_value[0],
                             aggregate=value[AGGREGATE],
-                            conversion=float(value[CONVERSION]),
+                            conversion=value[CONVERSION],
+                            threshold=value[THRESHOLD]
                         )
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable
