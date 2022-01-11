@@ -51,6 +51,21 @@ class DataParser:
         return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != '' \
             and str(row[variable]) not in ignore_values
 
+    @staticmethod
+    def parse_condition(condition):
+        """ Return a lambda to validate the values according to the conditions
+            provided.
+        """
+        condition_parsed = condition.split(DEFAULT_SEPARATOR)
+        conditions = {
+            '>0': lambda value: value > 0,
+            '<0': lambda value: value < 0
+        }
+        if len(condition_parsed) > 1 or condition_parsed[0] not in conditions.keys():
+            return lambda value: value in condition_parsed
+        else:
+            return conditions[condition_parsed[0]]
+
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
         """
@@ -311,12 +326,12 @@ class DataParser:
                     if value[ALTERNATIVES]:
                         source_variables.extend(value[ALTERNATIVES].split(DEFAULT_SEPARATOR))
                     # Check the first variable for the field that it's valid
+                    condition_lambda = value[CONDITION] and self.parse_condition(value[CONDITION])
                     for source_variable in source_variables:
                         source_variable_suffixed = source_variable + suffix
                         if self.valid_row_value(source_variable_suffixed, row, self.missing_values):
                             source_value.append(row[source_variable_suffixed])
-                            if not value[CONDITION] or row[source_variable_suffixed] in \
-                                value[CONDITION].split(DEFAULT_SEPARATOR):
+                            if not value[CONDITION] or condition_lambda(row[source_variable_suffixed]):
                                 break
                 elif value[STATIC_VALUE]:
                     source_value = [value[STATIC_VALUE]]
