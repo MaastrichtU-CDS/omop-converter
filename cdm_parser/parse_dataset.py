@@ -225,27 +225,28 @@ class DataParser:
         if death_datetime:
             self.pg.run_sql(*update_person(person_id, death_datetime))
 
-    def get_visit_id(self, row, person_id, suffix=''):
-        """ Retrieve an existing visit date or parse the date and
-            create a new visit. A suffix can be provided to get/parse 
+    def get_visits(self, row, person_id, suffix=''):
+        """ Retrieve existing visit dates or parse the available dates and
+            create new visits. A suffix can be provided to get/parse 
             visits for the follow ups.
         """
         # Parse the date for the observation/measurement/condition if available
         # TODO: Calculating the end data when provided with a period for the wave
-        visit_id = None
+        visits = {}
         for date_source_variable in self.date_source_variables:
             date_variable = date_source_variable + suffix
             if date_variable in row and row[date_variable]:
+                visit_id = None
                 try:
                     visit_date = parse_date(str(row[date_variable]), self.date_format, DATE_FORMAT)
                     visit_id = get_visit_by_person_and_date(self.pg, person_id, visit_date)
                     if not visit_id:
                         visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
-                    break
+                    visits[date_variable] = visit_id
                 except Exception as error:
                     print(f"Error while trying to parse a date from the following variable \
                         {date_variable}: {str(error)}")
-        return visit_id
+        return visits
 
     def transform_rows(self, iterator, start, limit):
         """ Transform each row in the dataset
@@ -283,11 +284,11 @@ class DataParser:
                     person_id = self.parse_person(row)
                 # Parse the row once for each suffix used
                 for suffix in self.fu_suffix:
-                    visit_id = self.get_visit_id(row, person_id, suffix=suffix)
-                    if visit_id:
-                        self.transform_row(row, person_id, visit_id, suffix=suffix)
+                    visits = self.get_visits(row, person_id, suffix=suffix)
+                    if len(visits.keys()) > 0:
+                        self.transform_row(row, person_id, visits, suffix=suffix)
                     elif not suffix:
-                        print(f'No visit date found for the person with id {person_id} at baseline')
+                        print(f'No visit dates found for the person with id {person_id} at baseline')
                 # Keep track of the number of records processed
                 processed_records += 1
                 if processed_records % 250 == 0:
@@ -298,7 +299,7 @@ class DataParser:
                skipped_records += 1
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
-    def transform_row(self, row, person_id, visit_id, suffix=''):
+    def transform_row(self, row, person_id, visits, suffix=''):
         """ Transform each row and insert in the database.
         """
         # Parse the observations/measurements/conditions
@@ -324,7 +325,7 @@ class DataParser:
                         # Validate source value
                         # Check if it's not null, not a missing value, and (if provided) apply a condition.
                         if self.valid_row_value(source_variable_suffixed, row, self.missing_values, value[VALIDATION]):
-                            source_value.insert(0, row[source_variable_suffixed])
+                            source_value.append(row[source_variable_suffixed])
                             if not value[CONDITION] or row[source_variable_suffixed] \
                                 in value[CONDITION].split(DEFAULT_SEPARATOR):
                                 break
@@ -345,12 +346,15 @@ class DataParser:
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable
                             date = DATE_DEFAULT
+                            visit_id = visits[visits.keys()[0]]
                             (source_dates, source_date_format) = self.get_parameters(
                                 self.destination_mapping[key][DATE])
                             if source_dates:
                                 for source_date in source_dates:
                                     source_date_variable = source_date + suffix
-                                    if source_date_variable and self.valid_row_value(source_date_variable, row):
+                                    if source_date_variable in visits:
+                                        visit_id = visits[source_date_variable]
+                                    if self.valid_row_value(source_date_variable, row):
                                         try:
                                             date = parse_date(
                                                 str(row[source_date_variable]),
