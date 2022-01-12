@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
 source_id,Record Id,,,,,,,,,,
 date,DATE_NEURO,,,,,%d-%m-%Y,,,,,
 birth_year,,,,,,,,,,,

@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,validation
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
 source_id,,,,,,,,,,,
 date,VISIT1_DATE,,,,,%Y-%m-%d,,,,,
 birth_year,Year_of_birth,,,,,,,,,,

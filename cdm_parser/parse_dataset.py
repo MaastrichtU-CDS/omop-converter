@@ -322,9 +322,14 @@ class DataParser:
                     # Check the first variable for the field that it's valid
                     for source_variable in source_variables:
                         source_variable_suffixed = source_variable + suffix
-                        # Validate source value
-                        # Check if it's not null, not a missing value, and (if provided) apply a condition.
-                        if self.valid_row_value(source_variable_suffixed, row, self.missing_values, value[VALIDATION]):
+                        # Validate source value by checking if it's not null, not a missing value, 
+                        # and (if provided) apply a condition.
+                        if self.valid_row_value(
+                            source_variable_suffixed,
+                            row,
+                            self.missing_values,
+                            self.destination_mapping[key][VALIDATION]
+                        ):
                             source_value.append(row[source_variable_suffixed])
                             if not value[CONDITION] or row[source_variable_suffixed] \
                                 in value[CONDITION].split(DEFAULT_SEPARATOR):
