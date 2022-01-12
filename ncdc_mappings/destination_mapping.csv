@@ -50,11 +50,13 @@ hypertension,4058286,Observation,,,yes;no,4188539;4188540,,date_comorbidities,1;
 hypercholesterolemia,4185909,Observation,,,yes;no,4188539;4188540,,date_comorbidities,1;0,bool
 dm_1,201254,Condition,,,yes;no,4188539;_,,date_comorbidities,1;0,bool
 dm_2,201826,Condition,,,yes;no,4188539;_,,date_comorbidities,1;0,bool
+dm,201820,Condition,,,yes;no,4188539;_,,date_comorbidities,1;0,bool
 myocardial_infarction,4329847,Condition,,,yes;no,4188539;_,,date_comorbidities,1;0,bool
 heart_failure,316139,Condition,,,yes;no,4188539;_,,date_comorbidities,1;0,bool
 stroke,381316,Condition,,,yes;no,4188539;_,,date_comorbidities,1;0,bool
 no_dm_1,201254,Observation,,,yes;no,_;4132135,,date_comorbidities,1;0,bool
 no_dm_2,201826,Observation,,,yes;no,_;4132135,,date_comorbidities,1;0,bool
+no_dm,201820,Observation,,,yes;no,_;4132135,,date_comorbidities,1;0,bool
 no_myocardial_infarction,4329847,Observation,,,yes;no,_;4132135,,date_comorbidities,1;0,bool
 no_heart_failure,316139,Observation,,,yes;no,_;4132135,,date_comorbidities,1;0,bool
 no_stroke,381316,Observation,,,yes;no,_;4132135,,date_comorbidities,1;0,bool
@@ -68,7 +70,7 @@ no_glucose_abnormal,4042728,Observation,,,yes;no,_;4132135,glucose_cutoff,date_b
 glucose_cutoff,,NA,,,,,,date_blood,,text
 hdl,4101713,Measurement,mmol/L,8753,,,,date_blood,> 0 ,num
 ldl,4012479,Measurement,mmol/L,8753,,,,date_blood,> 0,num
-crp,4208414,Measurement,,,,,,date_blood,> 0,num
+crp,4208414,Measurement,mg/L,8751,,,,date_blood,> 0,num
 alcohol,4074035,Observation,,,yes;no,4188539;4188540,,date_habits,1;0,bool
 smoking_behavior,4275495,Observation,,,current;past;never,4034855;4132507;763692,,date_habits,2;1;0,int
 smoker,4298794,Observation,,,yes;no,4188539;4188540,,date_habits,1;0,bool
@@ -112,7 +114,8 @@ no_anxiety,441542,Observation,,,yes;no,_;4132135,anxiety_cutoff,date_anxiety,1;0
 anxiety_cutoff,,NA,,,,,,date_anxiety,,text
 mhi_5_questionnaire,2000000079,Measurement,,,,,,date_depression,> 0,num
 lidas_questionnaire,2000000091,Measurement,,,,,,date_depression,> 0,num
-npi_questionnaire,2000000092,Measurement,,,,,,date_depression,> 0,num
+npi_questionnaire_frq,2000000092,Measurement,,,,,,date_depression,> 0,num
+npi_questionnaire sev,2000000100,Measurement,,,,,,date_depression,> 0,num
 mmse_total,4169175,Measurement,,,,,,date_mmse,0;30,num
 attention_test_tmt_a_time,2000000028,Measurement,,,,,,date_npe,> 0,num
 attention_test_tmt_a_errors,2000000029,Measurement,,,,,,date_npe,> 0,num
@@ -157,7 +160,7 @@ priority_memory_dr_15_word_list_correct,2000000082,Measurement,,,,,,date_npe,> 0
 priority_memory_dr_15_word_list_incorrect,2000000083,Measurement,,,,,,date_npe,> 0,num
 priority_executive_tmt_b_time,2000000062,Measurement,,,,,,date_npe,,num
 priority_executive_tmt_b_errors,2000000063,Measurement,,,,,,date_npe,,num
-priority_executive_stroop_3,2000000064,Measurement,,,,,,date_npe,,num
+priority_executive_stroop_3,2000000064,Measurement,sec,8555,,,,date_npe,,num
 priority_executive_cst_a,2000000065,Measurement,,,,,,date_npe,,num
 priority_executive_cst_b,2000000066,Measurement,,,,,,date_npe,,num
 priority_executive_cst_c,2000000067,Measurement,,,,,,date_npe,,num

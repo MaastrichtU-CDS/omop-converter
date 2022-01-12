@@ -98,3 +98,4 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000097	e_selectin	Measurement	Vocabulary	Measurement		E_Selectin	20210101	20991231	
 2000000098	vcam	Measurement	Vocabulary	Measurement		VCAM	20210101	20991231	
 2000000099	icam	Measurement	Vocabulary	Measurement		ICAM	20210101	20991231	
+2000000100	npi_questionnaire sev	Measurement	Vocabulary	Measurement		npi_questionnaire sev	20210101	20991231	
