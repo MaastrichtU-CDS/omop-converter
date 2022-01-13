@@ -4,6 +4,7 @@ from cdm_builder import *
 from constants import *
 from utils import arrays_to_dict, parse_date, get_year_of_birth
 from exceptions import ParsingError
+from operator import le, lt, ge, gt
 
 CDM_SQL = {
     CONDITION_OCCURRENCE: build_condition,
@@ -43,20 +44,30 @@ class DataParser:
             keys.split(separator),
             values.split(separator)
         )
-    
+
+    @staticmethod
+    def validate_value(value, validation):
+        """ Validate if a value is within the expected range.
+        """
+        validation_functions = {
+            '>=': ge,
+            '<=': le,
+            '>': gt,
+            '<': lt,
+        }
+        for key, condition in validation_functions.items():
+            if key in validation:
+                val_condition = validation.split(key)
+                return condition(float(value), float(val_condition[1]) if len(val_condition) > 1 else 0)
+        return True
+
     @staticmethod
     def valid_row_value(variable, row, ignore_values=[], validation=None):
         """ Validate if the value exists and is not null
         """
-        validation_functions = {
-            '>=0': lambda value: value >= 0,
-            '>0': lambda value: value > 0,
-            '<0': lambda value: value < 0,
-            '<=0': lambda value: value <= 0
-        }
         return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != '' \
             and str(row[variable]) not in ignore_values and (not validation or \
-                validation_functions[validation](row[variable]))
+                DataParser.validate_value(row[variable], validation))
 
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
@@ -328,7 +339,7 @@ class DataParser:
                             source_variable_suffixed,
                             row,
                             self.missing_values,
-                            self.destination_mapping[key][VALIDATION]
+                            self.destination_mapping[key][VALUES_RANGE]
                         ):
                             source_value.append(row[source_variable_suffixed])
                             if not value[CONDITION] or row[source_variable_suffixed] \

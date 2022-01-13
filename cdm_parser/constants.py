@@ -58,12 +58,11 @@ ADDITIONAL_INFO = 'additional_info'
 STATIC_VALUE = 'static_value'
 ALTERNATIVES = 'alternatives'
 CONDITION = 'condition'
-FLAT_MAP = 'flat_map'
+VALUES_RANGE = 'values_range'
 TYPE = 'type'
 AGGREGATE = 'aggregate'
 CONVERSION = 'conversion'
 THRESHOLD = 'threshold'
-VALIDATION = 'validation'
 
 MEAN = 'mean'
 

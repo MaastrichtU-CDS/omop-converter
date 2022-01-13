@@ -75,11 +75,11 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
                 concept_mapping[concept_id] = destination_mapping[key]
                 concept_mapping[concept_id][VARIABLE] = key
                 concept_mapping[concept_id]['mapping'] = {}
-                if concept_mapping[concept_id][FLAT_MAP] and (concept_mapping[concept_id][VALUES_CONCEPT_ID] or \
+                if concept_mapping[concept_id][VALUES_RANGE] and (concept_mapping[concept_id][VALUES_CONCEPT_ID] or \
                     concept_mapping[concept_id][VALUES]):
                     concept_mapping[concept_id]['mapping'] = DataParser.variable_values_to_dict(
                         concept_mapping[concept_id][VALUES_CONCEPT_ID] or concept_mapping[concept_id][VALUES],
-                        concept_mapping[concept_id][FLAT_MAP]
+                        concept_mapping[concept_id][VALUES_RANGE]
                     )
 
     # Person information
