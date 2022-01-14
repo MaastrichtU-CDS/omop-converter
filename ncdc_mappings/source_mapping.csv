@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,validation
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
 source_id,,,,,,,,,,,
 date,,,,,,,,,,,
 birth_year,,,,,,,,,,,
@@ -127,7 +127,7 @@ anxiety_cutoff,,,,,,,,,,,
 mhi_5_questionnaire,,,,,,,,,,,
 lidas_questionnaire,,,,,,,,,,,
 npi_questionnaire_frq,,,,,,,,,,,
-npi_questionnaire sev,,,,,,,,,,,
+npi_questionnaire_sev,,,,,,,,,,,
 date_mmse,,,,,,,,,,,
 mmse_total,,,,,,,,,,,
 date_npe,,,,,,,,,,,

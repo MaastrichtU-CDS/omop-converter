@@ -161,7 +161,8 @@ class DataParser:
             raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         elif aggregate:
             aggregated_value = None
-            values = [float(value) * float(conversion)] if conversion else int(value)
+            values = [float(val) * float(conversion) for val in value] if conversion \
+                else [float(val) for val in value]
             if aggregate == MEAN:
                 aggregated_value = sum(values)/len(value)
             else:
@@ -340,11 +341,9 @@ class DataParser:
                             row,
                             self.missing_values,
                             self.destination_mapping[key][VALUES_RANGE]
-                        ):
-                            source_value.append(row[source_variable_suffixed])
-                            if not value[CONDITION] or row[source_variable_suffixed] \
-                                in value[CONDITION].split(DEFAULT_SEPARATOR):
-                                break
+                        ) and (not value[CONDITION] or row[source_variable_suffixed] \
+                            in value[CONDITION].split(DEFAULT_SEPARATOR)):
+                                source_value.append(row[source_variable_suffixed])
                 elif value[STATIC_VALUE]:
                     source_value = [value[STATIC_VALUE]]
                 if len(source_value) > 0:
@@ -362,7 +361,7 @@ class DataParser:
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable
                             date = DATE_DEFAULT
-                            visit_id = visits[visits.keys()[0]]
+                            visit_id = visits[list(visits.keys())[0]]
                             (source_dates, source_date_format) = self.get_parameters(
                                 self.destination_mapping[key][DATE])
                             if source_dates:
@@ -385,7 +384,7 @@ class DataParser:
                                             )
                             # Create the necessary arguments to build the SQL statement
                             named_args = {
-                                'source_value': ';'.join(source_value),
+                                'source_value': ';'.join([str(value) for value in source_value]),
                                 'date': date,
                                 'visit_id': visit_id
                             }

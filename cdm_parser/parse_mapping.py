@@ -29,6 +29,9 @@ COLUMN_TYPE = {
     NOT_APPLICABLE: SQL_VARCHAR
 }
 
+DATE_FORMAT_PLANE = '%d/%m/%Y'
+DEFAULT_DATE_PLANE = '01/01/1970'
+
 def get_parsed_value(mapping, value):
     """ Get the parsed value for a variable.
     """
@@ -87,7 +90,7 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
     column_value[DATE] = visit[1].strftime('%Y-%m-%d')
     column_value[YEAR_OF_BIRTH] = visit[3]
     column_value[GENDER] = get_parsed_value(concept_mapping[GENDER]['mapping'], visit[4])
-    column_value[DEATH_DATE] = visit[5].strftime('%Y/%m/%d') if visit[5] and visit[5].strftime('%d/%m/%Y') != '01/01/1970' else ''
+    column_value[DEATH_DATE] = visit[5].strftime('%Y/%m/%d') if visit[5] and visit[5].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE else ''
     column_value[DEATH_FLAG] = 1 if visit[5] else 0
     # Observations
     for observation in observations:
@@ -99,18 +102,18 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
         else:
             raise ParsingError(
                 f'Error while creating the plane table columns for variable: {concept_map[VARIABLE]}')
-        if concept_map[DATE] and observation[1] and observation[1].strftime('%d/%m/%Y') != '01/01/1970':
+        if concept_map[DATE] and observation[1] and observation[1].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE:
             column_value[concept_map[DATE]] = observation[1].strftime('%Y-%m-%d')
     # Measurements
     for measurement in measurements:
         concept_map = concept_mapping[str(measurement[0])]
-        if concept_map[DATE] and measurement[1] and measurement[1].strftime('%d/%m/%Y') != '01/01/1970':
+        if concept_map[DATE] and measurement[1] and measurement[1].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE:
             column_value[concept_map[DATE]] = measurement[1].strftime('%Y-%m-%d')
         column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map['mapping'], measurement[2])
     # Condition Occurrence
     for condition in conditions:
         concept_map = concept_mapping[str(condition[0])]
-        if concept_map[DATE] and condition[1] and condition[1].strftime('%d/%m/%Y') != '01/01/1970':
+        if concept_map[DATE] and condition[1] and condition[1].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE:
             column_value[concept_map[DATE]] = condition[1].strftime('%Y-%m-%d')
         column_value[concept_map[VARIABLE]] = 1
     return column_value

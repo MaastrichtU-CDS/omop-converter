@@ -115,7 +115,7 @@ anxiety_cutoff,,NA,,,,,,date_anxiety,,text
 mhi_5_questionnaire,2000000079,Measurement,,,,,,date_depression,>0,num
 lidas_questionnaire,2000000091,Measurement,,,,,,date_depression,>0,num
 npi_questionnaire_frq,2000000092,Measurement,,,,,,date_depression,>0,num
-npi_questionnaire sev,2000000100,Measurement,,,,,,date_depression,>0,num
+npi_questionnaire_sev,2000000100,Measurement,,,,,,date_depression,>0,num
 mmse_total,4169175,Measurement,,,,,,date_mmse,0;30,num
 attention_test_tmt_a_time,2000000028,Measurement,,,,,,date_npe,>0,num
 attention_test_tmt_a_errors,2000000029,Measurement,,,,,,date_npe,>0,num

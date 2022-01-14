@@ -160,7 +160,7 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;;;mhi_5_questionnaire;MHI 5 questionnaire (Depression and Anxiety);numerical;;> 0;num;;No;;Measurement;;2000000079;;;;;;;;;Date_depression
 ;;;lidas_questionnaire;LIDAS (Self Report - Depression);numerical;;> 0;num;;No;;Measurement;;2000000091;;;;;;;;;Date_depression
 ;;;npi_questionnaire_frq;NPI questionnairet (Anxiety) - Frequency;numerical;;> 0;num;;No;;Measurement;;2000000092;;;;;;;;;Date_depression
-;;;npi_questionnaire sev;NPI questionnairet (Anxiety) - Severity;numerical;;> 0;num;;No;;Measurement;;2000000100;;;;;;;;;Date_depression
+;;;npi_questionnaire_sev;NPI questionnairet (Anxiety) - Severity;numerical;;> 0;num;;No;;Measurement;;2000000100;;;;;;;;;Date_depression
 Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;Cognitive screening tests;Date MMSE;Date_MMSE;Date MMSE assessment;date;;;date;;No;;;;;;;;;;;;;
 ;Cognitive screening tests;MMSE total score;MMSE_total;MMSE total score;numeric;;"0;30";num;;No;;Measurement;SNOMED;4169175;Athena-4169175;;;;;;;;Date_MMSE
