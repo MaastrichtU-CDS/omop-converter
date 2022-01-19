@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:12.6
+    environment:
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-password}"
+
+  memorabel-parser:
+    image: pmateus/memorabel-data-harmonization:1.1.0
+    stdin_open: true
+    tty: true
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: "${POSTGRES_PASSWORD:-password}"
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: Cohort
+      DOCKER_ENV: 1
+      VOCABULARY_PATH: /usr/src/app/vocabularies
+      DESTINATION_MAPPING_PATH: /mnt/mappings/destination_mapping.csv
+      SOURCE_MAPPING_PATH: /mnt/mappings/source_mapping.csv
+      DATASET_PATH: /mnt/data/dataset.csv
+      DATASET_DELIMITER: "," 
+      SOURCE_NAME: Cohort
+      HOLDER:
+      DESCRIPTION: Data from the Cohort
+      REFERENCE:
+      ETL_REFERENCE: https://gitlab.com/UM-CDS/projects/memorabel/-/tree/master/data_harmonization
+      CDM_VERSION: 6.0
+      VOCABULARY_VERSION: 1.0
+      FOLLOW_UP_SUFFIX: ""
+      ENCODING: "iso-8859-1"
+    volumes:
+      - $PWD:/mnt/mappings
+      - $PWD/dataset.csv:/mnt/data/dataset.csv
+    depends_on:
+      - db
