@@ -161,6 +161,7 @@ priority_memory_dr_15_word_list_incorrect,2000000083,Measurement,,,,,,date_npe,>
 priority_executive_tmt_b_time,2000000062,Measurement,,,,,,date_npe,>0,num
 priority_executive_tmt_b_errors,2000000063,Measurement,,,,,,date_npe,>0,num
 priority_executive_stroop_3,2000000064,Measurement,sec,8555,,,,date_npe,>0,num
+priority_executive_stroop_3_adj,2000000101,Measurement,,,,,,date_npe,>0,num
 priority_executive_cst_a,2000000065,Measurement,,,,,,date_npe,>0,num
 priority_executive_cst_b,2000000066,Measurement,,,,,,date_npe,>0,num
 priority_executive_cst_c,2000000067,Measurement,,,,,,date_npe,>0,num

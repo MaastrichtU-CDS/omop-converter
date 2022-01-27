@@ -5,8 +5,8 @@ General;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Cohort;Name of cohort;factor;1 = ADC, 2 = LASA, 3 = Maastricht Study, 4 = SMART, 5 = LLS, 6 = Rotterdam Study, 7 = Lifelines, 8 = EMIF twins, 9 = EMIF 90+, 10 = DCS;"0;10";;;Yes;;;;;;;;;;;;;
 ;;ID;ID;Participant ID;Character;;;;;Yes;;;;;;;;;;;;;
 Demographics;Subject characteristics & demograhics;;;;;;;;;;;;;;;;;;;;;;
-;Demographics;Birth year;Birth_year;Year of birth ;numeric;;>= 1900;int;;Yes;;Person;;;;;;;;;;;
-;Demographics;Age ;Age;Age at  assessment;numeric;;>= 0;num;years;No;;Observation;SNOMED;4265453;Athena-4265453;year;9448;UCUM;;;;;date_age
+;Demographics;Birth year;Birth_year;Year of birth ;numeric;;>=1900;int;;Yes;;Person;;;;;;;;;;;
+;Demographics;Age ;Age;Age at  assessment;numeric;;>=0;num;years;No;;Observation;SNOMED;4265453;Athena-4265453;year;9448;UCUM;;;;;date_age
 ;Demographics;Sex;Sex;Sex;factor;"1= female; 0 = male";"0;1;_";int;;Yes;;Person;;;;;;;"male;female;-";"8507;8532;8551";GENDER;;
 ;Subject characteristics;Education_years;Education_years;Education level in years;numeric;;> = 0;num;years;Yes;Recode Verhaage score into education in years ('1'=5) ('2'=6) ('3'=8) ('4'=9) ('5'=10) ('6'=13) ('7'=17). CBS categories can also be converted to year;Observation;;2000000001;;year;9448;UCUM;;;;;
 ;Subject characteristics;;Education_category;Education level categories (2 categories);factor;"1 = high; 0 = low";"0;1";int;;Yes;"Low: years <  7; High: years >= 7";Observation;SNOMED;4171617;Athena-4171617;;;;"low;high";"4267416;4328749";SNOMED;;
@@ -21,7 +21,7 @@ Demographics;Subject characteristics & demograhics;;;;;;;;;;;;;;;;;;;;;;
 7. University degree";Observation;;2000000078;;;;;"1;2;3;4;5;6;7";;;;
 Dementia;Clinical information & cognitive screening tests;;;;;;;;;;;;;;;;;;;;;;
 ;Diagnoses;Date Diagnosis;Date_diagnosis;Date of diagnosis ;date;;;date;;No;;;;;;;;;;;;;
-;;;Diagnosis;Diagnosis ;factor;"1 = normal cognition; 2 = subjective cognitive decline; 3 = mild cognitive impairment; 4 dementia";"0;4";;;No;;;;;;;;;;;;;
+;;;Diagnosis;Diagnosis ;factor;"1 = normal cognition; 2 = subjective cognitive decline; 3 = mild cognitive impairment; 4 dementia";;;;No;;;;;;;;;;;;;
 ;;;normal_cognition_diagnosis;Normal Cognition Diagnosis;;;"1;0";bool;;No;;Condition;SNOMED;42710016;Athena-42710016;;;;"yes;no";"4188539;_";SNOMED;;Date_diagnosis
 ;;Subjective Cognitive Impairment;scd_diagnosis;Subjective Cognitive Decline;;;"1;0";bool;;No;;Condition;;2000000002;;;;;"yes;no";"4188539;_";;;Date_diagnosis
 ;;;mci_diagnosis;Mild cognitive Impairment;;;"1;0";bool;;No;;Condition;SNOMED;4297400;Athena-4297400;;;;"yes;no";"4188539;_";;;Date_diagnosis
@@ -30,7 +30,7 @@ Dementia;Clinical information & cognitive screening tests;;;;;;;;;;;;;;;;;;;;;;
 ;;;no_scd_diagnosis;Subjective Cognitive Decline;;;"1;0";bool;;No;;Observation;;2000000002;;;;;"yes;no";"_;4132135";;;Date_diagnosis
 ;;;no_mci_diagnosis;Mild cognitive Impairment;;;"1;0";bool;;No;;Observation;SNOMED;4297400;Athena-4297400;;;;"yes;no";"_;4132135";;;Date_diagnosis
 ;;;no_dementia_diagnosis;Dementia diagnosis;;;"1;0";bool;;No;;Observation;SNOMED;4182210;Athena-4182210;;;;"yes;no";"_;4132135";;;Date_diagnosis
-;;;Dementia_type;Dementia type;factor;1 =  Alzheimer's dementia, 2 = Lewy body dementia, 3 = Vascular dementia, 4 = Frontotemporal dementia, 5 = Parkinson's dementia, 6 = Semantic dementia, 7 = Corticobasal syndrome, 8 = Progressive supranuclear palsey, 9 = Progressive non-fluent aphsia, 10 = Creutzfeldt-Jakob disease;"0;10";;;No;;;;;;;;;;;;;
+;;;Dementia_type;Dementia type;factor;1 =  Alzheimer's dementia, 2 = Lewy body dementia, 3 = Vascular dementia, 4 = Frontotemporal dementia, 5 = Parkinson's dementia, 6 = Semantic dementia, 7 = Corticobasal syndrome, 8 = Progressive supranuclear palsey, 9 = Progressive non-fluent aphsia, 10 = Creutzfeldt-Jakob disease;;;;No;;;;;;;;;;;;;
 ;;;alzheimers_dementia;Alzheimer's dementia;;;"1;0";bool;;No;;Condition;SNOMED;378419;Athena-378419;;;;"yes;no";"4188539;_";;;Date_diagnosis
 ;;;lewy_body_dementia;Lewy body dementia;;;"1;0";bool;;No;;Condition;SNOMED;380701;Athena-380701;;;;"yes;no";"4188539;_";;;Date_diagnosis
 ;;;vascular_dementia;Vascular dementia;;;"1;0";bool;;No;;Condition;SNOMED;443605;Athena-443605;;;;"yes;no";"4188539;_";;;Date_diagnosis
@@ -52,8 +52,8 @@ Dementia;Clinical information & cognitive screening tests;;;;;;;;;;;;;;;;;;;;;;
 ;;;no_pnfa;Progressive non-fluent aphasia;;;"1;0";bool;;No;;Observation;SNOMED;37396465;Athena-37396465;;;;"yes;no";"_;4132135";;;Date_diagnosis
 ;;;no_cjd;Creutzfeldt-Jakob disease;;;"1;0";bool;;No;;Observation;SNOMED;372241;Athena-372241;;;;"yes;no";"_;4132135";;;Date_diagnosis
 ;Dates rating scales;Date of rating scales assessment;Date_CDR;Date Clinical Dementia Rating Scale assessment;date;;;date;;No;;;;;;;;;;;;;
-;Dementia rating scales;CDR total;CDR_total;Clinical Dementia Rating total score;numeric;;;num;;No;;Observation;SNOMED;36714811;Athena-36714811;;;;;;;;Date_CDR
-;;CDR sum of boxes;CDR_sum_of_boxes;Clinical Dementia Rating sum of boxes;numeric;;;num;;No;;Observation;;2000000003;;;;;;;;;Date_CDR
+;Dementia rating scales;CDR total;CDR_total;Clinical Dementia Rating total score;numeric;;>=0;num;;No;;Observation;SNOMED;36714811;Athena-36714811;;;;;;;;Date_CDR
+;;CDR sum of boxes;CDR_sum_of_boxes;Clinical Dementia Rating sum of boxes;numeric;;>=0;num;;No;;Observation;;2000000003;;;;;;;;;Date_CDR
 Mortality;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Mort_Date;Date of death;date;;;date;;Yes;;Person;;;;;;;;;;;
 ;;;Live_Date;Last known date to be alive;date;;;date;;Yes;;Observation;;2000000004;;;;;;;;;
@@ -61,11 +61,11 @@ Mortality;;;;;;;;;;;;;;;;;;;;;;;
 Cardiovascular;Clinical information & Laboratory test results;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Date_vitals;Date assessment vital signs;date;;;date;;No;;;;;;;;;;;;;
-;Vital Signs;SBP;SBP;Systolic blood pressure ;numeric;;> 30;num;mmHg;No;;Measurement;SNOMED;4152194;Athena-4152194;mmHg;8876;UCUM;;;;;Date_vitals
-;Vital Signs;DBP;DBP;Diastolic blood pressure;numeric;;> 30;num;mmHg;No;;Measurement;SNOMED;4154790;Athena-4154790;mmHg;8876;UCUM;;;;;Date_vitals
-;Vital Signs;Body Mass Index;BMI;"BMI: weight;(bodylength_cm;100)^2)";numeric;;> 0;num;"kg;m^2";No;;Observation;SNOMED;4245997;Athena-4245997;kg/m2;9531;UCUM;;;;;Date_vitals
-;Vital Signs;Weight;Weight;Weight;numeric;;> 0;num;kg;No;;Observation;SNOMED;37111521;Athena-37111521;kg;9529;UCUM;;;;;Date_vitals
-;Vital Signs;Body length;Height;Height ;numeric;;> 0;num;cm;No;;Observation;SNOMED;4087492;Athena-4087492;cm;8582;UCUM;;;;;Date_vitals
+;Vital Signs;SBP;SBP;Systolic blood pressure ;numeric;;>30;num;mmHg;No;;Measurement;SNOMED;4152194;Athena-4152194;mmHg;8876;UCUM;;;;;Date_vitals
+;Vital Signs;DBP;DBP;Diastolic blood pressure;numeric;;>30;num;mmHg;No;;Measurement;SNOMED;4154790;Athena-4154790;mmHg;8876;UCUM;;;;;Date_vitals
+;Vital Signs;Body Mass Index;BMI;"BMI: weight;(bodylength_cm;100)^2)";numeric;;>0;num;"kg;m^2";No;;Observation;SNOMED;4245997;Athena-4245997;kg/m2;9531;UCUM;;;;;Date_vitals
+;Vital Signs;Weight;Weight;Weight;numeric;;>0;num;kg;No;;Observation;SNOMED;37111521;Athena-37111521;kg;9529;UCUM;;;;;Date_vitals
+;Vital Signs;Body length;Height;Height ;numeric;;>0;num;cm;No;;Observation;SNOMED;4087492;Athena-4087492;cm;8582;UCUM;;;;;Date_vitals
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Date_comorbidities;Date assessment comorbidities;date;;;date;;;;;;;;;;;;;;;
 ;Cardiovascular Risk Factors;Hypertension;Hypertension;History of hypertension;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4058286;Athena-4058286;;;;"yes;no";"4188539;4188540";;;Date_comorbidities
@@ -87,14 +87,14 @@ Cardiovascular;Clinical information & Laboratory test results;;;;;;;;;;;;;;;;;;;
 ;Hormonal therapy;Anti-diabetic drugs;Drugs_diabetes;Diabetes Mellitus  type 2 medication ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000007;;;;;"yes;no";"4188539;4188540";;;Date_comorbidities
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;Blood dates;Date Blood Collection;Date_blood;Date blood collection;date; ;;date;;No;;;;;;;;;;;;;
-;Blood measures;Fasted glucose;Glucose_fasted;Fasted glucose blood;numeric;;> 0 ;num;;No;;Measurement;SNOMED;4156660;Athena-4156660;;;;;;;;Date_blood
-;Blood measures;Non-fasted glucose ;Glucose_nonfasted;Non-fasted glucose blood;numeric;;> 0;num;;No;;Measurement;;2000000008;;;;;;;;;Date_blood
+;Blood measures;Fasted glucose;Glucose_fasted;Fasted glucose blood;numeric;;>0;num;;No;;Measurement;SNOMED;4156660;Athena-4156660;;;;;;;;Date_blood
+;Blood measures;Non-fasted glucose ;Glucose_nonfasted;Non-fasted glucose blood;numeric;;>0;num;;No;;Measurement;;2000000008;;;;;;;;;Date_blood
 ;Blood measures;;Glucose_abnormal;Glucose dichotomized;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;4042728;Athena-4042728;;;;"yes;no";"4188539;_";;Glucose_cutoff;Date_blood
 ;Blood measures;;no_Glucose_abnormal;Glucose dichotomized;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4042728;Athena-4042728;;;;"yes;no";"_;4132135";;Glucose_cutoff;Date_blood
 ;Blood measures;;Glucose_cutoff;Cutoff used ;0<…, 1>=…;;;text;;No;;NA;;;;;;;;;;;Date_blood
-;Blood measures;HDL cholesterol;HDL;High density lipoprotein cholesterol;numeric;;> 0 ;num;"mmol;L";No;;Measurement;SNOMED;4101713;Athena-4101713;mmol/L;8753;UCUM;;;;;Date_blood
-;Blood measures;LDL cholesterol ;LDL;Low density lipoprotein cholesterol;numeric;;> 0;num;"mmol;L";No;;Measurement;SNOMED;4012479;Athena-4012479;mmol/L;8753;UCUM;;;;;Date_blood
-;Blood measures;CRP;CRP;C-reactive protein;numeric;;> 0;num;mg/L;No;;Measurement;SNOMED;4208414;Athena-4208414;mg/L;8751;UCUM;;;;;Date_blood
+;Blood measures;HDL cholesterol;HDL;High density lipoprotein cholesterol;numeric;;>0;num;"mmol;L";No;;Measurement;SNOMED;4101713;Athena-4101713;mmol/L;8753;UCUM;;;;;Date_blood
+;Blood measures;LDL cholesterol ;LDL;Low density lipoprotein cholesterol;numeric;;>0;num;"mmol;L";No;;Measurement;SNOMED;4012479;Athena-4012479;mmol/L;8753;UCUM;;;;;Date_blood
+;Blood measures;CRP;CRP;C-reactive protein;numeric;;>0;num;mg/L;No;;Measurement;SNOMED;4208414;Athena-4208414;mg/L;8751;UCUM;;;;;Date_blood
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Date_habits;Date assessment alcohol and smoking habits;date;;;date;;No;;;;;;;;;;;;;
 ;Alcohol use;Alcohol;Alcohol;Current alcohol use ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4074035;Athena-4074035;;;;"yes;no";"4188539;4188540";;;Date_habits
@@ -107,19 +107,19 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 "Amyloid;(P)Tau";Imaging & Laboratory test results;;;;;;;;;;;;;;;;;;;;;;
 ;CSF dates;Date CSF collection;Date_LP;Date lumbar puncture;date;;;date;;No;;;;;;;;;;;;;
 ;CSF;CSF Assay;CSF_assay_amyloid;CSF Assay Amyloid;factor;"1 = luminex; 2 = innogetics Elisa; 3 = Elecsys; 4 = Innotest";"1;2;3;4;5";int;;No;;Observation;;2000000011;;;;;"luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun";;;;Date_LP
-;CSF;;CSF_ab;Amyloid beta in CSF ;numeric;;> 0;;"pg;ml";No;"Priority for 1. Amyloid Beta 1-42 in pg;ml                                                    2. Ratio Amyloid Beta 42;40                                                                                  3. Amyloid Beta 1-38 in pg;ml";;;;;;;;;;;;Date_LP
-;CSF;"Amyloid Beta 1-42 (pg;mL)";CSF_ab_total_1_42;"Amyloid Beta 1-42 in pg;ml ";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000012;;pg/mL;8845;UCUM;;;;;Date_LP
-;CSF;"Amyloid Beta 42;40";CSF_ab_total_ratio_42_40;"Ratio Amyloid Beta 42;40   ";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000013;;pg/mL;8845;UCUM;;;;;Date_LP
-;CSF;"Amyloid Beta 1-38 (pg;mL)";CSF_ab_total_1_38;"Amyloid Beta 1-38 in pg;ml";numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000014;;pg/mL;8845;UCUM;;;;;Date_LP
+;CSF;;CSF_ab;Amyloid beta in CSF ;numeric;;>0;;"pg;ml";No;"Priority for 1. Amyloid Beta 1-42 in pg;ml                                                    2. Ratio Amyloid Beta 42;40                                                                                  3. Amyloid Beta 1-38 in pg;ml";;;;;;;;;;;;Date_LP
+;CSF;"Amyloid Beta 1-42 (pg;mL)";CSF_ab_total_1_42;"Amyloid Beta 1-42 in pg;ml ";numeric;;>0;num;"pg;ml";No;;Measurement;;2000000012;;pg/mL;8845;UCUM;;;;;Date_LP
+;CSF;"Amyloid Beta 42;40";CSF_ab_total_ratio_42_40;"Ratio Amyloid Beta 42;40   ";numeric;;>0;num;"pg;ml";No;;Measurement;;2000000013;;pg/mL;8845;UCUM;;;;;Date_LP
+;CSF;"Amyloid Beta 1-38 (pg;mL)";CSF_ab_total_1_38;"Amyloid Beta 1-38 in pg;ml";numeric;;>0;num;"pg;ml";No;;Measurement;;2000000014;;pg/mL;8845;UCUM;;;;;Date_LP
 ;CSF;;Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;;2000000015;;;;;"yes;no";"4188539;_";;Amy_cutoff;Date_LP
 ;CSF;;no_Amy_abnormal;Amyloid beta dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000015;;;;;"yes;no";"_;4132135";;Amy_cutoff;Date_LP
 ;CSF;;Amy_cutoff;Cutoff used ;0<…, 1>=…;;;text;;No;;NA;;;;;;;;;;;Date_LP
 ;CSF;CSF Assay;CSF_assay_Tau;CSF Assay tau;factor;1 = luminex, 2 = innogetics Elisa, 3 = Elecsys, 4 = Innotest;"1;2;3;4;5";int;;No;;Observation;;2000000016;;;;;"luminex;innogetics Elisa;Elecsys;Innotest;Euroimmun";;;;Date_LP
-;CSF;Total Tau;CSF_ttau;Total Tau ;numeric;;> 0;num;"pg;mL";No;;Measurement;SNOMED;4260896;Athena-4260896;pg/mL;8845;UCUM;;;;;Date_LP
+;CSF;Total Tau;CSF_ttau;Total Tau ;numeric;;>0;num;"pg;mL";No;;Measurement;SNOMED;4260896;Athena-4260896;pg/mL;8845;UCUM;;;;;Date_LP
 ;CSF;Total Tau Abnormal;Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;;2000000017;;;;;"yes;no";"4188539;_";;Ttau_cutoff;Date_LP
 ;CSF;Total Tau Abnormal;no_Ttau_abnormal;Total Tau dichotomised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000017;;;;;"yes;no";"_;4188540";;Ttau_cutoff;Date_LP
 ;CSF;Total Tau Cut-off;Ttau_cutoff;Cutoff used ;0<…, 1>=…;;;text;;No;;NA;;;;;;;;;;;Date_LP
-;CSF;Phosphorylated Tau;CSF_ptau;Phosphorylated Tau;numeric;;> 0;num;"pg;ml";No;;Measurement;;2000000018;;pg/mL;8845;UCUM;;;;;Date_LP
+;CSF;Phosphorylated Tau;CSF_ptau;Phosphorylated Tau;numeric;;>0;num;"pg;ml";No;;Measurement;;2000000018;;pg/mL;8845;UCUM;;;;;Date_LP
 ;CSF;Phosphorylated Tau abnormal ;Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;;2000000019;;;;;"yes;no";"4188539;_";;Ptau_cutoff;Date_LP
 ;CSF;Phosphorylated Tau abnormal ;no_Ptau_abnormal;Phosphorylated Tau dichotemised;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000019;;;;;"yes;no";"_;4132135";;Ptau_cutoff;Date_LP
 ;CSF;Phosphorylated Tau cut-off;Ptau_cutoff;Cutoff used ;0<…, 1>=…;;;text;;No;;NA;;;;;;;;;;;Date_LP
@@ -127,40 +127,40 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;Amyloid PET protocol;Amyloid PET tracer ;PET_tracer;Tracer used during PET assessment;factor;1 = PiB, 2 = Florbetapir, 3 = AV-45;"1;2;3";int;;No;;Observation;;2000000020;;;;;"PiB;Florbetapir;AV-45";;;;Date_PET
 ;Amyloid PET protocol;Amyloid PET Method;PET_method;Method used to express amyloid uptake in PET ;factor;1 = SUVR, 2 = NPnD;;;;No;;;;;;;;;;;;;Date_PET
 ;;;Pet_assesment;Assessment of PET scan ;factor;1 = quantitative, 0 = visual;"1;0";int;;No;;Observation;;2000000021;;;;;"quantitative;visual";"4149267;4113286";;;Date_PET
-;;;PET_level;Result PET assessment, continuous;numeric;;> 0;;;No;;;;;;;;;;;;;Date_PET
-;;;PET_level_suvr;Result PET assessment SUVR;numeric;;> 0;num;;No;;Observation;;2000000022;;;;;;;;;Date_PET
-;;;PET_level_bpnd;Result PET assessment BPnd;numeric;;> 0;num;;No;;Observation;;2000000023;;;;;;;;;Date_PET
+;;;PET_level;Result PET assessment, continuous;numeric;;>0;;;No;;;;;;;;;;;;;Date_PET
+;;;PET_level_suvr;Result PET assessment SUVR;numeric;;>0;num;;No;;Observation;;2000000022;;;;;;;;;Date_PET
+;;;PET_level_bpnd;Result PET assessment BPnd;numeric;;>0;num;;No;;Observation;;2000000023;;;;;;;;;Date_PET
 ;Amyloid PET;Amyloid PET abnormal;PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;;2000000024;;;;;"yes;no";"4188539;_";;;Date_PET
 ;Amyloid PET;Amyloid PET abnormal;no_PET_abnormal;Amyloid positivity on PET;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000024;;;;;"yes;no";"_;4132135";;;Date_PET
 "Anxiety;depression";Clinical information & rating scales;;;;;;;;;;;;;;;;;;;;;;
 ;Dates rating scales;Date of rating scales assessment;Date_depression;Date assesment depression;date;;;date;;No;;;;;;;;;;;;;
-;Psychiatric disorders;;Depression_type;Assement type depression;factor;1 = clinical diagnosis, 2 = MINI, 3 = GDS-15, 4 = GDS, 5 = CES-D, 6 = other;"1;6";;;No;Priority for 1. clinical diagnosis                                                                       2. MINI                                                                                                                             3. GDS-15                                                                                                                                4. GDS                                                                                                                           5. CES-D                                                                                                                             6. If not available, please provide alternative if possible   ;;;;;;;;;;;;Date_depression
-;;;Depression_rating_mini;Depression Rating from MINI;numerical;;> 0;num;;No;;Measurement;;2000000025;;;;;;;;;Date_depression
-;;GDS-15;Depression_rating_gds_15;Depression Rating from GDS-15;numerical;;> 0;num;;No;;Measurement;SNOMED;40482001;Athena-40482001;;;;;;;;Date_depression
-;;GDS-30;Depression_rating_gds;Depression Rating from GDS;numerical;;> 0;num;;No;;Measurement;SNOMED;4159706;Athena-4159706;;;;;;;;Date_depression
-;;CES-D;Depression_rating_ces_d;Depression Rating from CES-D;numerical;;> 0;num;;No;;Measurement;;2000000026;;;;;;;;;Date_depression
-;;;Depression_rating_other;Depression Rating from another alternative;numerical;;> 0;;;No;;;;;;;;;;;;;Date_depression
-;Rating scales;;Depression_rating;Result assesment depression: rating scale;numerical;;> 0;;;No;;;;;;;;;;;;;Date_depression
+;Psychiatric disorders;;Depression_type;Assement type depression;factor;1 = clinical diagnosis, 2 = MINI, 3 = GDS-15, 4 = GDS, 5 = CES-D, 6 = other;;;;No;Priority for 1. clinical diagnosis                                                                       2. MINI                                                                                                                             3. GDS-15                                                                                                                                4. GDS                                                                                                                           5. CES-D                                                                                                                             6. If not available, please provide alternative if possible   ;;;;;;;;;;;;Date_depression
+;;;Depression_rating_mini;Depression Rating from MINI;numerical;;>0;num;;No;;Measurement;;2000000025;;;;;;;;;Date_depression
+;;GDS-15;Depression_rating_gds_15;Depression Rating from GDS-15;numerical;;>0;num;;No;;Measurement;SNOMED;40482001;Athena-40482001;;;;;;;;Date_depression
+;;GDS-30;Depression_rating_gds;Depression Rating from GDS;numerical;;>0;num;;No;;Measurement;SNOMED;4159706;Athena-4159706;;;;;;;;Date_depression
+;;CES-D;Depression_rating_ces_d;Depression Rating from CES-D;numerical;;>0;num;;No;;Measurement;;2000000026;;;;;;;;;Date_depression
+;;;Depression_rating_other;Depression Rating from another alternative;numerical;;>0;;;No;;;;;;;;;;;;;Date_depression
+;Rating scales;;Depression_rating;Result assesment depression: rating scale;numerical;;>0;;;No;;;;;;;;;;;;;Date_depression
 ;Psychiatric disorders;Depression;Depression;"Result assesment depression: yes;no";factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;440383;Athena-440383;;;;"yes;no";"4188539;_";;Depression_cutoff;Date_depression
 ;Psychiatric disorders;Depression;no_Depression;"Result assesment depression: yes;no";factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;440383;Athena-440383;;;;"yes;no";"_;4132135";;Depression_cutoff;Date_depression
 ;;;Depression_cutoff;Cutoff used ;0<…, 1>=…, cd;;;text;;No;;NA;;;;;;;;;;;Date_depression
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;Dates rating scales;Date of rating scales assessment;Date_anxiety;Date assessment anxiety;date;;;date;;No;;;;;;;;;;;;;
 ;Psychiatric disorders;;Anxiety_type;Assessment type anxiety;factor;1 = clinical diagnosis, 2 = MINI, 3 = BECK anxiety, 4 = State-Trate anxiety inventory, 5 = Hospital anxiety and depresson scale, 6 = other;"1;6";;;No;Priority for 1. clinical diagnosis                                                                         2.  MINI                                                                                                                          3. Beck anxiety                                                                                                             4.  State-Trait anxiety inventory                                                                        5. Hospital anxiety and depresson scale                                                             6. If not available, please provide alternative if possible;;;;;;;;;;;;Date_anxiety
-;;MINI Anxiety Interview;Anxiety_rating_mini;Anxiety Rating from MINI;numerical;;> 0;num;;No;;Measurement;;2000000027;;;;;;;;;Date_anxiety
-;;BECK Anxiety;Anxiety_rating_beck_anxiety;Anxiety Rating from Beck anxiety;numerical;;> 0;num;;No;;Measurement;SNOMED;4128244;Athena-4128244;;;;;;;;Date_anxiety
-;;STAI;Anxiety_rating_state_trait;Anxiety Rating from State-Trait anxiety inventory ;numerical;;> 0;num;;No;;Measurement;SNOMED;4169477;Athena-4169477;;;;;;;;Date_anxiety
-;;;Anxiety_rating_hospital_scale;Anxiety Rating from Hospital anxiety and depresson scale ;numerical;;> 0;num;;No;;Measurement;SNOMED;4165145;Athena-4165145;;;;;;;;Date_anxiety
-;;;Anxiety_rating_other;Anxiety Rating from another alternative;numerical;;> 0;;;No;;;;;;;;;;;;;Date_anxiety
-;Psychiatric disorders;;Anxiety_rating;Result assesment anxiety: rating scale;numerical;;> 0;;;No;;;;;;;;;;;;;Date_anxiety
+;;MINI Anxiety Interview;Anxiety_rating_mini;Anxiety Rating from MINI;numerical;;>0;num;;No;;Measurement;;2000000027;;;;;;;;;Date_anxiety
+;;BECK Anxiety;Anxiety_rating_beck_anxiety;Anxiety Rating from Beck anxiety;numerical;;>0;num;;No;;Measurement;SNOMED;4128244;Athena-4128244;;;;;;;;Date_anxiety
+;;STAI;Anxiety_rating_state_trait;Anxiety Rating from State-Trait anxiety inventory ;numerical;;>0;num;;No;;Measurement;SNOMED;4169477;Athena-4169477;;;;;;;;Date_anxiety
+;;;Anxiety_rating_hospital_scale;Anxiety Rating from Hospital anxiety and depresson scale ;numerical;;>0;num;;No;;Measurement;SNOMED;4165145;Athena-4165145;;;;;;;;Date_anxiety
+;;;Anxiety_rating_other;Anxiety Rating from another alternative;numerical;;>0;;;No;;;;;;;;;;;;;Date_anxiety
+;Psychiatric disorders;;Anxiety_rating;Result assesment anxiety: rating scale;numerical;;>0;;;No;;;;;;;;;;;;;Date_anxiety
 ;Psychiatric disorders;Anxiety;Anxiety;"Result assesment anxiety: yes;no";factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;441542;Athena-441542;;;;"yes;no";"4188539;_";;Anxiety_cutoff;Date_anxiety
 ;Psychiatric disorders;Anxiety;no_Anxiety;"Result assesment anxiety: yes;no";factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;441542;Athena-441542;;;;"yes;no";"_;4132135";;Anxiety_cutoff;Date_anxiety
 ;;;Anxiety_cutoff;Cutoff used ;0<…, 1>=…, cd;;;text;;No;;NA;;;;;;;;;;;Date_anxiety
 ;;;;;;;;;;;;;;;;;;;;;;;
-;;;mhi_5_questionnaire;MHI 5 questionnaire (Depression and Anxiety);numerical;;> 0;num;;No;;Measurement;;2000000079;;;;;;;;;Date_depression
-;;;lidas_questionnaire;LIDAS (Self Report - Depression);numerical;;> 0;num;;No;;Measurement;;2000000091;;;;;;;;;Date_depression
-;;;npi_questionnaire_frq;NPI questionnairet (Anxiety) - Frequency;numerical;;> 0;num;;No;;Measurement;;2000000092;;;;;;;;;Date_depression
-;;;npi_questionnaire_sev;NPI questionnairet (Anxiety) - Severity;numerical;;> 0;num;;No;;Measurement;;2000000100;;;;;;;;;Date_depression
+;;;mhi_5_questionnaire;MHI 5 questionnaire (Depression and Anxiety);numerical;;>0;num;;No;;Measurement;;2000000079;;;;;;;;;Date_depression
+;;;lidas_questionnaire;LIDAS (Self Report - Depression);numerical;;>0;num;;No;;Measurement;;2000000091;;;;;;;;;Date_depression
+;;;npi_questionnaire_frq;NPI questionnairet (Anxiety) - Frequency;numerical;;>0;num;;No;;Measurement;;2000000092;;;;;;;;;Date_depression
+;;;npi_questionnaire_sev;NPI questionnairet (Anxiety) - Severity;numerical;;>0;num;;No;;Measurement;;2000000100;;;;;;;;;Date_depression
 Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;Cognitive screening tests;Date MMSE;Date_MMSE;Date MMSE assessment;date;;;date;;No;;;;;;;;;;;;;
 ;Cognitive screening tests;MMSE total score;MMSE_total;MMSE total score;numeric;;"0;30";num;;No;;Measurement;SNOMED;4169175;Athena-4169175;;;;;;;;Date_MMSE
@@ -169,18 +169,18 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 2. Stroop 1
 3. Stroop 2                                                                                                 
 5. Symbol Digit Substitution Task                                                                                               9.  If not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;TMT-A;Attention_test_tmt_a;Attention score from Trail Making Test Part  A ;numeric;;> 0;num;;No;;;;;;;;;;;;;Date_NPE
-;;;Attention_test_tmt_a_time;Attention score from Trail Making Test Part  A - Time;numeric;;> 0;num;;No;;Measurement;;2000000028;;;;;;;;;Date_NPE
-;;;Attention_test_tmt_a_errors;Attention score from Trail Making Test Part  A - Errors;numeric;;> 0;num;;No;;Measurement;;2000000029;;;;;;;;;Date_NPE
-;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1;numeric;;> 0;num;;No;;Measurement;;2000000030;;;;;;;;;Date_NPE
-;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2;numeric;;> 0;num;;No;;Measurement;;2000000031;;;;;;;;;Date_NPE
-;;;Attention_test_stroop_1_adj;Attention score from Stroop 1 - adjusted for number of errors;numeric;;> 0;num;;No;;Measurement;;2000000088;;;;;;;;;Date_NPE
-;;;Attention_test_stroop_2_adj;Attention score from Stroop 2 - adjusted for number of errors;numeric;;> 0;num;;No;;Measurement;;2000000089;;;;;;;;;Date_NPE
-;;SDST;Attention_test_sdst;Attention score from Symbol Digit Substitution Task      - number correct   ;numeric;;> 0;num;;No;;Measurement;;2000000032;;;;;;;;;Date_NPE
-;;;Attention_test_ldst;Attention score from Letter Digit Substitution Task   - number correct      ;numeric;;> 0;num;;No;;Measurement;;2000000090;;;;;;;;;Date_NPE
-;;;Attention_test_other;Attention score from another alternative;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority Attention Test;Priority attention ;Priority_attention;raw scores;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority Attention Test;Priority attention z-score;Priority_attention_z ;z-score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
+;;TMT-A;Attention_test_tmt_a;Attention score from Trail Making Test Part  A ;numeric;;>0;num;;No;;;;;;;;;;;;;Date_NPE
+;;;Attention_test_tmt_a_time;Attention score from Trail Making Test Part  A - Time;numeric;;>0;num;;No;;Measurement;;2000000028;;;;;;;;;Date_NPE
+;;;Attention_test_tmt_a_errors;Attention score from Trail Making Test Part  A - Errors;numeric;;>0;num;;No;;Measurement;;2000000029;;;;;;;;;Date_NPE
+;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1;numeric;;>0;num;;No;;Measurement;;2000000030;;sec;8555;UCUM;;;;;Date_NPE
+;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2;numeric;;>0;num;;No;;Measurement;;2000000031;;sec;8555;UCUM;;;;;Date_NPE
+;;;Attention_test_stroop_1_adj;Attention score from Stroop 1 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000088;;;;;;;;;Date_NPE
+;;;Attention_test_stroop_2_adj;Attention score from Stroop 2 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000089;;;;;;;;;Date_NPE
+;;SDST;Attention_test_sdst;Attention score from Symbol Digit Substitution Task      - number correct   ;numeric;;>0;num;;No;;Measurement;;2000000032;;;;;;;;;Date_NPE
+;;;Attention_test_ldst;Attention score from Letter Digit Substitution Task   - number correct      ;numeric;;>0;num;;No;;Measurement;;2000000090;;;;;;;;;Date_NPE
+;;;Attention_test_other;Attention score from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
+;Priority Attention Test;Priority attention ;Priority_attention;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
+;Priority Attention Test;Priority attention z-score;Priority_attention_z ;z-score;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority memory Test;priority memory type;Priority_memory_type;Priority test for  memory;factor ;1 = RAVLT,  2 = CERAD, 3 = Grober-Buschke FCSRT, 4 = Story recall test, 5 = Logical memory, 6 = Hopkins, 7 = VAT, 8 = Story recall Brescia, 9 = Recall Rey figure, 10 = MMSE, 11 =ADAS-Cog, 12 = 10 word list, 13 = immediate recall 10 word list, 14 = other;"1;14";;;No;"Priority for 1. Ray Auditory Verbal Learning Test (RAVLT)
 2. CERAD
 3. Grober-Buschke FCSRT
@@ -194,56 +194,57 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 11. ADAS-Cog
 12. 10 word list
 13. immediate recall 10 word list                                                                    14. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;AVLT Immediate;Priority_memory_im_ravlt;Priority test from RAVLT (immediate);numeric;;> 0;num;;No;;Measurement;;2000000033;;;;;;;;;Date_NPE
-;;CERAD WL Immediate;Priority_memory_im_cerad;Priority test from CERAD (immediate);numeric;;> 0;num;;No;;Measurement;;2000000034;;;;;;;;;Date_NPE
-;;;Priority_memory_im_gb;Priority test from Grober-Buschke FCSRT (immediate);numeric;;> 0;num;;No;;Measurement;;2000000035;;;;;;;;;Date_NPE
-;;SRT Immediate;Priority_memory_im_sct;Priority test from Story recall test (immediate);numeric;;> 0;num;;No;;Measurement;;2000000036;;;;;;;;;Date_NPE
-;;LM Immediate;Priority_memory_im_lm;Priority test from Logical memory (immediate);numeric;;> 0;num;;No;;Measurement;;2000000037;;;;;;;;;Date_NPE
-;;HVLT Immediate;Priority_memory_im_hopkins;Priority test from Hopkins (immediate);numeric;;> 0;num;;No;;Measurement;;2000000038;;;;;;;;;Date_NPE
-;;;Priority_memory_im_vat_a;Priority test from VAT A  (immediate);numeric;;> 0;num;;No;;Measurement;;2000000039;;;;;;;;;Date_NPE
-;;;Priority_memory_im_vat_b;Priority test from VAT B  (immediate);numeric;;> 0;num;;No;;Measurement;;2000000040;;;;;;;;;Date_NPE
-;;;Priority_memory_im_srb;Priority test from Story recall Brescia (immediate);numeric;;> 0;num;;No;;Measurement;;2000000041;;;;;;;;;Date_NPE
-;;;Priority_memory_im_rrf;Priority test from Recall Rey figure (immediate);numeric;;> 0;num;;No;;Measurement;;2000000042;;;;;;;;;Date_NPE
-;;;Priority_memory_im_mmse;Priority test from MMSE (immediate);numeric;;> 0;num;;No;;Measurement;;2000000043;;;;;;;;;Date_NPE
-;;;Priority_memory_im_adas;Priority test from ADAS-Cog (immediate);numeric;;> 0;num;;No;;Measurement;;2000000044;;;;;;;;;Date_NPE
-;;;Priority_memory_im_10_word_list;Priority test from 10 word list (immediate);numeric;;> 0;num;;No;;Measurement;;2000000045;;;;;;;;;Date_NPE
-;;;Priority_memory_im_recall_10_word_list;Priority test from  immediate recall 10 word list     (immediate)                       ;numeric;;> 0;num;;No;;Measurement;;2000000046;;;;;;;;;Date_NPE
-;;;Priority_memory_im_15_word_list_correct;Priority test from 15 word list (immediate) - number of correct answers;numeric;;> 0;num;;No;;Measurement;;2000000080;;;;;;;;;Date_NPE
-;;;Priority_memory_im_15_word_list_incorrect;Priority test from 15 word list (immediate) - number of incorrect answers;numeric;;> 0;num;;No;;Measurement;;2000000081;;;;;;;;;Date_NPE
-;;;Priority_memory_im_other;Priority test from another alternative  (immediate);numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority memory Test;Priority memory immediate;Priority_memory_im;raw scores;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
+;;AVLT Immediate;Priority_memory_im_ravlt;Priority test from RAVLT (immediate);numeric;;>0;num;;No;;Measurement;;2000000033;;;;;;;;;Date_NPE
+;;CERAD WL Immediate;Priority_memory_im_cerad;Priority test from CERAD (immediate);numeric;;>0;num;;No;;Measurement;;2000000034;;;;;;;;;Date_NPE
+;;;Priority_memory_im_gb;Priority test from Grober-Buschke FCSRT (immediate);numeric;;>0;num;;No;;Measurement;;2000000035;;;;;;;;;Date_NPE
+;;SRT Immediate;Priority_memory_im_sct;Priority test from Story recall test (immediate);numeric;;>0;num;;No;;Measurement;;2000000036;;;;;;;;;Date_NPE
+;;LM Immediate;Priority_memory_im_lm;Priority test from Logical memory (immediate);numeric;;>0;num;;No;;Measurement;;2000000037;;;;;;;;;Date_NPE
+;;HVLT Immediate;Priority_memory_im_hopkins;Priority test from Hopkins (immediate);numeric;;>0;num;;No;;Measurement;;2000000038;;;;;;;;;Date_NPE
+;;;Priority_memory_im_vat_a;Priority test from VAT A  (immediate);numeric;;>0;num;;No;;Measurement;;2000000039;;;;;;;;;Date_NPE
+;;;Priority_memory_im_vat_b;Priority test from VAT B  (immediate);numeric;;>0;num;;No;;Measurement;;2000000040;;;;;;;;;Date_NPE
+;;;Priority_memory_im_srb;Priority test from Story recall Brescia (immediate);numeric;;>0;num;;No;;Measurement;;2000000041;;;;;;;;;Date_NPE
+;;;Priority_memory_im_rrf;Priority test from Recall Rey figure (immediate);numeric;;>0;num;;No;;Measurement;;2000000042;;;;;;;;;Date_NPE
+;;;Priority_memory_im_mmse;Priority test from MMSE (immediate);numeric;;>0;num;;No;;Measurement;;2000000043;;;;;;;;;Date_NPE
+;;;Priority_memory_im_adas;Priority test from ADAS-Cog (immediate);numeric;;>0;num;;No;;Measurement;;2000000044;;;;;;;;;Date_NPE
+;;;Priority_memory_im_10_word_list;Priority test from 10 word list (immediate);numeric;;>0;num;;No;;Measurement;;2000000045;;;;;;;;;Date_NPE
+;;;Priority_memory_im_recall_10_word_list;Priority test from  immediate recall 10 word list     (immediate)                       ;numeric;;>0;num;;No;;Measurement;;2000000046;;;;;;;;;Date_NPE
+;;;Priority_memory_im_15_word_list_correct;Priority test from 15 word list (immediate) - number of correct answers;numeric;;>0;num;;No;;Measurement;;2000000080;;;;;;;;;Date_NPE
+;;;Priority_memory_im_15_word_list_incorrect;Priority test from 15 word list (immediate) - number of incorrect answers;numeric;;>0;num;;No;;Measurement;;2000000081;;;;;;;;;Date_NPE
+;;;Priority_memory_im_other;Priority test from another alternative  (immediate);numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
+;Priority memory Test;Priority memory immediate;Priority_memory_im;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority memory Test;Priority memory immediate z-score;Priority_memory_im_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
-;;AVLT Delayed;Priority_memory_dr_ravlt;Priority test from RAVLT (delayed);numeric;;> 0;num;;No;;Measurement;;2000000047;;;;;;;;;Date_NPE
-;;CERAD WL Delayed;Priority_memory_dr_cerad;Priority test from CERAD (delayed);numeric;;> 0;num;;No;;Measurement;;2000000048;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_gb;Priority test from Grober-Buschke FCSRT (delayed);numeric;;> 0;num;;No;;Measurement;;2000000049;;;;;;;;;Date_NPE
-;;SRT Delayed;Priority_memory_dr_sct;Priority test from Story recall test (delayed);numeric;;> 0;num;;No;;Measurement;;2000000050;;;;;;;;;Date_NPE
-;;LM Delayed;Priority_memory_dr_lm;Priority test from Logical memory (delayed);numeric;;> 0;num;;No;;Measurement;;2000000051;;;;;;;;;Date_NPE
-;;HVLT Delayed;Priority_memory_dr_hopkins;Priority test from Hopkins (delayed);numeric;;> 0;num;;No;;Measurement;;2000000052;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_vat_a;Priority test from VAT A (delayed);numeric;;> 0;num;;No;;Measurement;;2000000053;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_vat_b;Priority test from VAT B  (delayed);numeric;;> 0;num;;No;;Measurement;;2000000054;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_srb;Priority test from Story recall Brescia (delayed);numeric;;> 0;num;;No;;Measurement;;2000000055;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_rrf_short;Priority test from Recall Rey figure (short delay);numeric;;> 0;num;;No;;Measurement;;2000000056;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_rrf_long;Priority test from Recall Rey figure (long delay);numeric;;> 0;num;;No;;Measurement;;2000000057;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_mmse;Priority test from MMSE (delayed);numeric;;> 0;num;;No;;Measurement;;2000000058;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;> 0;num;;No;;Measurement;;2000000059;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;> 0;num;;No;;Measurement;;2000000060;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;> 0;num;;No;;Measurement;;2000000061;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_15_word_list_correct;Priority test from 15 word list (delayed) - number of correct answers;numeric;;> 0;num;;No;;Measurement;;2000000082;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_15_word_list_incorrect;Priority test from 15 word list (delayed) - number of incorrect answers;numeric;;> 0;num;;No;;Measurement;;2000000083;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_other;Priority test from another alternative  (delayed);numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority memory Test;Priority memory delayed;Priority_memory_dr;raw scores ;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
+;;AVLT Delayed;Priority_memory_dr_ravlt;Priority test from RAVLT (delayed);numeric;;>0;num;;No;;Measurement;;2000000047;;;;;;;;;Date_NPE
+;;CERAD WL Delayed;Priority_memory_dr_cerad;Priority test from CERAD (delayed);numeric;;>0;num;;No;;Measurement;;2000000048;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_gb;Priority test from Grober-Buschke FCSRT (delayed);numeric;;>0;num;;No;;Measurement;;2000000049;;;;;;;;;Date_NPE
+;;SRT Delayed;Priority_memory_dr_sct;Priority test from Story recall test (delayed);numeric;;>0;num;;No;;Measurement;;2000000050;;;;;;;;;Date_NPE
+;;LM Delayed;Priority_memory_dr_lm;Priority test from Logical memory (delayed);numeric;;>0;num;;No;;Measurement;;2000000051;;;;;;;;;Date_NPE
+;;HVLT Delayed;Priority_memory_dr_hopkins;Priority test from Hopkins (delayed);numeric;;>0;num;;No;;Measurement;;2000000052;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_vat_a;Priority test from VAT A (delayed);numeric;;>0;num;;No;;Measurement;;2000000053;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_vat_b;Priority test from VAT B  (delayed);numeric;;>0;num;;No;;Measurement;;2000000054;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_srb;Priority test from Story recall Brescia (delayed);numeric;;>0;num;;No;;Measurement;;2000000055;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_rrf_short;Priority test from Recall Rey figure (short delay);numeric;;>0;num;;No;;Measurement;;2000000056;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_rrf_long;Priority test from Recall Rey figure (long delay);numeric;;>0;num;;No;;Measurement;;2000000057;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_mmse;Priority test from MMSE (delayed);numeric;;>0;num;;No;;Measurement;;2000000058;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;>0;num;;No;;Measurement;;2000000059;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;>0;num;;No;;Measurement;;2000000060;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;>0;num;;No;;Measurement;;2000000061;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_15_word_list_correct;Priority test from 15 word list (delayed) - number of correct answers;numeric;;>0;num;;No;;Measurement;;2000000082;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_15_word_list_incorrect;Priority test from 15 word list (delayed) - number of incorrect answers;numeric;;>0;num;;No;;Measurement;;2000000083;;;;;;;;;Date_NPE
+;;;Priority_memory_dr_other;Priority test from another alternative  (delayed);numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
+;Priority memory Test;Priority memory delayed;Priority_memory_dr;raw scores ;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority memory Test;Priority memory delayed z -score;Priority_memory_dr_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority executive Test;Priority executive type;Priority_executive_type;Priority test for executive function;factor;1 = Trail Making Test B, 2 = Stroop 3, 3 = other;"1;3";;;No;"Priority for 1. Trail Making Test B
 2. Stroop 3                                                                                                 3. Concept Shifting Test Part A                                                    4. Concept Shifting Test Part B                                                     5. Concept Shifting Test Part C                                                                                                                    6. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;TMT-B;Priority_executive_TMT_b;Priority test for executive function score from TMT B;numeric;;;num;;No;;;;;;;;;;;;;Date_NPE
-;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;;num;;No;;Measurement;;2000000062;;;;;;;;;Date_NPE
-;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;;num;;No;;Measurement;;2000000063;;;;;;;;;Date_NPE
-;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3;numeric;;;num;;No;;Measurement;;2000000064;;sec;8555;UCUM;;;;;Date_NPE
-;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;;num;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE
-;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;;num;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE
-;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;;num;;No;;Measurement;;2000000067;;;;;;;;;Date_NPE
-;;;Priority_executive_vet;Visual elevator test (0-10);numeric;;;num;;No;;Measurement;;2000000084;;;;;;;;;Date_NPE
-;;;Priority_executive_bat;Brixton anticipation task (0-54);numeric;;;num;;No;;Measurement;;2000000085;;;;;;;;;Date_NPE
+;;TMT-B;Priority_executive_TMT_b;Priority test for executive function score from TMT B;numeric;;>0;num;;No;;;;;;;;;;;;;Date_NPE
+;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;>0;num;;No;;Measurement;;2000000062;;;;;;;;;Date_NPE
+;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;>0;num;;No;;Measurement;;2000000063;;;;;;;;;Date_NPE
+;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3 - Time;numeric;;>0;num;;No;;Measurement;;2000000064;;sec;8555;UCUM;;;;;Date_NPE
+;;;Priority_executive_stroop_3_adj;Priority test for executive  Stroop 3 - Time adjusted;numeric;;>0;num;;No;;Measurement;;2000000101;;;;;;;;;Date_NPE
+;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;>0;num;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE
+;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;>0;num;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE
+;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;>0;num;;No;;Measurement;;2000000067;;;;;;;;;Date_NPE
+;;;Priority_executive_vet;Visual elevator test (0-10);numeric;;>0;num;;No;;Measurement;;2000000084;;;;;;;;;Date_NPE
+;;;Priority_executive_bat;Brixton anticipation task (0-54);numeric;;>0;num;;No;;Measurement;;2000000085;;;;;;;;;Date_NPE
 ;;;Priority_executive_other;Priority test for executive function score from another alternative;numeric;;;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
 ;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
@@ -253,30 +254,30 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 4. Any type of fluency 2 min
 5. Boston Naming Test (15;30;60 items)
 6. Any picture naming test                                                                                 7. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;Animals Fluency 1 min;Priority_language_animal_fluency;Priority test for language from Animal Fluency 1 min;numeric;;> 0;num;;No;;Measurement;;2000000068;;;;;;;;;Date_NPE
-;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;> 0;num;;No;;Measurement;;2000000069;;;;;;;;;Date_NPE
-;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;> 0;num;;No;;Measurement;;2000000070;;;;;;;;;Date_NPE
-;;;Priority_language_any_fluency_2;Priority test for language from Any type of fluency 2 min;numeric;;> 0;num;;No;;Measurement;;2000000071;;;;;;;;;Date_NPE
-;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;> 0;num;;No;;Measurement;;2000000072;;;;;;;;;Date_NPE
-;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;> 0;num;;No;;Measurement;;2000000073;;;;;;;;;Date_NPE
-;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;> 0;num;;No;;Measurement;;2000000074;;;;;;;;;Date_NPE
-;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming  ;numeric;;> 0;num;;No;;Measurement;;2000000075;;;;;;;;;Date_NPE
-;;;Priority_language_animals_naming_1;Priority test for language from naming animals 1 min - total correct;numeric;;> 0;num;;No;;Measurement;;2000000087;;;;;;;;;Date_NPE
-;;;Priority_language_verbal_fluency_1;Priority test for verbal fluency 1 min;numeric;;> 0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_NPE
-;;;Priority_language_other;Priority test for language from another alternative;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority language test;Priority language;Priority_language;raw scores;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;;;;No;;;;;;;;;;;;;Date_NPE
+;;Animals Fluency 1 min;Priority_language_animal_fluency;Priority test for language from Animal Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000068;;;;;;;;;Date_NPE
+;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000069;;;;;;;;;Date_NPE
+;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000070;;;;;;;;;Date_NPE
+;;;Priority_language_any_fluency_2;Priority test for language from Any type of fluency 2 min;numeric;;>0;num;;No;;Measurement;;2000000071;;;;;;;;;Date_NPE
+;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;>0;num;;No;;Measurement;;2000000072;;;;;;;;;Date_NPE
+;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;>0;num;;No;;Measurement;;2000000073;;;;;;;;;Date_NPE
+;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;>0;num;;No;;Measurement;;2000000074;;;;;;;;;Date_NPE
+;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming  ;numeric;;>0;num;;No;;Measurement;;2000000075;;;;;;;;;Date_NPE
+;;;Priority_language_animals_naming_1;Priority test for language from naming animals 1 min - total correct;numeric;;>0;num;;No;;Measurement;;2000000087;;;;;;;;;Date_NPE
+;;;Priority_language_verbal_fluency_1;Priority test for verbal fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_NPE
+;;;Priority_language_other;Priority test for language from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
+;Priority language test;Priority language;Priority_language;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
+;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
 Plasma;;;;;;;;;;;;;;;;;;;;;;;
-;;;P_Tau;P-Tau in plasma;numeric;;> 0;num;;No;;Measurement;SNOMED;44807681;Athena-44807681;;;;;;;;
-;;;Amyloid_B_42;Amyloid-B-42 in plasma;numeric;;> 0;num;;No;;Measurement;;2000000093;;pg/mL;8845;UCUM;;;;;
-;;;Amyloid_B_40;Amyloid-B-40 in plasma;numeric;;> 0;num;;No;;Measurement;;2000000094;;pg/mL;8845;UCUM;;;;;
-;;;GFAP;Glial Fibrillary acidic protein;numeric;;> 0;num;;No;;Measurement;;2000000095;;;;;;;;;
-;;;NFL;Neurofilament light;numeric;;> 0;num;;No;;Measurement;;2000000096;;;;;;;;;
-;;;E_Selectin;E-selectin (CD62E);numeric;;> 0;num;;No;;Measurement;;2000000097;;;;;;;;;
-;;;SAA;Serum Amyloid A;numeric;;> 0;num;;No;;Measurement;SNOMED;46284972;Athena-46284972;;;;;;;;
-;;;VCAM;Vascular cellular adhesion molecule (CD106);numeric;;> 0;num;;No;;Measurement;;2000000098;;;;;;;;;
-;;;ICAM;Intercellular adhesion molecule (CD54);numeric;;> 0;num;;No;;Measurement;;2000000099;;;;;;;;;
-;;;Il6;Interleukin-6;numeric;;> 0;num;;No;;Measurement;SNOMED;4332015;Athena-4332015;;;;;;;;
-;;;Il8;Interleukin-8;numeric;;> 0;num;;No;;Measurement;SNOMED;4166200;Athena-4166200;;;;;;;;
-;;;Il_1b;Interleukin 1 beta;numeric;;> 0;num;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;
-;;;TNFalpha;Tumor necrosis factor alpa;numeric;;> 0;num;;No;;Measurement;;2000000076;;;;;;;;;
+;;;P_Tau;P-Tau in plasma;numeric;;>0;num;;No;;Measurement;SNOMED;44807681;Athena-44807681;;;;;;;;
+;;;Amyloid_B_42;Amyloid-B-42 in plasma;numeric;;>0;num;;No;;Measurement;;2000000093;;pg/mL;8845;UCUM;;;;;
+;;;Amyloid_B_40;Amyloid-B-40 in plasma;numeric;;>0;num;;No;;Measurement;;2000000094;;pg/mL;8845;UCUM;;;;;
+;;;GFAP;Glial Fibrillary acidic protein;numeric;;>0;num;;No;;Measurement;;2000000095;;;;;;;;;
+;;;NFL;Neurofilament light;numeric;;>0;num;;No;;Measurement;;2000000096;;;;;;;;;
+;;;E_Selectin;E-selectin (CD62E);numeric;;>0;num;;No;;Measurement;;2000000097;;;;;;;;;
+;;;SAA;Serum Amyloid A;numeric;;>0;num;;No;;Measurement;SNOMED;46284972;Athena-46284972;;;;;;;;
+;;;VCAM;Vascular cellular adhesion molecule (CD106);numeric;;>0;num;;No;;Measurement;;2000000098;;;;;;;;;
+;;;ICAM;Intercellular adhesion molecule (CD54);numeric;;>0;num;;No;;Measurement;;2000000099;;;;;;;;;
+;;;Il6;Interleukin-6;numeric;;>0;num;;No;;Measurement;SNOMED;4332015;Athena-4332015;;;;;;;;
+;;;Il8;Interleukin-8;numeric;;>0;num;;No;;Measurement;SNOMED;4166200;Athena-4166200;;;;;;;;
+;;;Il_1b;Interleukin 1 beta;numeric;;>0;num;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;
+;;;TNFalpha;Tumor necrosis factor alpa;numeric;;>0;num;;No;;Measurement;;2000000076;;;;;;;;;
