@@ -51,3 +51,11 @@ def get_year_of_birth(age, date, input_format):
     """
     date_parsed = datetime.strptime(date, input_format)
     return (date_parsed - relativedelta(years=age)).year
+
+def parse_float(value):
+    """ Parse string to float.
+    """
+    try:
+        return float(value)
+    except ValueError:
+        return float(value.replace(",", "."))

@@ -2,7 +2,7 @@ import csv
 import pandas as pd
 from cdm_builder import *
 from constants import *
-from utils import arrays_to_dict, parse_date, get_year_of_birth
+from utils import arrays_to_dict, parse_date, get_year_of_birth, parse_float
 from exceptions import ParsingError
 from operator import le, lt, ge, gt
 
@@ -58,7 +58,7 @@ class DataParser:
         for key, condition in validation_functions.items():
             if key in validation:
                 val_condition = validation.split(key)
-                return condition(float(value), float(val_condition[1]) if len(val_condition) > 1 else 0)
+                return condition(parse_float(value), parse_float(val_condition[1]) if len(val_condition) > 1 else 0)
         return True
 
     @staticmethod
@@ -152,25 +152,31 @@ class DataParser:
     def get_parsed_value(self, variable, value, aggregate=None, conversion=None, threshold=None):
         """ Get the parsed value for a variable.
         """
-        value_parsed = float(value) > float(threshold) if threshold else value
+        # Parse the value according to the case:
+        # - Thresholding the value and obtaining a boolean
+        # - Using the value without transformations
+        value_parsed = parse_float(value) > parse_float(threshold) if threshold else value
         if variable in self.value_mapping:
+            # Retrieving the destination value from the mapping
             if str(value_parsed) in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value_parsed)])
             elif DEFAULT_VALUE in self.value_mapping[variable]:
                 return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])                
             raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         elif aggregate:
+            # Aggregating multiple values using one of the aggregation functions available.
             aggregated_value = None
-            values = [float(val) * float(conversion) for val in value] if conversion \
-                else [float(val) for val in value]
+            values = [parse_float(val) * parse_float(conversion) for val in value] if conversion \
+                else [parse_float(val) for val in value]
             if aggregate == MEAN:
                 aggregated_value = sum(values)/len(value)
             else:
                 raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
             return (False, aggregated_value)
-        return (False, float(value) * float(conversion) if conversion else value_parsed)
+        # If any of the previous cases don't apply, return the value and apply a conversion if necessary.
+        return (False, parse_float(value) * parse_float(conversion) if conversion else value_parsed)
 
-    def get_death_datetimne(self, row):
+    def get_death_datetime(self, row):
         """ Retrieve the death datetime if available. Otherwise, if a
             flag is present, a default value will be used.
         """
@@ -197,7 +203,7 @@ class DataParser:
         birth_year_source_variable = self.get_source_variable(YEAR_OF_BIRTH)
         birth_year = None
         if birth_year_source_variable and self.valid_row_value(birth_year_source_variable, row):
-            birth_year = int(float(row[birth_year_source_variable]))
+            birth_year = int(parse_float(row[birth_year_source_variable]))
         else:
             # The year of birth is required to create an entry for the person. In case that 
             # variable isn't provided, the year of birth will be obtained from a variable indicating
@@ -209,7 +215,7 @@ class DataParser:
                         self.destination_mapping[AGE][DATE])
                     if self.valid_row_value(age_variable, row) and age_date_variables:
                         try:
-                            birth_year = get_year_of_birth(int(float(row[age_variable])), \
+                            birth_year = get_year_of_birth(int(parse_float(row[age_variable])), \
                                 str(row[age_date_variables[i]]), age_date_format if age_date_format else self.date_format)
                             break
                         except Exception as error:
@@ -224,7 +230,7 @@ class DataParser:
             self.get_parsed_value(GENDER, row[sex_source_variable])[1],
             birth_year,
             self.cohort_id,
-            self.get_death_datetimne(row),
+            self.get_death_datetime(row),
         )
         person_id = self.pg.run_sql(*person_sql, fetch_one=True)
 
@@ -233,7 +239,7 @@ class DataParser:
     def update_person(self, person_id, row):
         """ Update a person if new information is available.
         """
-        death_datetime = self.get_death_datetimne(row)
+        death_datetime = self.get_death_datetime(row)
         if death_datetime:
             self.pg.run_sql(*update_person(person_id, death_datetime))
 
