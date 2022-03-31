@@ -184,7 +184,13 @@ class DataParser:
         death_time_source_variable = self.get_source_variable(DEATH_DATE)
         death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
         if death_time_source_variable and self.valid_row_value(death_time_source_variable, row):
-            death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
+            try:
+                death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
+            except Exception as error:
+                raise ParsingError(
+                    f'Error parsing a malformated date for the death date {death_flag_source_variable} ' + 
+                    f'with source variable {str(row[death_time_source_variable])}: {str(error)})'
+                )
         elif death_flag_source_variable and self.valid_row_value(death_flag_source_variable, row):
             (_, parsed_value) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
             if parsed_value and parsed_value == 'True':
