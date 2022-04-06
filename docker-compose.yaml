@@ -45,4 +45,3 @@ services:
       - $PWD/data:/mnt/data
     depends_on:
       - db
-      - adminer
