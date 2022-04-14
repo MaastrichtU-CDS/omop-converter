@@ -172,8 +172,10 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;TMT-A;Attention_test_tmt_a;Attention score from Trail Making Test Part  A ;numeric;;>0;num;;No;;;;;;;;;;;;;Date_NPE
 ;;;Attention_test_tmt_a_time;Attention score from Trail Making Test Part  A - Time;numeric;;>0;num;;No;;Measurement;;2000000028;;;;;;;;;Date_NPE
 ;;;Attention_test_tmt_a_errors;Attention score from Trail Making Test Part  A - Errors;numeric;;>0;num;;No;;Measurement;;2000000029;;;;;;;;;Date_NPE
-;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1;numeric;;>0;num;;No;;Measurement;;2000000030;;sec;8555;UCUM;;;;;Date_NPE
-;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2;numeric;;>0;num;;No;;Measurement;;2000000031;;sec;8555;UCUM;;;;;Date_NPE
+;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1 - Time;numeric;;>0;num;;No;;Measurement;;2000000030;;sec;8555;UCUM;;;;;Date_NPE
+;;;Attention_test_stroop_1_e;Attention score from Stroop 1 - Errors;numeric;;>0;num;;No;;Measurement;;2000000102;;;;;;;;;Date_NPE
+;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2 - Time;numeric;;>0;num;;No;;Measurement;;2000000031;;sec;8555;UCUM;;;;;Date_NPE
+;;;Attention_test_stroop_2_e;Attention score from Stroop 2 - Errors;numeric;;>0;num;;No;;Measurement;;2000000103;;;;;;;;;Date_NPE
 ;;;Attention_test_stroop_1_adj;Attention score from Stroop 1 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000088;;;;;;;;;Date_NPE
 ;;;Attention_test_stroop_2_adj;Attention score from Stroop 2 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000089;;;;;;;;;Date_NPE
 ;;SDST;Attention_test_sdst;Attention score from Symbol Digit Substitution Task      - number correct   ;numeric;;>0;num;;No;;Measurement;;2000000032;;;;;;;;;Date_NPE
@@ -239,6 +241,7 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;>0;num;;No;;Measurement;;2000000062;;;;;;;;;Date_NPE
 ;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;>0;num;;No;;Measurement;;2000000063;;;;;;;;;Date_NPE
 ;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3 - Time;numeric;;>0;num;;No;;Measurement;;2000000064;;sec;8555;UCUM;;;;;Date_NPE
+;;;Priority_executive_stroop_3_e;Priority test for executive function score from Stroop 3 -Errors;numeric;;>0;num;;No;;Measurement;;2000000104;;;;;;;;;Date_NPE
 ;;;Priority_executive_stroop_3_adj;Priority test for executive  Stroop 3 - Time adjusted;numeric;;>0;num;;No;;Measurement;;2000000101;;;;;;;;;Date_NPE
 ;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;>0;num;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE
 ;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;>0;num;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE
