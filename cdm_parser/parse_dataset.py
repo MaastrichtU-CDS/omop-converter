@@ -272,8 +272,15 @@ class DataParser:
                         visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
                     visits[date_variable] = visit_id
                 except Exception as error:
-                    print(f"Error while trying to parse a date from the following variable \
-                        {date_variable}: {str(error)}")
+                    if "visit_date" not in self.warnings:
+                        print(f"Error while trying to parse a date from the following variable \
+                            {date_variable}: {str(error)}")
+                    elif (self.warnings.count("visit_date") % 100) == 0:
+                        print(self.warnings.count("visit_date"))
+                    self.warnings.append("visit_date")
+                    visit_date = parse_date("1970-01-01", self.date_format, DATE_FORMAT)
+                    visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
+                    visits[date_variable] = visit_id
         return visits
 
     def transform_rows(self, iterator, start, limit):
