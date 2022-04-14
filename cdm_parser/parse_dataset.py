@@ -16,13 +16,14 @@ class DataParser:
     """ Parses the dataset to the OMOP CDM.
     """
     def __init__(self, path, source_mapping, destination_mapping,
-        fu_suffix, cohort_id, missing_values, pg):
+        fu_suffix, cohort_id, missing_values, cross_sectional, pg):
         self.path = path
         self.source_mapping = source_mapping
         self.destination_mapping = destination_mapping
         self.cohort_id = cohort_id
         self.pg = pg
         self.warnings = []
+        self.cross_sectional = cross_sectional
 
         # Keywords used as missing values
         self.missing_values = missing_values.split(';') if missing_values else []
@@ -259,7 +260,10 @@ class DataParser:
         visits = {}
         for date_source_variable in self.date_source_variables:
             date_variable = date_source_variable + suffix
-            if date_variable in row and row[date_variable]:
+            if self.cross_sectional:
+                visit_id = get_visit_by_person(self.pg, person_id)
+                visits[date_variable] = visit_id
+            elif date_variable in row and row[date_variable]:
                 visit_id = None
                 try:
                     visit_date = parse_date(str(row[date_variable]), self.date_format, DATE_FORMAT)

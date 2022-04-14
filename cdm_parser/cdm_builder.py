@@ -193,6 +193,12 @@ def get_visit_by_person_and_date(pg, person_id, start_date):
     return pg.run_sql(f"""SELECT visit_occurrence_id FROM VISIT_OCCURRENCE WHERE 
         person_id = {person_id} AND visit_start_datetime = '{start_date}'""", fetch_one=True)
 
+def get_visit_by_person(pg, person_id):
+    """ Retrieve the visit id for a person in a specific date.
+    """
+    return pg.run_sql(f"""SELECT visit_occurrence_id FROM VISIT_OCCURRENCE WHERE 
+        person_id = {person_id}""", fetch_one=True)
+
 def get_visit_occurrences(pg):
     """ Get all visit occurences.
     """

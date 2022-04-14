@@ -104,6 +104,7 @@ def insert_constraints():
 @cli.command(help='Parse the dataset and populate the OMOP CDM database.')
 @click.option('--cohort-name', prompt=True)
 @click.option('--cohort-location')
+@click.option('--cross-sectional', default=False, type=bool)
 @click.option('--start', default=0, type=int)
 @click.option('--limit', default=-1, type=int)
 @click.option(
@@ -113,7 +114,7 @@ def insert_constraints():
     help='Convert the caregories? Only valid for spss files'
 )
 @click.option('--drop-temp-tables/--no-drop-temp-tables', default=False, type=bool)
-def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals, drop_temp_tables):
+def parse_data(cohort_name, cohort_location, cross_sectional, start, limit, convert_categoricals, drop_temp_tables):
     """ Parse the source dataset and populate the CDM database.
         
         Important: One or more temporary tables will be created to store information only required
@@ -145,6 +146,7 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
             os.getenv(FOLLOW_UP_SUFFIX),
             cohort_id,
             os.getenv(MISSING_VALUES),
+            cross_sectional,
             pg
         )
         parser.parse_dataset(
