@@ -120,7 +120,9 @@ mmse_total,4169175,Measurement,,,,,,date_mmse,0;30,num
 attention_test_tmt_a_time,2000000028,Measurement,,,,,,date_npe,>0,num
 attention_test_tmt_a_errors,2000000029,Measurement,,,,,,date_npe,>0,num
 attention_test_stroop_1,2000000030,Measurement,sec,8555,,,,date_npe,>0,num
+attention_test_stroop_1_e,2000000102,Measurement,sec,8555,,,,date_npe,>0,num
 attention_test_stroop_2,2000000031,Measurement,sec,8555,,,,date_npe,>0,num
+attention_test_stroop_2_e,2000000103,Measurement,sec,8555,,,,date_npe,>0,num
 attention_test_stroop_1_adj,2000000088,Measurement,,,,,,date_npe,>0,num
 attention_test_stroop_2_adj,2000000089,Measurement,,,,,,date_npe,>0,num
 attention_test_sdst,2000000032,Measurement,,,,,,date_npe,>0,num
@@ -161,6 +163,7 @@ priority_memory_dr_15_word_list_incorrect,2000000083,Measurement,,,,,,date_npe,>
 priority_executive_tmt_b_time,2000000062,Measurement,,,,,,date_npe,>0,num
 priority_executive_tmt_b_errors,2000000063,Measurement,,,,,,date_npe,>0,num
 priority_executive_stroop_3,2000000064,Measurement,sec,8555,,,,date_npe,>0,num
+priority_executive_stroop_3_e,2000000104,Measurement,sec,8555,,,,date_npe,>0,num
 priority_executive_stroop_3_adj,2000000101,Measurement,,,,,,date_npe,>0,num
 priority_executive_cst_a,2000000065,Measurement,,,,,,date_npe,>0,num
 priority_executive_cst_b,2000000066,Measurement,,,,,,date_npe,>0,num

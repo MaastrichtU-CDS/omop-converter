@@ -100,3 +100,6 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000099	icam	Measurement	Vocabulary	Measurement		ICAM	20210101	20991231	
 2000000100	npi_questionnaire_sev	Measurement	Vocabulary	Measurement		npi_questionnaire_sev	20210101	20991231	
 2000000101	priority_executive_stroop_3_adj	Measurement	Vocabulary	Measurement		priority_executive_stroop_3_adj	20210101	20991231	
+2000000102	priority_executive_stroop_1_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_1_e	20210101	20991231	
+2000000103	priority_executive_stroop_2_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_2_e	20210101	20991231	
+2000000104	priority_executive_stroop_3_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_3_e	20210101	20991231	

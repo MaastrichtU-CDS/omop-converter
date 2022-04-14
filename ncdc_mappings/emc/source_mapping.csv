@@ -1,6 +1,6 @@
 variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
 source_id,ergoid,,,,,,,,,,
-date,startdat,,,,,%Y-%m-%d,,,,,
+date,e4_3494,startdat,,,,%Y-%m-%d,,,,,
 birth_year,,,,,,,,,,,
 date_age,startdat,,,,,%Y-%m-%d,,,,,
 age,startage,,,,,,,,,,
