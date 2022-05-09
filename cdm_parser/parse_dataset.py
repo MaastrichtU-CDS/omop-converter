@@ -149,7 +149,7 @@ class DataParser:
                 raise ParsingError(f'Format required for variable: {parameter}')
         return (parameter_source_variables, parameter_format)
 
-    def get_parsed_value(self, variable, value, aggregate=None, conversion=None, threshold=None):
+    def get_parsed_value(self, variable, value, aggregate=None, conversion=None, threshold=None, source_variable=None):
         """ Get the parsed value for a variable.
         """
         # Parse the value according to the case:
@@ -158,10 +158,13 @@ class DataParser:
         value_parsed = parse_float(value) > parse_float(threshold) if threshold else value
         if variable in self.value_mapping:
             # Retrieving the destination value from the mapping
-            if str(value_parsed) in self.value_mapping[variable]:
-                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][str(value_parsed)])
-            elif DEFAULT_VALUE in self.value_mapping[variable]:
-                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], self.value_mapping[variable][DEFAULT_VALUE])                
+            value_map = self.value_mapping[variable]
+            if str(value_parsed) in value_map:
+                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], value_map[str(value_parsed)])
+            elif DEFAULT_VALUE in value_map:
+                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], value_map[DEFAULT_VALUE])
+            elif source_variable and source_variable in value_map:
+                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], value_map[source_variable])
             raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
         elif aggregate:
             # Aggregating multiple values using one of the aggregation functions available.
@@ -339,6 +342,7 @@ class DataParser:
                     self.warnings.append(key)
             else:
                 source_value = []
+                source_variable_valid = []
                 if value[SOURCE_VARIABLE]:
                     source_variables = [value[SOURCE_VARIABLE]]
                     if value[ALTERNATIVES]:
@@ -356,6 +360,7 @@ class DataParser:
                         ) and (not value[CONDITION] or row[source_variable_suffixed] \
                             in value[CONDITION].split(DEFAULT_SEPARATOR)):
                                 source_value.append(row[source_variable_suffixed])
+                                source_variable_valid.append(source_variable_suffixed)
                 elif value[STATIC_VALUE]:
                     source_value = [value[STATIC_VALUE]]
                 if len(source_value) > 0:
@@ -368,7 +373,8 @@ class DataParser:
                             source_value if value[AGGREGATE] else source_value[0],
                             aggregate=value[AGGREGATE],
                             conversion=value[CONVERSION],
-                            threshold=value[THRESHOLD]
+                            threshold=value[THRESHOLD],
+                            source_variable=source_variable_valid[0],
                         )
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable
@@ -413,8 +419,12 @@ class DataParser:
                                 else:
                                     additional_info_variable = self.source_mapping[additional_info][SOURCE_VARIABLE] + suffix
                                     if additional_info_variable and self.valid_row_value(additional_info_variable, row):
-                                        named_args['additional_info'] = f'{additional_info_variable}: \
-                                            {self.get_parsed_value(additional_info_variable, row[additional_info_variable])[1]}'
+                                        additional_info_value = self.get_parsed_value(
+                                            additional_info_variable,
+                                            row[additional_info_variable],
+                                            source_variable=additional_info_variable
+                                        )[1]
+                                        named_args['additional_info'] = f'{additional_info_variable}: {additional_info_value}'
                             elif value[STATIC_VALUE]:
                                 named_args['additional_info'] = value[STATIC_VALUE]
 
