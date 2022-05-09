@@ -1,0 +1,18 @@
+import psycopg2
+
+connection = psycopg2.connect("postgresql://user[:password]@][host][:port][/dbname]")
+db_client = connection.cursor()
+
+#ALL make a table with sql to organize data
+sql_statement = """SELECT p.person_id 
+    + SELECT * FROM CONDITION_OCCURRENCE AS c ON p.person_id = c.person_id 
+    WHERE c.condition_concept_id = '4182210' GROUP BY gender_concept_id
+    + SELECT * FROM OBSERVATION AS o WHERE o.person_id IN 
+    (SELECT DISTINCT p.person_id FROM PERSON AS CONDITION_OCCURRENCE AS c ON p.person_id = c.person_id 
+    WHERE c.condition_concept_id = '4182210') GROUP BY gender_concept_id
+    + SELECT * FROM MEASUREMENT AS o WHERE o.person_id IN 
+    (SELECT DISTINCT p.person_id FROM PERSON AS CONDITION_OCCURRENCE AS c ON p.person_id = c.person_id 
+    WHERE c.condition_concept_id = '4182210') GROUP BY gender_concept_id"""
+db_client.execute(sql_statement)
+result = db_client.fetchone()
+prinat(result)

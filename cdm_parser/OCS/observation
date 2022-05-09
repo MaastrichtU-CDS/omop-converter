@@ -1,0 +1,11 @@
+import psycopg2
+
+connection = psycopg2.connect("postgresql://user[:password]@][host][:port][/dbname]")
+db_client = connection.cursor()
+
+#OBSERVATIONS
+sql_statement = """SELECT * FROM CONDITION_OCCURRENCE AS c ON p.person_id = c.person_id 
+    WHERE c.condition_concept_id = '4182210' GROUP BY gender_concept_id"""
+db_client.execute(sql_statement)
+result = db_client.fetchone()
+print(result)
