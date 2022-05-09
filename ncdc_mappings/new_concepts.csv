@@ -103,3 +103,4 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000102	priority_executive_stroop_1_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_1_e	20210101	20991231	
 2000000103	priority_executive_stroop_2_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_2_e	20210101	20991231	
 2000000104	priority_executive_stroop_3_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_3_e	20210101	20991231	
+2000000105	amyloid_b_ratio_42_40	Measurement	Vocabulary	Measurement		Amyloid_b_Ratio_42_40	20210101	20991231	
