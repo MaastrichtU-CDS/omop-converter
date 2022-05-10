@@ -98,6 +98,8 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
         if concept_map[DOMAIN] == OBSERVATION:
             column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map['mapping'], observation[3] or observation[2])
         elif concept_map[DOMAIN] == CONDITION_OCCURRENCE:
+            # Condition information regarding absence of a disease.
+            # Couldn't be represented in the Condition table due to limitations in the OMOP CDM.
             column_value[concept_map[VARIABLE]] = 0
         else:
             raise ParsingError(

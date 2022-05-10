@@ -5,6 +5,7 @@ omop_scripts/
 vocabularies*/
 vocabular*.zip
 postgresql.zip
+postgresql/
 mappings/
 __MACOSX
 scripts/

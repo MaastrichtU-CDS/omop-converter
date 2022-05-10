@@ -374,7 +374,7 @@ class DataParser:
                             aggregate=value[AGGREGATE],
                             conversion=value[CONVERSION],
                             threshold=value[THRESHOLD],
-                            source_variable=source_variable_valid[0],
+                            source_variable=source_variable_valid[0] if len(source_variable_valid) > 0 else None,
                         )
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable

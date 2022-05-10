@@ -1,6 +1,6 @@
-recorD id,date_FU1,gender,age_neuro,age_o,dd,d_d_o,df,birth_year,education_years,apoe_genotype,h_t,h_t_FU1,body_mass_index,bmi_date,obesity,smoking,cholesterol,alcohol_amount,stroke,h_h_t,s_b_p,d_b_p,date,additional_info,hp_th,dementia_d,d_d,d_h_m,d_h_m_alt,apoe_g
-001,26/09/2008,78,,,,,,1943,9,Heterozygote,0,1,22,26/01/2004,no,past,5.4,4,no,0,129,,23/01/2004,false,,true,23/01/2004,true,1,3/3
-002,,Female,80.9,,,,true,1941,13,Homozygote,1,1,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004,1,true,2/2
-001,,,,,11/09/2008,,true,,,,1,,23,28/07/2004,yes,,6.4,,no,1,153,,21/7/2004,true,0,false,,,,1/1
-003,,Female,75.1,,,,,,13,Homozygote,1,,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004,1,,1/3
-004,,Male,,91,,5/05/2005,,,6,Homozygote,1,,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,,1,,
+recorD id,I_live,date_FU1,gender,age_neuro,age_o,dd,d_d_o,df,birth_year,education_years,apoe_genotype,h_t,h_t_FU1,body_mass_index,bmi_date,obesity,smoking,cholesterol,alcohol_amount,stroke,h_h_t,s_b_p,d_b_p,date,additional_info,hp_th,dementia_d,d_d,d_h_m,d_h_m_alt,apoe_g,csf1,csf2
+001,,26/09/2008,78,,,,,,1943,9,Heterozygote,0,1,22,26/01/2004,no,past,5.4,4,no,0,129,,23/01/2004,false,,true,23/01/2004,true,1,3/3,1,
+002,10-09-2021,,Female,80.9,,,,true,1941,13,Homozygote,1,1,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004,1,true,2/2,,
+001,,,,,,11/09/2008,,true,,,,1,,23,28/07/2004,yes,,6.4,,no,1,153,,21/7/2004,true,0,false,,,,1/1,,3
+003,,,Female,75.1,,,,,,13,Homozygote,1,,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,01/09/2004,1,,1/3
+004,,,Male,,91,,5/05/2005,,,6,Homozygote,1,,25,02/09/2004,yes,yes,5.4,4,no,1,130,87,01/09/2004,true,135,false,,1,,,2
