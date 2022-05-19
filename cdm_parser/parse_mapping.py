@@ -49,7 +49,7 @@ def get_parsed_value(mapping, value):
 def get_column_statement(column_name, type, domain=OBSERVATION):
     """ Build the sql statement for the column.
     """
-    return f'{column_name} {COLUMN_TYPE[type] if type else COLUMN_TYPE[domain]}'
+    return f'{column_name} {COLUMN_TYPE[type or domain]}'
 
 def parse_mapping_to_columns(mapping):
     """ Parse a CDM mapping to SQL columns.

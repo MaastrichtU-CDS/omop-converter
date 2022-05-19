@@ -2,7 +2,9 @@ import os
 import subprocess
 from configparser import ConfigParser
 from datetime import datetime
+
 from dateutil.relativedelta import relativedelta
+import pandas as pd
 
 def import_config(path, section):
     """ Import the configurations from a file and set them as
@@ -59,3 +61,8 @@ def parse_float(value):
         return float(value)
     except ValueError:
         return float(value.replace(",", "."))
+
+def is_value_valid(value):
+    """ Check if a value is null, None, or empty.
+    """
+    return not pd.isnull(value) and str(value) != ''

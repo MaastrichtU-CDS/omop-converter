@@ -6,7 +6,7 @@ import pandas as pd
 from cdm_builder import *
 from constants import *
 from exceptions import ParsingError
-from utils import arrays_to_dict, parse_date, get_year_of_birth, parse_float
+from utils import arrays_to_dict, parse_date, get_year_of_birth, parse_float, is_value_valid
 
 CDM_SQL = {
     CONDITION_OCCURRENCE: build_condition,
@@ -67,7 +67,7 @@ class DataParser:
     def valid_row_value(variable, row, ignore_values=[], validation=None):
         """ Validate if the value exists and is not null
         """
-        return variable in row and not pd.isnull(row[variable]) and str(row[variable]) != '' \
+        return variable in row and is_value_valid(row[variable]) \
             and str(row[variable]) not in ignore_values and (not validation or \
                 DataParser.validate_value(row[variable], validation))
 
@@ -230,18 +230,25 @@ class DataParser:
             # variable isn't provided, the year of birth will be obtained from a variable indicating
             # the age for a particular date.
             (age_variables, _) = self.get_parameters(AGE)
-            if AGE in self.destination_mapping and age_variables:
-                for i, age_variable in enumerate(age_variables):
+            if AGE in self.destination_mapping:
+                (age_variables, _) = self.get_parameters(AGE)
+                if age_variables:
                     (age_date_variables, age_date_format) = self.get_parameters(
-                        self.destination_mapping[AGE][DATE])
-                    if self.valid_row_value(age_variable, row) and age_date_variables:
-                        try:
-                            birth_year = get_year_of_birth(int(parse_float(row[age_variable])), \
-                                str(row[age_date_variables[i]]), age_date_format if age_date_format else self.date_format)
-                            break
-                        except Exception as error:
-                            raise ParsingError(
-                                f'Error parsing year of birth from variable {age_variable}: {str(error)}')
+                            self.destination_mapping[AGE][DATE])
+                    for i, age_variable in enumerate(age_variables):
+                        age = None
+                        if self.valid_row_value(age_variable, row) and age_date_variables:
+                            age = int(parse_float(row[age_variable]))
+                        elif AGE in self.source_mapping and is_value_valid(self.source_mapping[AGE][STATIC_VALUE]):
+                            age = int(self.source_mapping[AGE][STATIC_VALUE])
+                        if age:
+                            try:
+                                birth_year = get_year_of_birth(age, str(row[age_date_variables[i]]), \
+                                    age_date_format if age_date_format else self.date_format)
+                                break
+                            except Exception as error:
+                                raise ParsingError(
+                                    f'Error parsing year of birth from variable {age_variable}: {str(error)}')
 
         if not birth_year:
             raise ParsingError('Missing required information, the row should contain the year of birth.')
