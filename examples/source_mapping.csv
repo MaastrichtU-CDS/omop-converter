@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,limit
 source_id,recorD id,,,,,
 date,date,dat;dt1,,,,%d/%m/%Y
 mort_date,dd,,,,,%d/%m/%Y
@@ -9,7 +9,7 @@ birth_year,birth_year,,,,
 sex,gender,,,Male;Female;-,male;female;-
 bmi,body_mass_index,,,,,,,,,
 hypertension,h_t,,,0;1;-,no;yes;_
-sbp,s_b_p,,,,,,1st Measurement,,
+sbp,s_b_p,,,,,,1st Measurement,,,,300
 dbp,d_b_p,,,,,,
 dementia_diagnosis,dementia_d,,,true;false,yes;no,,,
 no_dementia_diagnosis,dementia_d,,,true;false,yes;no,,,

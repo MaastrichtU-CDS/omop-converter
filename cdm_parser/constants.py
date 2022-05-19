@@ -63,6 +63,7 @@ TYPE = 'type'
 AGGREGATE = 'aggregate'
 CONVERSION = 'conversion'
 THRESHOLD = 'threshold'
+LIMIT = 'limit'
 
 MEAN = 'mean'
 
