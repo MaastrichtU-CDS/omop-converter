@@ -9,3 +9,4 @@ postgresql/
 mappings/
 __MACOSX
 scripts/
+.DS_Store
