@@ -1,10 +1,12 @@
+from operator import le, lt, ge, gt
+
 import csv
 import pandas as pd
+
 from cdm_builder import *
 from constants import *
-from utils import arrays_to_dict, parse_date, get_year_of_birth, parse_float
 from exceptions import ParsingError
-from operator import le, lt, ge, gt
+from utils import arrays_to_dict, parse_date, get_year_of_birth, parse_float
 
 CDM_SQL = {
     CONDITION_OCCURRENCE: build_condition,
@@ -149,7 +151,8 @@ class DataParser:
                 raise ParsingError(f'Format required for variable: {parameter}')
         return (parameter_source_variables, parameter_format)
 
-    def get_parsed_value(self, variable, value, aggregate=None, conversion=None, threshold=None, source_variable=None):
+    def get_parsed_value(self, variable, value, aggregate=None, conversion=None, threshold=None, source_variable=None,
+        format=None, type=None):
         """ Get the parsed value for a variable.
         """
         # Parse the value according to the case:
@@ -177,6 +180,15 @@ class DataParser:
                 raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
             return (False, aggregated_value)
         # If any of the previous cases don't apply, return the value and apply a conversion if necessary.
+        if type == DATE:
+            if format:
+                try:
+                    value_parsed = parse_date(value_parsed, format, POSTGRES_DATE_FORMAT)
+                except Exception as error:
+                    raise ParsingError(f"Failed to parse date {variable} with value {value} from format " +
+                        f"{format} to {POSTGRES_DATE_FORMAT}: {str(error)}")
+            else:
+                raise ParsingError(f"No date format provided for variable {variable}!")
         return (False, parse_float(value) * parse_float(conversion) if conversion else value_parsed)
 
     def get_death_datetime(self, row):
@@ -375,6 +387,8 @@ class DataParser:
                             conversion=value[CONVERSION],
                             threshold=value[THRESHOLD],
                             source_variable=source_variable_valid[0] if len(source_variable_valid) > 0 else None,
+                            format=value[FORMAT],
+                            type=self.destination_mapping[key][TYPE]
                         )
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable

@@ -18,7 +18,7 @@ sbp,4152194,Measurement,mmHg,8876,,,,date_vitals,
 dbp,4154790,Measurement,mmHg,8876,,,,date_vitals,
 drugs_hypertension,2000000004,Observation,,,yes;no,4188539;4188540,,date_comorbidities,
 csf_assay_tau,2000000015,Observation,,,,,,date_lp,
-csf_spec,2000000029,Observation,,,,,
+csf_spec,2000000029,Observation,,,,,,,,
 apoe_genotype,2000000010,Observation,,,2/2;2/3;3/3;3/4;2/4;4/4,,,apoe_date,1;2;3;4;5;6,int
 amyloid_b_42,2000000093,Measurement,pg/mL,8845,,,,date_lp,> 0,num
 apoe_carrier,2000000009,Observation,,,yes;no,4188539;4188540,,apoe_date,1;0,bool
