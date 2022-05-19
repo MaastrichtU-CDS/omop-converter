@@ -67,10 +67,10 @@ class DataParser:
     def valid_row_value(variable, row, ignore_values=[], validation=None, limit=None):
         """ Validate if the value exists and is not null
         """
-        return variable in row and is_value_valid(row[variable]) \
-            and str(row[variable]) not in ignore_values and \
-                (not is_value_valid(limit) or int(row[variable]) < int(limit)) and (not validation or \
-                DataParser.validate_value(row[variable], validation))
+        return variable in row and is_value_valid(row[variable]) and \
+            str(row[variable]) not in ignore_values and \
+                (not is_value_valid(limit) or parse_float(row[variable]) < parse_float(limit)) and \
+                    (not validation or DataParser.validate_value(row[variable], validation))
 
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
@@ -240,7 +240,7 @@ class DataParser:
                             self.destination_mapping[AGE][DATE])
                     for i, age_variable in enumerate(age_variables):
                         age = None
-                        if self.valid_row_value(age_variable, row, limit) and age_date_variables:
+                        if self.valid_row_value(age_variable, row, limit=limit) and age_date_variables:
                             age = int(parse_float(row[age_variable]))
                         elif AGE in self.source_mapping and is_value_valid(self.source_mapping[AGE][STATIC_VALUE]):
                             age = int(self.source_mapping[AGE][STATIC_VALUE])
