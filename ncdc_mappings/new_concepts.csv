@@ -90,7 +90,7 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000089	attention_test_stroop_2_adj	Measurement	Vocabulary	Measurement		Attention_test_stroop_2_adj	20210101	20991231	
 2000000090	attention_test_ldst	Measurement	Vocabulary	Measurement		Attention_test_ldst	20210101	20991231	
 2000000091	lidas_questionnaire	Measurement	Vocabulary	Measurement		lidas_questionnaire	20210101	20991231	
-2000000092	npi_questionnaire	Measurement	Vocabulary	Measurement		npi_questionnaire	20210101	20991231	
+2000000092	npi_questionnaire_frq	Measurement	Vocabulary	Measurement		npi_questionnaire_frq	20210101	20991231	
 2000000093	amyloid_b_42	Measurement	Vocabulary	Measurement		Amyloid_B_42	20210101	20991231	
 2000000094	amyloid_b_40	Measurement	Vocabulary	Measurement		Amyloid_B_40	20210101	20991231	
 2000000095	gfap	Measurement	Vocabulary	Measurement		GFAP	20210101	20991231	
@@ -99,8 +99,8 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000098	vcam	Measurement	Vocabulary	Measurement		VCAM	20210101	20991231	
 2000000099	icam	Measurement	Vocabulary	Measurement		ICAM	20210101	20991231	
 2000000100	npi_questionnaire_sev	Measurement	Vocabulary	Measurement		npi_questionnaire_sev	20210101	20991231	
-2000000101	priority_executive_stroop_3_adj	Measurement	Vocabulary	Measurement		priority_executive_stroop_3_adj	20210101	20991231	
-2000000102	priority_executive_stroop_1_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_1_e	20210101	20991231	
-2000000103	priority_executive_stroop_2_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_2_e	20210101	20991231	
-2000000104	priority_executive_stroop_3_e	Measurement	Vocabulary	Measurement		priority_executive_stroop_3_e	20210101	20991231	
-2000000105	amyloid_b_ratio_42_40	Measurement	Vocabulary	Measurement		Amyloid_b_Ratio_42_40	20210101	20991231	
+2000000101	priority_executive_stroop_3_adj	Measurement	Vocabulary	Measurement		Priority_executive_stroop_3_adj	20210101	20991231	
+2000000102	attention_test_stroop_1_e	Measurement	Vocabulary	Measurement		Attention_test_stroop_1_e	20210101	20991231	
+2000000103	attention_test_stroop_2_e	Measurement	Vocabulary	Measurement		Attention_test_stroop_2_e	20210101	20991231	
+2000000104	priority_executive_stroop_3_e	Measurement	Vocabulary	Measurement		Priority_executive_stroop_3_e	20210101	20991231	
+2000000105	amyloid_b_ratio_42_40	Measurement	Vocabulary	Measurement		Amyloid_B_ratio_42_40	20210101	20991231	

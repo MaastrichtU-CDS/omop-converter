@@ -139,6 +139,7 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;
 ;;GDS-15;Depression_rating_gds_15;Depression Rating from GDS-15;numerical;;>0;num;;No;;Measurement;SNOMED;40482001;Athena-40482001;;;;;;;;Date_depression
 ;;GDS-30;Depression_rating_gds;Depression Rating from GDS;numerical;;>0;num;;No;;Measurement;SNOMED;4159706;Athena-4159706;;;;;;;;Date_depression
 ;;CES-D;Depression_rating_ces_d;Depression Rating from CES-D;numerical;;>0;num;;No;;Measurement;;2000000026;;;;;;;;;Date_depression
+;;PHQ-9;Depression_rating_phq_9;Depression Rating from PHQ 9;numerical;;>0;num;;No;;Measurement;SNOMED;36714983;Athena-36714983;;;;;;;;Date_depression
 ;;;Depression_rating_other;Depression Rating from another alternative;numerical;;>0;;;No;;;;;;;;;;;;;Date_depression
 ;Rating scales;;Depression_rating;Result assesment depression: rating scale;numerical;;>0;;;No;;;;;;;;;;;;;Date_depression
 ;Psychiatric disorders;Depression;Depression;"Result assesment depression: yes;no";factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;440383;Athena-440383;;;;"yes;no";"4188539;_";;Depression_cutoff;Date_depression
@@ -168,21 +169,21 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 ;Priority Attention Test;Priority attention Type;Priority_attention_type;Priority test for attention;factor; 1 = Trail Making Test A, 2 = Stroop 1, 3 = Stroop 2, 4 = Symbol Digit Substitution Task, 5 = other;"1;5";;;No;"Priority for 1. Trail Making Test A 
 2. Stroop 1
 3. Stroop 2                                                                                                 
-5. Symbol Digit Substitution Task                                                                                               9.  If not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;TMT-A;Attention_test_tmt_a;Attention score from Trail Making Test Part  A ;numeric;;>0;num;;No;;;;;;;;;;;;;Date_NPE
-;;;Attention_test_tmt_a_time;Attention score from Trail Making Test Part  A - Time;numeric;;>0;num;;No;;Measurement;;2000000028;;;;;;;;;Date_NPE
-;;;Attention_test_tmt_a_errors;Attention score from Trail Making Test Part  A - Errors;numeric;;>0;num;;No;;Measurement;;2000000029;;;;;;;;;Date_NPE
-;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1 - Time;numeric;;>0;num;;No;;Measurement;;2000000030;;sec;8555;UCUM;;;;;Date_NPE
-;;;Attention_test_stroop_1_e;Attention score from Stroop 1 - Errors;numeric;;>0;num;;No;;Measurement;;2000000102;;;;;;;;;Date_NPE
-;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2 - Time;numeric;;>0;num;;No;;Measurement;;2000000031;;sec;8555;UCUM;;;;;Date_NPE
-;;;Attention_test_stroop_2_e;Attention score from Stroop 2 - Errors;numeric;;>0;num;;No;;Measurement;;2000000103;;;;;;;;;Date_NPE
-;;;Attention_test_stroop_1_adj;Attention score from Stroop 1 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000088;;;;;;;;;Date_NPE
-;;;Attention_test_stroop_2_adj;Attention score from Stroop 2 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000089;;;;;;;;;Date_NPE
-;;SDST;Attention_test_sdst;Attention score from Symbol Digit Substitution Task      - number correct   ;numeric;;>0;num;;No;;Measurement;;2000000032;;;;;;;;;Date_NPE
-;;;Attention_test_ldst;Attention score from Letter Digit Substitution Task   - number correct      ;numeric;;>0;num;;No;;Measurement;;2000000090;;;;;;;;;Date_NPE
-;;;Attention_test_other;Attention score from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority Attention Test;Priority attention ;Priority_attention;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority Attention Test;Priority attention z-score;Priority_attention_z ;z-score;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
+5. Symbol Digit Substitution Task                                                                                               9.  If not available, please provide alternative if possible";;;;;;;;;;;;Date_Attention
+;;TMT-A;Attention_test_tmt_a;Attention score from Trail Making Test Part  A ;numeric;;>0;num;;No;;;;;;;;;;;;;Date_Attention
+;;;Attention_test_tmt_a_time;Attention score from Trail Making Test Part  A - Time;numeric;;>0;num;;No;;Measurement;;2000000028;;;;;;;;;Date_Attention
+;;;Attention_test_tmt_a_errors;Attention score from Trail Making Test Part  A - Errors;numeric;;>0;num;;No;;Measurement;;2000000029;;;;;;;;;Date_Attention
+;;Stroop Part 1;Attention_test_stroop_1;Attention score from Stroop 1 - Time;numeric;;>0;num;;No;;Measurement;;2000000030;;sec;8555;UCUM;;;;;Date_Attention
+;;;Attention_test_stroop_1_e;Attention score from Stroop 1 - Errors;numeric;;>0;num;;No;;Measurement;;2000000102;;;;;;;;;Date_Attention
+;;Stroop Part 2;Attention_test_stroop_2;Attention score from Stroop 2 - Time;numeric;;>0;num;;No;;Measurement;;2000000031;;sec;8555;UCUM;;;;;Date_Attention
+;;;Attention_test_stroop_2_e;Attention score from Stroop 2 - Errors;numeric;;>0;num;;No;;Measurement;;2000000103;;;;;;;;;Date_Attention
+;;;Attention_test_stroop_1_adj;Attention score from Stroop 1 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000088;;;;;;;;;Date_Attention
+;;;Attention_test_stroop_2_adj;Attention score from Stroop 2 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000089;;;;;;;;;Date_Attention
+;;SDST;Attention_test_sdst;Attention score from Symbol Digit Substitution Task      - number correct   ;numeric;;>0;num;;No;;Measurement;;2000000032;;;;;;;;;Date_Attention
+;;;Attention_test_ldst;Attention score from Letter Digit Substitution Task   - number correct      ;numeric;;>0;num;;No;;Measurement;;2000000090;;;;;;;;;Date_Attention
+;;;Attention_test_other;Attention score from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_Attention
+;Priority Attention Test;Priority attention ;Priority_attention;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_Attention
+;Priority Attention Test;Priority attention z-score;Priority_attention_z ;z-score;numeric;;>0;;;No;;;;;;;;;;;;;Date_Attention
 ;Priority memory Test;priority memory type;Priority_memory_type;Priority test for  memory;factor ;1 = RAVLT,  2 = CERAD, 3 = Grober-Buschke FCSRT, 4 = Story recall test, 5 = Logical memory, 6 = Hopkins, 7 = VAT, 8 = Story recall Brescia, 9 = Recall Rey figure, 10 = MMSE, 11 =ADAS-Cog, 12 = 10 word list, 13 = immediate recall 10 word list, 14 = other;"1;14";;;No;"Priority for 1. Ray Auditory Verbal Learning Test (RAVLT)
 2. CERAD
 3. Grober-Buschke FCSRT
@@ -195,92 +196,93 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;
 10. MMSE
 11. ADAS-Cog
 12. 10 word list
-13. immediate recall 10 word list                                                                    14. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;AVLT Immediate;Priority_memory_im_ravlt;Priority test from RAVLT (immediate);numeric;;>0;num;;No;;Measurement;;2000000033;;;;;;;;;Date_NPE
-;;CERAD WL Immediate;Priority_memory_im_cerad;Priority test from CERAD (immediate);numeric;;>0;num;;No;;Measurement;;2000000034;;;;;;;;;Date_NPE
-;;;Priority_memory_im_gb;Priority test from Grober-Buschke FCSRT (immediate);numeric;;>0;num;;No;;Measurement;;2000000035;;;;;;;;;Date_NPE
-;;SRT Immediate;Priority_memory_im_sct;Priority test from Story recall test (immediate);numeric;;>0;num;;No;;Measurement;;2000000036;;;;;;;;;Date_NPE
-;;LM Immediate;Priority_memory_im_lm;Priority test from Logical memory (immediate);numeric;;>0;num;;No;;Measurement;;2000000037;;;;;;;;;Date_NPE
-;;HVLT Immediate;Priority_memory_im_hopkins;Priority test from Hopkins (immediate);numeric;;>0;num;;No;;Measurement;;2000000038;;;;;;;;;Date_NPE
-;;;Priority_memory_im_vat_a;Priority test from VAT A  (immediate);numeric;;>0;num;;No;;Measurement;;2000000039;;;;;;;;;Date_NPE
-;;;Priority_memory_im_vat_b;Priority test from VAT B  (immediate);numeric;;>0;num;;No;;Measurement;;2000000040;;;;;;;;;Date_NPE
-;;;Priority_memory_im_srb;Priority test from Story recall Brescia (immediate);numeric;;>0;num;;No;;Measurement;;2000000041;;;;;;;;;Date_NPE
-;;;Priority_memory_im_rrf;Priority test from Recall Rey figure (immediate);numeric;;>0;num;;No;;Measurement;;2000000042;;;;;;;;;Date_NPE
-;;;Priority_memory_im_mmse;Priority test from MMSE (immediate);numeric;;>0;num;;No;;Measurement;;2000000043;;;;;;;;;Date_NPE
-;;;Priority_memory_im_adas;Priority test from ADAS-Cog (immediate);numeric;;>0;num;;No;;Measurement;;2000000044;;;;;;;;;Date_NPE
-;;;Priority_memory_im_10_word_list;Priority test from 10 word list (immediate);numeric;;>0;num;;No;;Measurement;;2000000045;;;;;;;;;Date_NPE
-;;;Priority_memory_im_recall_10_word_list;Priority test from  immediate recall 10 word list     (immediate)                       ;numeric;;>0;num;;No;;Measurement;;2000000046;;;;;;;;;Date_NPE
-;;;Priority_memory_im_15_word_list_correct;Priority test from 15 word list (immediate) - number of correct answers;numeric;;>0;num;;No;;Measurement;;2000000080;;;;;;;;;Date_NPE
-;;;Priority_memory_im_15_word_list_incorrect;Priority test from 15 word list (immediate) - number of incorrect answers;numeric;;>0;num;;No;;Measurement;;2000000081;;;;;;;;;Date_NPE
-;;;Priority_memory_im_other;Priority test from another alternative  (immediate);numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority memory Test;Priority memory immediate;Priority_memory_im;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority memory Test;Priority memory immediate z-score;Priority_memory_im_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
-;;AVLT Delayed;Priority_memory_dr_ravlt;Priority test from RAVLT (delayed);numeric;;>0;num;;No;;Measurement;;2000000047;;;;;;;;;Date_NPE
-;;CERAD WL Delayed;Priority_memory_dr_cerad;Priority test from CERAD (delayed);numeric;;>0;num;;No;;Measurement;;2000000048;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_gb;Priority test from Grober-Buschke FCSRT (delayed);numeric;;>0;num;;No;;Measurement;;2000000049;;;;;;;;;Date_NPE
-;;SRT Delayed;Priority_memory_dr_sct;Priority test from Story recall test (delayed);numeric;;>0;num;;No;;Measurement;;2000000050;;;;;;;;;Date_NPE
-;;LM Delayed;Priority_memory_dr_lm;Priority test from Logical memory (delayed);numeric;;>0;num;;No;;Measurement;;2000000051;;;;;;;;;Date_NPE
-;;HVLT Delayed;Priority_memory_dr_hopkins;Priority test from Hopkins (delayed);numeric;;>0;num;;No;;Measurement;;2000000052;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_vat_a;Priority test from VAT A (delayed);numeric;;>0;num;;No;;Measurement;;2000000053;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_vat_b;Priority test from VAT B  (delayed);numeric;;>0;num;;No;;Measurement;;2000000054;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_srb;Priority test from Story recall Brescia (delayed);numeric;;>0;num;;No;;Measurement;;2000000055;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_rrf_short;Priority test from Recall Rey figure (short delay);numeric;;>0;num;;No;;Measurement;;2000000056;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_rrf_long;Priority test from Recall Rey figure (long delay);numeric;;>0;num;;No;;Measurement;;2000000057;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_mmse;Priority test from MMSE (delayed);numeric;;>0;num;;No;;Measurement;;2000000058;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;>0;num;;No;;Measurement;;2000000059;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;>0;num;;No;;Measurement;;2000000060;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;>0;num;;No;;Measurement;;2000000061;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_15_word_list_correct;Priority test from 15 word list (delayed) - number of correct answers;numeric;;>0;num;;No;;Measurement;;2000000082;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_15_word_list_incorrect;Priority test from 15 word list (delayed) - number of incorrect answers;numeric;;>0;num;;No;;Measurement;;2000000083;;;;;;;;;Date_NPE
-;;;Priority_memory_dr_other;Priority test from another alternative  (delayed);numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority memory Test;Priority memory delayed;Priority_memory_dr;raw scores ;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority memory Test;Priority memory delayed z -score;Priority_memory_dr_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
+13. immediate recall 10 word list                                                                    14. if not available, please provide alternative if possible";;;;;;;;;;;;Date_Memory
+;;AVLT Immediate;Priority_memory_im_ravlt;Priority test from RAVLT (immediate);numeric;;>0;num;;No;;Measurement;;2000000033;;;;;;;;;Date_Memory
+;;CERAD WL Immediate;Priority_memory_im_cerad;Priority test from CERAD (immediate);numeric;;>0;num;;No;;Measurement;;2000000034;;;;;;;;;Date_Memory
+;;;Priority_memory_im_gb;Priority test from Grober-Buschke FCSRT (immediate);numeric;;>0;num;;No;;Measurement;;2000000035;;;;;;;;;Date_Memory
+;;SRT Immediate;Priority_memory_im_sct;Priority test from Story recall test (immediate);numeric;;>0;num;;No;;Measurement;;2000000036;;;;;;;;;Date_Memory
+;;LM Immediate;Priority_memory_im_lm;Priority test from Logical memory (immediate);numeric;;>0;num;;No;;Measurement;;2000000037;;;;;;;;;Date_Memory
+;;HVLT Immediate;Priority_memory_im_hopkins;Priority test from Hopkins (immediate);numeric;;>0;num;;No;;Measurement;;2000000038;;;;;;;;;Date_Memory
+;;;Priority_memory_im_vat_a;Priority test from VAT A  (immediate);numeric;;>0;num;;No;;Measurement;;2000000039;;;;;;;;;Date_Memory
+;;;Priority_memory_im_vat_b;Priority test from VAT B  (immediate);numeric;;>0;num;;No;;Measurement;;2000000040;;;;;;;;;Date_Memory
+;;;Priority_memory_im_srb;Priority test from Story recall Brescia (immediate);numeric;;>0;num;;No;;Measurement;;2000000041;;;;;;;;;Date_Memory
+;;;Priority_memory_im_rrf;Priority test from Recall Rey figure (immediate);numeric;;>0;num;;No;;Measurement;;2000000042;;;;;;;;;Date_Memory
+;;;Priority_memory_im_mmse;Priority test from MMSE (immediate);numeric;;>0;num;;No;;Measurement;;2000000043;;;;;;;;;Date_Memory
+;;;Priority_memory_im_adas;Priority test from ADAS-Cog (immediate);numeric;;>0;num;;No;;Measurement;;2000000044;;;;;;;;;Date_Memory
+;;;Priority_memory_im_10_word_list;Priority test from 10 word list (immediate);numeric;;>0;num;;No;;Measurement;;2000000045;;;;;;;;;Date_Memory
+;;;Priority_memory_im_recall_10_word_list;Priority test from  immediate recall 10 word list     (immediate)                       ;numeric;;>0;num;;No;;Measurement;;2000000046;;;;;;;;;Date_Memory
+;;;Priority_memory_im_15_word_list_correct;Priority test from 15 word list (immediate) - number of correct answers;numeric;;>0;num;;No;;Measurement;;2000000080;;;;;;;;;Date_Memory
+;;;Priority_memory_im_15_word_list_incorrect;Priority test from 15 word list (immediate) - number of incorrect answers;numeric;;>0;num;;No;;Measurement;;2000000081;;;;;;;;;Date_Memory
+;;;Priority_memory_im_other;Priority test from another alternative  (immediate);numeric;;>0;;;No;;;;;;;;;;;;;Date_Memory
+;Priority memory Test;Priority memory immediate;Priority_memory_im;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_Memory
+;Priority memory Test;Priority memory immediate z-score;Priority_memory_im_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Memory
+;;AVLT Delayed;Priority_memory_dr_ravlt;Priority test from RAVLT (delayed);numeric;;>0;num;;No;;Measurement;;2000000047;;;;;;;;;Date_Memory
+;;CERAD WL Delayed;Priority_memory_dr_cerad;Priority test from CERAD (delayed);numeric;;>0;num;;No;;Measurement;;2000000048;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_gb;Priority test from Grober-Buschke FCSRT (delayed);numeric;;>0;num;;No;;Measurement;;2000000049;;;;;;;;;Date_Memory
+;;SRT Delayed;Priority_memory_dr_sct;Priority test from Story recall test (delayed);numeric;;>0;num;;No;;Measurement;;2000000050;;;;;;;;;Date_Memory
+;;LM Delayed;Priority_memory_dr_lm;Priority test from Logical memory (delayed);numeric;;>0;num;;No;;Measurement;;2000000051;;;;;;;;;Date_Memory
+;;HVLT Delayed;Priority_memory_dr_hopkins;Priority test from Hopkins (delayed);numeric;;>0;num;;No;;Measurement;;2000000052;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_vat_a;Priority test from VAT A (delayed);numeric;;>0;num;;No;;Measurement;;2000000053;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_vat_b;Priority test from VAT B  (delayed);numeric;;>0;num;;No;;Measurement;;2000000054;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_srb;Priority test from Story recall Brescia (delayed);numeric;;>0;num;;No;;Measurement;;2000000055;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_rrf_short;Priority test from Recall Rey figure (short delay);numeric;;>0;num;;No;;Measurement;;2000000056;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_rrf_long;Priority test from Recall Rey figure (long delay);numeric;;>0;num;;No;;Measurement;;2000000057;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_mmse;Priority test from MMSE (delayed);numeric;;>0;num;;No;;Measurement;;2000000058;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_adas;Priority test from ADAS-Cog (delayed);numeric;;>0;num;;No;;Measurement;;2000000059;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_10_word_list;Priority test from 10 word list (delayed);numeric;;>0;num;;No;;Measurement;;2000000060;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_recall_10_word_list;Priority test from  immediate recall 10 word list     (delayed)                       ;numeric;;>0;num;;No;;Measurement;;2000000061;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_15_word_list_correct;Priority test from 15 word list (delayed) - number of correct answers;numeric;;>0;num;;No;;Measurement;;2000000082;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_15_word_list_incorrect;Priority test from 15 word list (delayed) - number of incorrect answers;numeric;;>0;num;;No;;Measurement;;2000000083;;;;;;;;;Date_Memory
+;;;Priority_memory_dr_other;Priority test from another alternative  (delayed);numeric;;>0;;;No;;;;;;;;;;;;;Date_Memory
+;Priority memory Test;Priority memory delayed;Priority_memory_dr;raw scores ;numeric;;>0;;;No;;;;;;;;;;;;;Date_Memory
+;Priority memory Test;Priority memory delayed z -score;Priority_memory_dr_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Memory
 ;Priority executive Test;Priority executive type;Priority_executive_type;Priority test for executive function;factor;1 = Trail Making Test B, 2 = Stroop 3, 3 = other;"1;3";;;No;"Priority for 1. Trail Making Test B
-2. Stroop 3                                                                                                 3. Concept Shifting Test Part A                                                    4. Concept Shifting Test Part B                                                     5. Concept Shifting Test Part C                                                                                                                    6. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;TMT-B;Priority_executive_TMT_b;Priority test for executive function score from TMT B;numeric;;>0;num;;No;;;;;;;;;;;;;Date_NPE
-;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;>0;num;;No;;Measurement;;2000000062;;;;;;;;;Date_NPE
-;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;>0;num;;No;;Measurement;;2000000063;;;;;;;;;Date_NPE
-;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3 - Time;numeric;;>0;num;;No;;Measurement;;2000000064;;sec;8555;UCUM;;;;;Date_NPE
-;;;Priority_executive_stroop_3_e;Priority test for executive function score from Stroop 3 -Errors;numeric;;>0;num;;No;;Measurement;;2000000104;;;;;;;;;Date_NPE
-;;;Priority_executive_stroop_3_adj;Priority test for executive  Stroop 3 - Time adjusted;numeric;;>0;num;;No;;Measurement;;2000000101;;;;;;;;;Date_NPE
-;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;>0;num;;No;;Measurement;;2000000065;;;;;;;;;Date_NPE
-;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;>0;num;;No;;Measurement;;2000000066;;;;;;;;;Date_NPE
-;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;>0;num;;No;;Measurement;;2000000067;;;;;;;;;Date_NPE
-;;;Priority_executive_vet;Visual elevator test (0-10);numeric;;>0;num;;No;;Measurement;;2000000084;;;;;;;;;Date_NPE
-;;;Priority_executive_bat;Brixton anticipation task (0-54);numeric;;>0;num;;No;;Measurement;;2000000085;;;;;;;;;Date_NPE
-;;;Priority_executive_other;Priority test for executive function score from another alternative;numeric;;;;;No;;;;;;;;;;;;;Date_NPE
-;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
+2. Stroop 3                                                                                                 3. Concept Shifting Test Part A                                                    4. Concept Shifting Test Part B                                                     5. Concept Shifting Test Part C                                                                                                                    6. if not available, please provide alternative if possible";;;;;;;;;;;;Date_Executive
+;;TMT-B;Priority_executive_TMT_b;Priority test for executive function score from TMT B;numeric;;>0;num;;No;;;;;;;;;;;;;Date_Executive
+;;;Priority_executive_TMT_b_time;Priority test for executive function score from TMT B - Time;numeric;;>0;num;;No;;Measurement;;2000000062;;;;;;;;;Date_Executive
+;;;Priority_executive_TMT_b_errors;Priority test for executive function score from TMT B - Errors;numeric;;>0;num;;No;;Measurement;;2000000063;;;;;;;;;Date_Executive
+;;Stroop Part 3;Priority_executive_stroop_3;Priority test for executive function score from Stroop 3 - Time;numeric;;>0;num;;No;;Measurement;;2000000064;;sec;8555;UCUM;;;;;Date_Executive
+;;;Priority_executive_stroop_3_e;Priority test for executive function score from Stroop 3 -Errors;numeric;;>0;num;;No;;Measurement;;2000000104;;;;;;;;;Date_Executive
+;;;Priority_executive_stroop_3_adj;Priority test for executive  Stroop 3 - Time adjusted;numeric;;>0;num;;No;;Measurement;;2000000101;;;;;;;;;Date_Executive
+;;CST-A;Priority_executive_cst_a;Concept Shifting Test A;numeric;;>0;num;;No;;Measurement;;2000000065;;;;;;;;;Date_Executive
+;;CST-B;Priority_executive_cst_b;Concept Shifting Test B;numeric;;>0;num;;No;;Measurement;;2000000066;;;;;;;;;Date_Executive
+;;CST-C;Priority_executive_cst_c;Concept Shifting Test C;numeric;;>0;num;;No;;Measurement;;2000000067;;;;;;;;;Date_Executive
+;;;Priority_executive_vet;Visual elevator test (0-10);numeric;;>0;num;;No;;Measurement;;2000000084;;;;;;;;;Date_Executive
+;;;Priority_executive_bat;Brixton anticipation task (0-54);numeric;;>0;num;;No;;Measurement;;2000000085;;;;;;;;;Date_Executive
+;;;Priority_executive_other;Priority test for executive function score from another alternative;numeric;;;;;No;;;;;;;;;;;;;Date_Executive
+;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_Executive
+;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Executive
 ;Priority language test;Priority language type;Priority_language_type;Priority test for language;factor;"1 = Animal Fluency 1 min, 2 = Category Fluency 1 min, 3 = Letter Fluency 1 min, 4 = Any type of fluency 2 min, 5 = Boston Naming Test (15;30;60 items), 6 = Any picture naming test. 7 = other";"1;7";;;No;"Priority for 1. Animal Fluency 1 min
 2. Category Fluency 1 min
 3. Letter Fluency 1 min
 4. Any type of fluency 2 min
 5. Boston Naming Test (15;30;60 items)
-6. Any picture naming test                                                                                 7. if not available, please provide alternative if possible";;;;;;;;;;;;Date_NPE
-;;Animals Fluency 1 min;Priority_language_animal_fluency;Priority test for language from Animal Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000068;;;;;;;;;Date_NPE
-;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000069;;;;;;;;;Date_NPE
-;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000070;;;;;;;;;Date_NPE
-;;;Priority_language_any_fluency_2;Priority test for language from Any type of fluency 2 min;numeric;;>0;num;;No;;Measurement;;2000000071;;;;;;;;;Date_NPE
-;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;>0;num;;No;;Measurement;;2000000072;;;;;;;;;Date_NPE
-;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;>0;num;;No;;Measurement;;2000000073;;;;;;;;;Date_NPE
-;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;>0;num;;No;;Measurement;;2000000074;;;;;;;;;Date_NPE
-;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming  ;numeric;;>0;num;;No;;Measurement;;2000000075;;;;;;;;;Date_NPE
-;;;Priority_language_animals_naming_1;Priority test for language from naming animals 1 min - total correct;numeric;;>0;num;;No;;Measurement;;2000000087;;;;;;;;;Date_NPE
-;;;Priority_language_verbal_fluency_1;Priority test for verbal fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_NPE
-;;;Priority_language_other;Priority test for language from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority language test;Priority language;Priority_language;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_NPE
-;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_NPE
+6. Any picture naming test                                                                                 7. if not available, please provide alternative if possible";;;;;;;;;;;;Date_Language
+;;Animals Fluency 1 min;Priority_language_animal_fluency;Priority test for language from Animal Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000068;;;;;;;;;Date_Language
+;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000069;;;;;;;;;Date_Language
+;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000070;;;;;;;;;Date_Language
+;;;Priority_language_any_fluency_2;Priority test for language from Any type of fluency 2 min;numeric;;>0;num;;No;;Measurement;;2000000071;;;;;;;;;Date_Language
+;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;>0;num;;No;;Measurement;;2000000072;;;;;;;;;Date_Language
+;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;>0;num;;No;;Measurement;;2000000073;;;;;;;;;Date_Language
+;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;>0;num;;No;;Measurement;;2000000074;;;;;;;;;Date_Language
+;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming  ;numeric;;>0;num;;No;;Measurement;;2000000075;;;;;;;;;Date_Language
+;;;Priority_language_animals_naming_1;Priority test for language from naming animals 1 min - total correct;numeric;;>0;num;;No;;Measurement;;2000000087;;;;;;;;;Date_Language
+;;;Priority_language_verbal_fluency_1;Priority test for verbal fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_Language
+;;;Priority_language_other;Priority test for language from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_Language
+;Priority language test;Priority language;Priority_language;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_Language
+;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Language
 Plasma;;;;;;;;;;;;;;;;;;;;;;;
-;;;P_Tau;P-Tau in plasma;numeric;;>0;num;;No;;Measurement;SNOMED;44807681;Athena-44807681;;;;;;;;
-;;;Amyloid_B_42;Amyloid-B-42 in plasma;numeric;;>0;num;;No;;Measurement;;2000000093;;pg/mL;8845;UCUM;;;;;
-;;;Amyloid_B_40;Amyloid-B-40 in plasma;numeric;;>0;num;;No;;Measurement;;2000000094;;pg/mL;8845;UCUM;;;;;
-;;;GFAP;Glial Fibrillary acidic protein;numeric;;>0;num;;No;;Measurement;;2000000095;;;;;;;;;
-;;;NFL;Neurofilament light;numeric;;>0;num;;No;;Measurement;;2000000096;;;;;;;;;
-;;;E_Selectin;E-selectin (CD62E);numeric;;>0;num;;No;;Measurement;;2000000097;;;;;;;;;
-;;;SAA;Serum Amyloid A;numeric;;>0;num;;No;;Measurement;SNOMED;46284972;Athena-46284972;;;;;;;;
-;;;VCAM;Vascular cellular adhesion molecule (CD106);numeric;;>0;num;;No;;Measurement;;2000000098;;;;;;;;;
-;;;ICAM;Intercellular adhesion molecule (CD54);numeric;;>0;num;;No;;Measurement;;2000000099;;;;;;;;;
-;;;Il6;Interleukin-6;numeric;;>0;num;;No;;Measurement;SNOMED;4332015;Athena-4332015;;;;;;;;
-;;;Il8;Interleukin-8;numeric;;>0;num;;No;;Measurement;SNOMED;4166200;Athena-4166200;;;;;;;;
-;;;Il_1b;Interleukin 1 beta;numeric;;>0;num;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;
-;;;TNFalpha;Tumor necrosis factor alpa;numeric;;>0;num;;No;;Measurement;;2000000076;;;;;;;;;
+;;;P_Tau;P-Tau in plasma;numeric;;>0;num;;No;;Measurement;SNOMED;44807681;Athena-44807681;;;;;;;;Date_Plasma
+;;;Amyloid_B_42;Amyloid-B-42 in plasma;numeric;;>0;num;;No;;Measurement;;2000000093;;pg/mL;8845;UCUM;;;;;Date_Plasma
+;;;Amyloid_B_40;Amyloid-B-40 in plasma;numeric;;>0;num;;No;;Measurement;;2000000094;;pg/mL;8845;UCUM;;;;;Date_Plasma
+;;;Amyloid_B_ratio_42_40;Ratio Amyloid B 42/40;numeric;;>0;num;;No;;Measurement;;2000000105;;;;;;;;;Date_Plasma
+;;;GFAP;Glial Fibrillary acidic protein;numeric;;>0;num;;No;;Measurement;;2000000095;;;;;;;;;Date_Plasma
+;;;NFL;Neurofilament light;numeric;;>0;num;;No;;Measurement;;2000000096;;;;;;;;;Date_Plasma
+;;;E_Selectin;E-selectin (CD62E);numeric;;>0;num;;No;;Measurement;;2000000097;;;;;;;;;Date_Plasma
+;;;SAA;Serum Amyloid A;numeric;;>0;num;;No;;Measurement;SNOMED;46284972;Athena-46284972;;;;;;;;Date_Plasma
+;;;VCAM;Vascular cellular adhesion molecule (CD106);numeric;;>0;num;;No;;Measurement;;2000000098;;;;;;;;;Date_Plasma
+;;;ICAM;Intercellular adhesion molecule (CD54);numeric;;>0;num;;No;;Measurement;;2000000099;;;;;;;;;Date_Plasma
+;;;Il6;Interleukin-6;numeric;;>0;num;;No;;Measurement;SNOMED;4332015;Athena-4332015;;;;;;;;Date_Plasma
+;;;Il8;Interleukin-8;numeric;;>0;num;;No;;Measurement;SNOMED;4166200;Athena-4166200;;;;;;;;Date_Plasma
+;;;Il_1b;Interleukin 1 beta;numeric;;>0;num;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;Date_Plasma
+;;;TNFalpha;Tumor necrosis factor alpa;numeric;;>0;num;;No;;Measurement;;2000000076;;;;;;;;;Date_Plasma
