@@ -244,7 +244,7 @@ class DataParser:
                             age = int(parse_float(row[age_variable]))
                         elif AGE in self.source_mapping and is_value_valid(self.source_mapping[AGE][STATIC_VALUE]):
                             age = int(self.source_mapping[AGE][STATIC_VALUE])
-                        if age:
+                        if is_value_valid(age):
                             try:
                                 birth_year = get_year_of_birth(age, str(row[age_date_variables[i]]), \
                                     age_date_format if age_date_format else self.date_format)
