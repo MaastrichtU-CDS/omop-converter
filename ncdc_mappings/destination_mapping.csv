@@ -4,7 +4,7 @@ date,,Person,,,,,,,,date
 birth_year,,Person,,,,,,,>=1900,int
 age,4265453,Observation,year,9448,,,,date_age,>=0,num
 sex,,Person,,,male;female;-,8507;8532;8551,,,0;1;_,int
-education_years,2000000001,Observation,year,9448,,,,,> = 0,num
+education_years,2000000001,Observation,year,9448,,,,,>=0,num
 education_category,4171617,Observation,,,low;high,4267416;4328749,,,0;1,int
 education_category_3,2000000077,Observation,,,low;medium;high,4267416;4152518;4328749,,,0;1;2,int
 education_category_verhage,2000000078,Observation,,,1;2;3;4;5;6;7,,,,1;2;3;4;5;6;7,int
