@@ -184,7 +184,7 @@ class DataParser:
                 raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
             return (False, aggregated_value)
         # If any of the previous cases don't apply, return the value and apply a conversion if necessary.
-        if type == DATE:
+        if type == TYPE_DATE:
             if format:
                 try:
                     value_parsed = parse_date(value_parsed, format, POSTGRES_DATE_FORMAT)
@@ -193,7 +193,7 @@ class DataParser:
                         f"{format} to {POSTGRES_DATE_FORMAT}: {str(error)}")
             else:
                 raise ParsingError(f"No date format provided for variable {variable}!")
-        elif type == NUMERIC:
+        elif type == TYPE_NUMERIC:
             value_parsed = parse_float(value)
         return (False, parse_float(value) * parse_float(conversion) if conversion else value_parsed)
 

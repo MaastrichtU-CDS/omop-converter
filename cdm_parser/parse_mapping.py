@@ -5,11 +5,6 @@ from parse_dataset import DataParser
 # TODO: Currently developed in a more strict association with ncdc constraints.
 # Refactor necessary to have a more generic solution for such a table.
 
-TYPE_INT = 'int'
-TYPE_NUMERIC = 'num'
-TYPE_TEXT = 'text'
-TYPE_BOOL = 'bool'
-
 SQL_INTEGER = 'INTEGER'
 SQL_NUMERIC = 'NUMERIC'
 SQL_VARCHAR = 'VARCHAR ( 50 )'
