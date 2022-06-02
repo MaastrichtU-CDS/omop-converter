@@ -193,6 +193,8 @@ class DataParser:
                         f"{format} to {POSTGRES_DATE_FORMAT}: {str(error)}")
             else:
                 raise ParsingError(f"No date format provided for variable {variable}!")
+        elif type == NUMERIC:
+            value_parsed = parse_float(value)
         return (False, parse_float(value) * parse_float(conversion) if conversion else value_parsed)
 
     def get_death_datetime(self, row):

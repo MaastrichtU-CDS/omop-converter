@@ -87,6 +87,8 @@ SOURCE_ID = 'source_id'
 DEATH_DATE = 'mort_date'
 DEATH_FLAG = 'mort'
 
+NUMERIC = 'num'
+
 DATE_FORMAT = '%Y%m%d %H:%M:%S'
 DATE_DEFAULT = '19700101 00:00:00'
 ID = 'ID'
