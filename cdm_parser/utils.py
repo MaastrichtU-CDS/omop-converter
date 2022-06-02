@@ -65,4 +65,4 @@ def parse_float(value):
 def is_value_valid(value):
     """ Check if a value is null, None, or empty.
     """
-    return not pd.isnull(value) and str(value) != ''
+    return not pd.isnull(value) and (str(value)).strip() != ''
