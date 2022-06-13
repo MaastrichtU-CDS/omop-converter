@@ -34,6 +34,7 @@ ENCODING = 'ENCODING'
 MISSING_VALUES = 'MISSING_VALUES'
 
 VARIABLE = 'variable'
+MAPPING = 'mapping'
 
 ID_TABLE = 'person_source_id'
 

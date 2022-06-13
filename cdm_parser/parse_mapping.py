@@ -72,10 +72,10 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
             if concept_id and concept_id not in concept_mapping:
                 concept_mapping[concept_id] = destination_mapping[key]
                 concept_mapping[concept_id][VARIABLE] = key
-                concept_mapping[concept_id]['mapping'] = {}
+                concept_mapping[concept_id][MAPPING] = {}
                 if concept_mapping[concept_id][VALUES_RANGE] and (concept_mapping[concept_id][VALUES_CONCEPT_ID] or \
                     concept_mapping[concept_id][VALUES]):
-                    concept_mapping[concept_id]['mapping'] = DataParser.variable_values_to_dict(
+                    concept_mapping[concept_id][MAPPING] = DataParser.variable_values_to_dict(
                         concept_mapping[concept_id][VALUES_CONCEPT_ID] or concept_mapping[concept_id][VALUES],
                         concept_mapping[concept_id][VALUES_RANGE]
                     )
@@ -84,14 +84,14 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
     column_value[ID] = visit[2]
     column_value[DATE] = visit[1].strftime('%Y-%m-%d')
     column_value[YEAR_OF_BIRTH] = visit[3]
-    column_value[GENDER] = get_parsed_value(concept_mapping[GENDER]['mapping'], visit[4])
+    column_value[GENDER] = get_parsed_value(concept_mapping[GENDER][MAPPING], visit[4])
     column_value[DEATH_DATE] = visit[5].strftime('%Y/%m/%d') if visit[5] and visit[5].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE else ''
     column_value[DEATH_FLAG] = 1 if visit[5] else 0
     # Observations
     for observation in observations:
         concept_map = concept_mapping[str(observation[0])]
         if concept_map[DOMAIN] == OBSERVATION:
-            column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map['mapping'], observation[3] or observation[2])
+            column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map[MAPPING], observation[3] or observation[2])
         elif concept_map[DOMAIN] == CONDITION_OCCURRENCE:
             # Condition information regarding absence of a disease.
             # Couldn't be represented in the Condition table due to limitations in the OMOP CDM.
@@ -106,7 +106,7 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
         concept_map = concept_mapping[str(measurement[0])]
         if concept_map[DATE] and measurement[1] and measurement[1].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE:
             column_value[concept_map[DATE]] = measurement[1].strftime('%Y-%m-%d')
-        column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map['mapping'], measurement[2])
+        column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map[MAPPING], measurement[2])
     # Condition Occurrence
     for condition in conditions:
         concept_map = concept_mapping[str(condition[0])]
