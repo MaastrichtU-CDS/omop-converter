@@ -75,17 +75,17 @@ Cardiovascular;Clinical information & Laboratory test results;;;;;;;;;;;;;;;;;;;
 ;Endocrine disorders;Diabetes_Mellitus;DM_2;Diabetes Mellitus type 2;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;201826;Athena-201826;;;;"yes;no";"4188539;_";;;Date_comorbidities;
 ;Endocrine disorders;Diabetes_Mellitus;DM;Diabetes Mellitus;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;201820;Athena-201820;;;;"yes;no";"4188539;_";;;Date_comorbidities;
 ;Cardiovascular Disorders;Myocardial infarction ;Myocardial_infarction;Myocardial infarction ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;4329847;Athena-4329847;;;;"yes;no";"4188539;_";;;Date_comorbidities;
-;Cardiovascular Disorders;;Cardiovascular_disease;History of Cardiovascular Disease;factor;"1 = yes; 0 = no";"1;0";bool;;No;"Reported to have ever had at least one of the following conditions/treatments:
-- myocardial infarction
-- cerebrovascular infarction and/or hemorrhage
-- percutaneous artery angioplasty of the coronary arteries, abdominal arteries, peripheral arteries or carotid artery
-- vascular surgery on coronary arteries, abdominal arteries, peripheral arteries or carotid artery.";Observation;SNOMED;4144290;Athena-4144290;;;;"yes;no";"4188539;4188540";;;Date_comorbidities;
 ;Other cardiac disorders ;Heart failure ;Heart_failure;Heart failure ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;316139;Athena-316139;;;;"yes;no";"4188539;_";;;Date_comorbidities;
 ;Cerebrovascular disorders;Stroke;Stroke;Stroke ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Condition;SNOMED;381316;Athena-381316;;;;"yes;no";"4188539;_";;;Date_comorbidities;
 ;Endocrine disorders;Diabetes_Mellitus;no_DM_1;Diabetes Mellitus type 1 ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;201254;Athena-201254;;;;"yes;no";"_;4132135";;;Date_comorbidities;
 ;Endocrine disorders;Diabetes_Mellitus;no_DM_2;Diabetes Mellitus type 2;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;201826;Athena-201826;;;;"yes;no";"_;4132135";;;Date_comorbidities;
 ;Endocrine disorders;Diabetes_Mellitus;no_DM;Diabetes Mellitus;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;201820;Athena-201820;;;;"yes;no";"_;4132135";;;Date_comorbidities;
 ;Cardiovascular Disorders;Myocardial infarction ;no_Myocardial_infarction;Myocardial infarction ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;4329847;Athena-4329847;;;;"yes;no";"_;4132135";;;Date_comorbidities;
+;Cardiovascular Disorders;;Cardiovascular_disease;History of Cardiovascular Disease;factor;"1 = yes; 0 = no";"1;0";bool;;No;"Reported to have ever had at least one of the following conditions/treatments:
+- myocardial infarction
+- cerebrovascular infarction and/or hemorrhage
+- percutaneous artery angioplasty of the coronary arteries, abdominal arteries, peripheral arteries or carotid artery
+- vascular surgery on coronary arteries, abdominal arteries, peripheral arteries or carotid artery.";Observation;SNOMED;4144290;Athena-4144290;;;;"yes;no";"4188539;4188540";;;Date_comorbidities;
 ;Other cardiac disorders ;Heart failure ;no_Heart_failure;Heart failure ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;316139;Athena-316139;;;;"yes;no";"_;4132135";;;Date_comorbidities;
 ;Cerebrovascular disorders;Stroke;no_Stroke;Stroke ;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;SNOMED;381316;Athena-381316;;;;"yes;no";"_;4132135";;;Date_comorbidities;
 ;Cardiovascular drugs;Anti-hypertensive drugs;Drugs_hypertension;Anti-hypertensive drugs;factor;"1 = yes; 0 = no";"1;0";bool;;No;;Observation;;2000000005;;;;;"yes;no";"4188539;4188540";;;Date_comorbidities;
@@ -323,3 +323,37 @@ Plasma;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Il_1b;Interleukin 1 beta;numeric;;>0;num;;No;;Measurement;SNOMED;4282774;Athena-4282774;;;;;;;;Date_Plasma;
 ;;;TNFalpha;Tumor necrosis factor alpa;numeric;;>0;num;;No;;Measurement;;2000000076;;;;;;;;;Date_Plasma;
 ;;;vwf;Von Willebrand factor (%);numeric;;>0;num;;No;;Measurement;SNOMED;4056962;Athena-4056962;%;;;;;;;Date_Plasma;Non-standard
+;;;fluency_double;Fluency test number of double answers;numeric;;>=0;num;;No;;Measurement;;2000010000;;;;;;;;;date_additional;
+;;;fluency_status;Fluency test status;factor;;"0;1;2;3;4;5;6;7";int;;No;"0 = not enough time.   1 = Complete and reliable: data can be used
+2 = Technical problems: for example, problems with the stopwatch
+3 = Refusal or insufficient motivation of the participant
+4 = Physical limitations: for example, insufficient vision/hearing or missing glasses/hearing aids
+5 = Participant deviated from instructions
+6 = Test not administered: for example, forgotten
+7 = Cognitive limitations, inability to grasp instructions";Measurement;;2000010001;;;;;"0;1;2;3;4;5;6;7";;;;date_additional;
+;;;stroop_chart3_spontaneous_corrections;Strooptest spontaneous corrections for chart 3;numeric;;>=0;num;;No;;Measurement;;2000010002;;;;;;;;;date_additional;
+;;;stroop_chart2_spontaneous_corrections;Strooptest spontaneous corrections for chart 2;numeric;;>=0;num;;No;;Measurement;;2000010003;;;;;;;;;date_additional;
+;;;stroop_chart1_spontaneous_corrections;Strooptest spontaneous corrections for chart 1;numeric;;>=0;num;;No;;Measurement;;2000010004;;;;;;;;;date_additional;
+;;;stroop_status;Strooptest status;factor;;"0;1;2;3;4;5;6;7";int;;No;;Measurement;;2000010005;;;;;"0;1;2;3;4;5;6;7";;;;date_additional;
+;;;stroop_interference;Strooptest interference time;numeric;;>=0;num;sec;No;;Measurement;;2000010006;;sec;8555;UCUM;;;;;date_additional;
+;;;wlt_double_trial_1;WLT double trial 1;numeric;;>=0;num;;No;;Measurement;;2000010007;;;;;;;;;date_additional;
+;;;wlt_double_trial_2;WLT double trial 2;numeric;;>=0;num;;No;;Measurement;;2000010008;;;;;;;;;date_additional;
+;;;wlt_double_trial_3;WLT double trial 3;numeric;;>=0;num;;No;;Measurement;;2000010009;;;;;;;;;date_additional;
+;;;wlt_double_trial_4;WLT double trial 4;numeric;;>=0;num;;No;;Measurement;;2000010010;;;;;;;;;date_additional;
+;;;wlt_double_trial_5;WLT double trial 5;numeric;;>=0;num;;No;;Measurement;;2000010011;;;;;;;;;date_additional;
+;;;wlt_false_positive;WLT recognition false positive;numeric;;>=0;int;;No;;Measurement;;2000010012;;;;;;;;;date_additional;
+;;;wlt_status;WLT status;factor;;"0;1;2;3;4;5;6;7";int;;No;;Measurement;;2000010013;;;;;"0;1;2;3;4;5;6;7";;;;date_additional;
+;;;wlt_true_negative;WLT recognition correct-negative;numeric;;>=0;int;;No;;Measurement;;2000010014;;;;;;;;;date_additional;
+;;;wlt_false_negative;WLT recognition false-negative;numeric;;>=0;int;;No;;Measurement;;2000010015;;;;;;;;;date_additional;
+;;;wlt_true_positive;WLT recognition correct-positive;numeric;;>=0;int;;No;;Measurement;;2000010016;;;;;;;;;date_additional;
+;;;cst_1_time_null;CST time for null version 1;numeric;;>=0;int;sec;No;;Measurement;;2000010017;;sec;8555;UCUM;;;;;date_additional;
+;;;cst_2_time_null;CST time for null version 2;numeric;;>=0;int;sec;No;;Measurement;;2000010018;;sec;8555;UCUM;;;;;date_additional;
+;;;cst_status;CST status;factor;;"0;1;2;3;4;5;6;7";int;;No;;Measurement;;2000010019;;;;;"0;1;2;3;4;5;6;7";;;;date_additional;
+;;;cst_adjusted;CST total time for trail adjusted for the mean time needed to complete trails A and B;numeric;;>=0;int;sec;No;;Measurement;;2000010020;;sec;8555;UCUM;;;;;date_additional;
+;;;ldst_status;LDST status;factor;;"0;1;2;3;4;5;6;7";int;;No;;Measurement;;2000010021;;;;;"0;1;2;3;4;5;6;7";;;;date_additional;
+;;;ldst_30_correct;LDST correct after 30 seconds;numeric;;>=0;int;sec;No;;Measurement;;2000010022;;sec;8555;UCUM;;;;;date_additional;
+;;;ldst_60_correct;LDST correct after 60 seconds;numeric;;>=0;int;sec;No;;Measurement;;2000010023;;sec;8555;UCUM;;;;;date_additional;
+;;;ldst_90_correct;LDST correct after 90 seconds;numeric;;>=0;int;sec;No;;Measurement;;2000010024;;sec;8555;UCUM;;;;;date_additional;
+;;;ldst_30_incorrect;LDST false after 30 seconds;numeric;;>=0;int;sec;No;;Measurement;;2000010025;;sec;8555;UCUM;;;;;date_additional;
+;;;ldst_60_incorrect;LDST false after 60 seconds ;numeric;;>=0;int;sec;No;;Measurement;;2000010026;;sec;8555;UCUM;;;;;date_additional;
+;;;ldst_90_incorrect;LDST false after 90 seconds ;numeric;;>=0;int;sec;No;;Measurement;;2000010027;;sec;8555;UCUM;;;;;date_additional;
