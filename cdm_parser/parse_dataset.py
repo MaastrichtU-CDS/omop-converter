@@ -9,20 +9,30 @@ from exceptions import ParsingError
 from utils import arrays_to_dict, parse_date, get_year_of_birth, parse_float, is_value_valid
 
 CDM_SQL = {
-    CONDITION_OCCURRENCE: build_condition,
-    MEASUREMENT: build_measurement,
-    OBSERVATION: build_observation
+    CONDITION_OCCURRENCE: {
+        BUILD: build_condition,
+        CHECK_DUPLICATE: check_duplicated_condition,
+    },
+    MEASUREMENT: {
+        BUILD: build_measurement,
+        CHECK_DUPLICATE: check_duplicated_measurement,
+    },
+    OBSERVATION: {
+        BUILD: build_observation,
+        CHECK_DUPLICATE: check_duplicated_observation,
+    },
 }
 
 class DataParser:
     """ Parses the dataset to the OMOP CDM.
     """
     def __init__(self, path, source_mapping, destination_mapping,
-        fu_suffix, cohort_id, missing_values, pg):
+        fu_suffix, cohort_id, missing_values, ignore_duplicate, pg):
         self.path = path
         self.source_mapping = source_mapping
         self.destination_mapping = destination_mapping
         self.cohort_id = cohort_id
+        self.ignore_duplicate = ignore_duplicate
         self.pg = pg
         self.warnings = []
 
@@ -306,6 +316,8 @@ class DataParser:
         processed_records = 0
         skipped_records = 0
         id_source_variable = self.get_source_variable(SOURCE_ID)
+        if not id_source_variable:
+            print("No source id variable provided!")
         for index, row in iterator:
             if limit > 0 and index - start >= limit:
                 break
@@ -431,7 +443,7 @@ class DataParser:
                             named_args = {
                                 'source_value': ';'.join([str(value) for value in source_value]),
                                 'date': date,
-                                'visit_id': visit_id
+                                'visit_id': visit_id,
                             }
                             if value_as_concept:
                                 named_args['value_as_concept'] = parsed_value
@@ -456,7 +468,12 @@ class DataParser:
                                 named_args['additional_info'] = value[STATIC_VALUE]
 
                             # Run the SQL script to insert the measurement/observation/condition
-                            self.pg.run_sql(*CDM_SQL[domain](person_id, self.destination_mapping[key], **named_args))
+                            # TODO: Batch insert and commit if everything runs correctly.
+                            if not self.ignore_duplicate or not self.pg.run_sql(
+                                *CDM_SQL[domain][CHECK_DUPLICATE](person_id, self.destination_mapping[key], **named_args),
+                                fetch_one=True
+                            ):
+                                self.pg.run_sql(*CDM_SQL[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
                     except ParsingError as error:
                         if key not in self.warnings:
                             self.warnings.append(key)

@@ -1,6 +1,6 @@
 variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,limit
 source_id,respnr,,,,,,,,,,
-date,,,,,,%Y-%m-%d,,,,,
+date,m_dat,_dat,,,,%Y-%m-%d,,,,,
 birth_year,byear,,,,,,,,,,
 date_age,,,,,,%Y-%m-%d,,,,,
 age,,,,,,,,,,,

@@ -123,6 +123,25 @@ def build_condition(person_id, field, value=None, value_as_concept=None, source_
         (nextval('condition_sequence'),%s,%s,%s,0,0,%s,%s,0,%s)
     """), (person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info))
 
+def check_duplicated_observation(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None):
+    return ((f"""SELECT COUNT(observation_id) FROM OBSERVATION WHERE person_id=%s AND observation_concept_id=%s
+        AND observation_datetime=%s AND {"value_as_string='%s'" if value else "value_as_concept_id=%s"} AND visit_occurrence_id=%s 
+    """), (person_id, field[CONCEPT_ID], date, value or value_as_concept, visit_id))
+
+def check_duplicated_measurement(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None):
+    return ((f"""SELECT COUNT(measurement_id) FROM MEASUREMENT WHERE person_id=%s AND
+        measurement_concept_id=%s AND measurement_datetime=%s AND {"value_as_number=%s" if value
+        else "value_as_concept_id=%s"} AND visit_occurrence_id=%s
+    """), (person_id, field[CONCEPT_ID], date, value or value_as_concept, visit_id))
+
+def check_duplicated_condition(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None):
+    return (("""SELECT COUNT(condition_occurrence_id) FROM CONDITION_OCCURRENCE WHERE person_id=%s AND 
+        condition_concept_id=%s AND condition_start_datetime=%s AND visit_occurrence_id=%s
+    """), (person_id, field[CONCEPT_ID], date, visit_id))
+
 def build_cohort(cohort_name, location_id):
     """ Build the sql statement for a care site.
     """
