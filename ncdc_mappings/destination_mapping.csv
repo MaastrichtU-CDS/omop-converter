@@ -107,8 +107,8 @@ depression_rating_gds_15,40482001,Measurement,,,,,,date_depression,>0,num
 depression_rating_gds,4159706,Measurement,,,,,,date_depression,>0,num
 depression_rating_ces_d,2000000026,Measurement,,,,,,date_depression,>0,num
 depression_rating_phq_9,36714983,Measurement,,,,,,date_depression,>0,num
-depression_rating_hads,4165145,Meaasurement,,,,,,date_depression,>0,num
-depression_rating_sf_36,35610204,Meaasurement,,,,,,date_depression,>0,num
+depression_rating_hads,4165145,Measurement,,,,,,date_depression,>0,num
+depression_rating_sf_36,35610204,Measurement,,,,,,date_depression,>0,num
 depression,440383,Condition,,,yes;no,4188539;_,depression_cutoff,date_depression,1;0,bool
 no_depression,440383,Observation,,,yes;no,_;4132135,depression_cutoff,date_depression,1;0,bool
 depression_cutoff,,NA,,,,,,date_depression,,text
