@@ -187,7 +187,8 @@ priority_executive_vet,2000000084,Measurement,,,,,,date_executive,>0,num
 priority_executive_bat,2000000085,Measurement,,,,,,date_executive,>0,num
 priority_executive_cijfferreeksspanne,2000000126,Measurement,,,,,,date_executive,>0,num
 priority_executive_vosp,2000000127,Measurement,,,,,,date_executive,>0,num
-priority_executive_wais_3,2000000128,Measurement,,,,,,date_executive,>0,num
+priority_executive_wais_3_b,2000000128,Measurement,,,,,,date_executive,>0,num
+priority_executive_wais_3_f,2000000134,Measurement,,,,,,date_executive,>0,num
 priority_language_animal_fluency_correct,2000000068,Measurement,,,,,,date_language,>0,num
 priority_language_animal_fluency_errors,2000000123,Measurement,,,,,,date_language,>0,num
 priority_language_category_fluency,2000000069,Measurement,,,,,,date_language,>0,num

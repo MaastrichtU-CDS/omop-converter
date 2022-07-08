@@ -269,8 +269,9 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Priority_executive_bat;Brixton anticipation task (0-54);numeric;;>0;num;;No;;Measurement;;2000000085;;;;;;;;;Date_Executive;
 ;;;Priority_executive_Cijfferreeksspanne;Cijfferreeksspanne;numeric;;>0;num;;No;;Measurement;;2000000126;;;;;;;;;Date_Executive;
 ;;;Priority_executive_vosp;VOSP number location;numeric;;>0;num;;No;;Measurement;;2000000127;;;;;;;;;Date_Executive;
-;;;Priority_executive_wais_3;WAIS-III digit span forward and backward;numeric;;>0;num;;No;;Measurement;;2000000128;;;;;;;;;Date_Executive;
-;;;Priority_executive_other;Priority test for executive function score from another alternative;numeric;;;;;No;;;;;;;;;;;;;Date_Executive;
+;;;Priority_executive_wais_3_b;WAIS-III digit span backward;numeric;;>0;num;;No;;Measurement;;2000000128;;;;;;;;;Date_Executive;
+;;;Priority_executive_wais_3_f;WAIS-III digit span forward;numeric;;>0;num;;No;;Measurement;;2000000134;;;;;;;;;Date_Executive;
+;;;;Priority test for executive function score from another alternative;numeric;;;;;No;;;;;;;;;;;;;Date_Executive;
 ;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_Executive;
 ;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Executive;
 ;Priority language test;Priority language type;Priority_language_type;Priority test for language;factor;"1 = Animal Fluency 1 min, 2 = Category Fluency 1 min, 3 = Letter Fluency 1 min, 4 = Any type of fluency 2 min, 5 = Boston Naming Test (15;30;60 items), 6 = Any picture naming test. 7 = other";"1;7";;;No;"Priority for 1. Animal Fluency 1 min
