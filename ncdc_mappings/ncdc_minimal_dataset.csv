@@ -280,17 +280,16 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;;
 4. Any type of fluency 2 min
 5. Boston Naming Test (15;30;60 items)
 6. Any picture naming test                                                                                 7. if not available, please provide alternative if possible";;;;;;;;;;;;Date_Language;
-;;Animals Fluency 1 min;Priority_language_animal_fluency_correct;Priority test for language from Animal Fluency 1 min - correct;numeric;;>0;num;;No;;Measurement;;2000000068;;;;;;;;;Date_Language;
-;;;Priority_language_animal_fluency_errors;Priority test for language from Animal Fluency 1 min - incorrect;numeric;;>0;num;;No;;Measurement;;2000000123;;;;;;;;;Date_Language;
-;;;Priority_language_category_fluency;Priority test for language from Category Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000069;;;;;;;;;Date_Language;
-;;Letter Fluency 1 min;Priority_language_letter_fluency;Priority test for language from Letter Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000070;;;;;;;;;Date_Language;
-;;;Priority_language_any_fluency;Priority test for language from Any type of fluency 2 min;numeric;;>0;num;;No;;Measurement;;2000000071;;;;;;;;;Date_Language;
+;;Animals Fluency 1 min;Priority_language_animal_fluency_1_correct;Priority test for language from Animal Fluency 1 min - correct;numeric;;>0;num;;No;;Measurement;;2000000068;;;;;;;;;Date_Language;
+;;;Priority_language_animal_fluency_1_errors;Priority test for language from Animal Fluency 1 min - incorrect;numeric;;>0;num;;No;;Measurement;;2000000123;;;;;;;;;Date_Language;
+;;Animals Fluency 2 min;Priority_language_animal_fluency_2_correct;Priority test for language from Animal Fluency 2 min - correct;numeric;;>0;num;;No;;Measurement;;2000000135;;;;;;;;;Date_Language;
+;;;Priority_language_animal_fluency_2_errors;Priority test for language from Animal Fluency 2 min - incorrect;numeric;;>0;num;;No;;Measurement;;2000000136;;;;;;;;;Date_Language;
+;;;Priority_language_category_fluency_1;Priority test for language from Category Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000069;;;;;;;;;Date_Language;
+;;Letter Fluency 1 min;Priority_language_letter_fluency_1;Priority test for language from Letter Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000070;;;;;;;;;Date_Language;
 ;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;>0;num;;No;;Measurement;;2000000072;;;;;;;;;Date_Language;
 ;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;>0;num;;No;;Measurement;;2000000073;;;;;;;;;Date_Language;
 ;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;>0;num;;No;;Measurement;;2000000074;;;;;;;;;Date_Language;
-;;;Priority_language_any_picture_naming_test;Priority test for language from Any picture naming  ;numeric;;>0;num;;No;;Measurement;;2000000075;;;;;;;;;Date_Language;
-;;;Priority_language_verbal_fluency;Priority test for verbal fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_Language;
-;;;Priority_language_cantab;CANTAB;numeric;;>0;num;;No;;Measurement;;2000000129;;;;;;;;;Date_Language;
+;;;Priority_language_verbal_fluency_1;Priority test for verbal fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_Language;
 ;;;Priority_language_other;Priority test for language from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_Language;
 ;Priority language test;Priority language;Priority_language;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_Language;
 ;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Language;
