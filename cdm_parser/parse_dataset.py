@@ -26,9 +26,8 @@ CDM_SQL = {
 class DataParser:
     """ Parses the dataset to the OMOP CDM.
     """
-    def __init__(self, path, source_mapping, destination_mapping,
+    def __init__(self, source_mapping, destination_mapping,
         fu_suffix, cohort_id, missing_values, ignore_duplicate, pg):
-        self.path = path
         self.source_mapping = source_mapping
         self.destination_mapping = destination_mapping
         self.cohort_id = cohort_id
@@ -82,6 +81,33 @@ class DataParser:
                 (not is_value_valid(limit) or parse_float(row[variable]) < parse_float(limit)) and \
                     (not validation or DataParser.validate_value(row[variable], validation))
 
+    @staticmethod
+    def parse_dataset(path, start, limit, convert_categoricals, delimiter, callback):
+        """ Read the dataset according to the file type
+        """
+        error_handling = 'ignore' if os.getenv(IGNORE_ENCODING_ERRORS) else 'strict'
+        header = None
+        kwargs = {
+            'start': start,
+            'limit': limit,
+        }
+        if '.csv' in path:
+            with open(path, 'r', errors=error_handling, encoding=os.getenv(ENCODING)) as csv_file:
+                csv_reader = csv.DictReader(csv_file, delimiter=delimiter)
+                for i in range(start):
+                    next(csv_reader)
+                callback(enumerate(csv_reader, start=start), **kwargs)
+                header = csv_reader.fieldnames
+        elif '.sav' in path:
+            df = pd.read_spss(path, convert_categoricals=convert_categoricals)
+            callback(df.loc[start:].iterrows(), **kwargs)
+            header = df.head()
+        elif '.sas' in path:
+            df = pd.read_sas(path, encoding=os.getenv(ENCODING))
+            callback(df.loc[start:].iterrows(), **kwargs)
+            header = df.head()
+        return header
+
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
         """
@@ -122,29 +148,6 @@ class DataParser:
                 except Exception as error:
                     raise ParsingError(f'Error creating the value mapping for variable {key}: {str(error)}')
         return value_mapping
-
-    def parse_dataset(self, start, limit, convert_categoricals, delimiter):
-        """ Parse the dataset to the CDM format.
-        """
-        print(f'Parse dataset from file {self.path}')
-
-        kwargs = {
-            'start': start,
-            'limit': limit,
-        }
-        error_handling = 'ignore' if os.getenv(IGNORE_ENCODING_ERRORS) else 'strict'
-        if '.csv' in self.path:
-            with open(self.path, 'r', errors=error_handling, encoding=os.getenv(ENCODING)) as csv_file:
-                csv_reader = csv.DictReader(csv_file, delimiter=delimiter)
-                for i in range(start):
-                    next(csv_reader)
-                self.transform_rows(enumerate(csv_reader, start=start), **kwargs)
-        elif '.sav' in self.path:
-            df = pd.read_spss(self.path, convert_categoricals=convert_categoricals)
-            self.transform_rows(df.loc[start:].iterrows(), **kwargs)
-        elif '.sas' in self.path:
-            df = pd.read_sas(self.path, encoding=os.getenv(ENCODING))
-            self.transform_rows(df.loc[start:].iterrows(), **kwargs)
 
     def get_parameters(self, parameter, with_format=False):
         """ Returns the source variable and format for a parameter.

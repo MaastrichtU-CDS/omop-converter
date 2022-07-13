@@ -142,7 +142,6 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
 
         # Parse the dataset
         parser = DataParser(
-            os.getenv(DATASET_PATH),
             source_mapping,
             destination_mapping,
             os.getenv(FOLLOW_UP_SUFFIX),
@@ -151,11 +150,13 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
             os.getenv(IGNORE_DUPLICATES),
             pg
         )
-        parser.parse_dataset(
-            start, 
-            limit, 
+        DataParser.parse_dataset(
+            os.getenv(DATASET_PATH),
+            start,
+            limit,
             convert_categoricals, 
             delimiter=os.getenv(DATASET_DELIMITER) or DEFAULT_DELIMITER,
+            callback=parser.transform_rows,
         )
 
         # Dropping the temporary tables
@@ -190,6 +191,55 @@ def parse_omop_to_plane(table_name):
             insert_values(pg, table_name, visit_values)
             if (count + 1) % 1000 == 0:
                 print(f'Processed {count + 1} visits from {len(visits)}')
+
+@click.option(
+    '--convert-categoricals/--no-convert-categoricals',
+    default=False,
+    type=bool,
+    help='Convert the caregories? Only valid for spss files'
+)
+@cli.command()
+def info(convert_categoricals):
+    """ Returns information regarding the mapping and dataset
+    """
+    destination_mapping = parse_csv_mapping(os.getenv(DESTINATION_MAPPING_PATH))
+    source_mapping = parse_csv_mapping(os.getenv(SOURCE_MAPPING_PATH))
+
+    header = DataParser.parse_dataset(
+        os.getenv(DATASET_PATH),
+        0,
+        convert_categoricals, 
+        delimiter=os.getenv(DATASET_DELIMITER) or DEFAULT_DELIMITER,
+        convert_categoricals=convert_categoricals,
+        callback=lambda *args, **kwargs: None,
+    )
+
+    info = {
+        SOURCE_MAPPING: {
+            MESSAGE: 'Source mapping incomplete: ',
+            VARIABLES: []
+        },
+        DESTINATION_MAPPING: {
+            MESSAGE: 'Destination mapping incomplete: ',
+            VARIABLES: []
+        },
+        DATASET: {
+            MESSAGE: 'Variables available in the dataset and not included: ',
+            VARIABLES: [],
+        }
+    }
+    source_variables = []
+    for key, value in source_mapping.items():
+        source_variables.append(value[SOURCE_VARIABLE])
+        if value[VALUES]:
+            if not value[VALUES_PARSED]:
+                info[SOURCE_MAPPING][VARIABLES].append(key)
+            if key not in destination_mapping or VALUES_CONCEPT_ID not in destination_mapping[key]:
+                info[DESTINATION_MAPPING][VARIABLES].append(key)
+    info[DATASET][VARIABLES] = [column for column in header if column not in source_variables]
+    for value in info.values():
+        if len(value[VARIABLES]) > 0:
+            print(value[MESSAGE] + ' ,'.join(value[VARIABLES]))
 
 @cli.command()
 def report():
