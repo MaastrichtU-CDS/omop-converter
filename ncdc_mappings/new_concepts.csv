@@ -137,6 +137,8 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000000140	attention_test_ldst_30_errors	Measurement	Vocabulary	Measurement		Attention_test_ldst_30_errors	20210101	20991231	
 2000000141	attention_test_ldst_90_correct	Measurement	Vocabulary	Measurement		Attention_test_ldst_90_correct	20210101	20991231	
 2000000142	attention_test_ldst_90_errors	Measurement	Vocabulary	Measurement		Attention_test_ldst_90_errors	20210101	20991231	
+2000000143	metabo_age	Measurement	Vocabulary	Measurement		metabo_age	20210101	20991231	
+2000000144	brain_age	Measurement	Vocabulary	Measurement		brain_age	20210101	20991231	
 2000010000	fluency_double	Measurement	Vocabulary	Measurement		fluency_double	20210101	20991231	
 2000010001	fluency_status	Measurement	Vocabulary	Measurement		fluency_status	20210101	20991231	
 2000010002	stroop_chart3_spontaneous_corrections	Measurement	Vocabulary	Measurement		stroop_chart3_spontaneous_corrections	20210101	20991231	
