@@ -256,9 +256,9 @@ class DataParser:
                     for i, age_variable in enumerate(age_variables):
                         age = None
                         if self.valid_row_value(age_variable, row, limit=limit) and age_date_variables:
-                            age = int(parse_float(row[age_variable]))
+                            age = parse_float(row[age_variable])
                         elif AGE in self.source_mapping and is_value_valid(self.source_mapping[AGE][STATIC_VALUE]):
-                            age = int(self.source_mapping[AGE][STATIC_VALUE])
+                            age = parse_float(self.source_mapping[AGE][STATIC_VALUE])
                         if is_value_valid(age):
                             try:
                                 birth_year = get_year_of_birth(age, str(row[age_date_variables[i]]), \

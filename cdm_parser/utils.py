@@ -51,8 +51,9 @@ def parse_date(date, input_format, output_format):
 def get_year_of_birth(age, date, input_format):
     """ Retrieve the year of birth from the age at a specific date.
     """
+    _, fraction = divmod(age, 1)
     date_parsed = datetime.strptime(date, input_format)
-    return (date_parsed - relativedelta(years=age)).year
+    return (date_parsed - relativedelta(years=int(age), days=fraction * 365)).year
 
 def parse_float(value):
     """ Parse string to float.
