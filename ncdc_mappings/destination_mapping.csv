@@ -205,6 +205,7 @@ priority_language_bnt_15,2000000072,Measurement,,,,,,date_language,>0,num
 priority_language_bnt_30,2000000073,Measurement,,,,,,date_language,>0,num
 priority_language_bnt_60,2000000074,Measurement,,,,,,date_language,>0,num
 priority_language_verbal_fluency_60,2000000086,Measurement,,,,,,date_language,>0,num
+priority_language_verbal_fluency_60_errors,2000000145,Measurement,,,,,,date_language,>0,num
 fluid_intelligence_raven,2000000130,Measurement,,,,,,date_fluid_intelligence,>0,num
 dexterity_purdue_pegboard,2000000131,Measurement,,,,,,date_dexterity,>0,num
 dexterity_clock_drawing,2000000132,Measurement,,,,,,date_dexterity,>0,num

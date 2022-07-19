@@ -296,6 +296,7 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;;
 ;;BNT-30;Priority_language_bnt_30;Priority test for language from  Boston Naming Test (30 items);numeric;;>0;num;;No;;Measurement;;2000000073;;;;;;;;;Date_Language;
 ;;BNT-60;Priority_language_bnt_60;Priority test for language from  Boston Naming Test (60 items);numeric;;>0;num;;No;;Measurement;;2000000074;;;;;;;;;Date_Language;
 ;;;Priority_language_verbal_fluency_60;Priority test for verbal fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000086;;;;;;;;;Date_Language;
+;;;Priority_language_verbal_fluency_60_errors;Priority test for verbal fluency 1 min - Errors;numeric;;>0;num;;No;;Measurement;;2000000145;;;;;;;;;Date_Language;
 ;;;Priority_language_other;Priority test for language from another alternative;numeric;;>0;;;No;;;;;;;;;;;;;Date_Language;
 ;Priority language test;Priority language;Priority_language;raw scores;numeric;;>0;;;No;;;;;;;;;;;;;Date_Language;
 ;Priority language test;Priority language z-score;Priority_language_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Language;
