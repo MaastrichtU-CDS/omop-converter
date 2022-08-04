@@ -240,6 +240,8 @@ class DataParser:
         """ Parse the person information from the row.
         """
         sex_source_variable = self.get_source_variable(GENDER)
+        if not self.valid_row_value(sex_source_variable, row):
+            raise ParsingError('Missing information for the sex variable.')
         birth_year_source_variable = self.get_source_variable(YEAR_OF_BIRTH)
         birth_year = None
         if birth_year_source_variable and self.valid_row_value(birth_year_source_variable, row):
@@ -349,12 +351,14 @@ class DataParser:
                 else:
                     person_id = self.parse_person(row)
                 # Parse the row once for each suffix used
+                visit_found = False
                 for suffix in self.fu_suffix:
                     visits = self.get_visits(row, person_id, suffix=suffix)
                     if len(visits.keys()) > 0:
+                        visit_found = True
                         self.transform_row(row, person_id, visits, suffix=suffix)
-                    elif not suffix:
-                        print(f'No visit dates found for the person with id {person_id} at baseline')
+                if not visit_found:
+                    print(f'No visit dates found for the person with id {person_id}')
                 # Keep track of the number of records processed
                 processed_records += 1
                 if processed_records % 250 == 0:

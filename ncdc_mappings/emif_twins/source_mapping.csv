@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,limit
 source_id,Record Id,,,,,,,,,,
 date,DATE_NEURO,,,,,%d-%m-%Y,,,,,
 birth_year,,,,,,,,,,,
@@ -239,7 +239,7 @@ cognitive_score_memory,,,,,,,,,,,
 cognitive_score_processing,,,,,,,,,,,
 cognitive_score_attention,,,,,,,,,,,
 cognitive_score_executive,,,,,,,,,,,
-date_plasma,,,,,,,,,,,
+date_plasma,BC_DATE,,,,,%d-%m-%Y,,,,,
 p_tau,CONC_PTAU181,,,,,,,,,,
 amyloid_b_42,CONC_AB42,,,,,,,,,,
 amyloid_b_40,CONC_AB40,,,,,,,,,,
