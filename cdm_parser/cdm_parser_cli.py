@@ -200,7 +200,10 @@ def parse_omop_to_plane(table_name):
 )
 @cli.command()
 def info(convert_categoricals):
-    """ Returns information regarding the mapping and dataset
+    """ Returns information regarding the mapping and dataset:
+            - Errors in the source mapping.
+            - Variables missing in the destination mapping.
+            - Variables available in the dataset that weren't included.
     """
     destination_mapping = parse_csv_mapping(os.getenv(DESTINATION_MAPPING_PATH))
     source_mapping = parse_csv_mapping(os.getenv(SOURCE_MAPPING_PATH))
