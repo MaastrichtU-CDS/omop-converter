@@ -38,6 +38,16 @@ no_pnfa,37396465,Observation,,,yes;no,_;4132135,,date_diagnosis,1;0,bool
 no_cjd,372241,Observation,,,yes;no,_;4132135,,date_diagnosis,1;0,bool
 cdr_total,36714811,Observation,,,,,,date_cdr,>=0,num
 cdr_sum_of_boxes,2000000003,Observation,,,,,,date_cdr,>=0,num
+subjective_memory_complaints,2000000147,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+mild_cognitive_impairment_petersen,2000000148,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+mild_cognitive_impairment_jessen,2000000149,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+mild_cognitive_impairment_no_adl_scd,2000000150,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+mild_cognitive_impairment_no_adl_memory,2000000151,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+amnestic_mild_cognitive_impairment_no_adl_scd,2000000152,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+amnestic_mild_cognitive_impairment_no_adl_memory,2000000153,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+non_amnestic_mild_cognitive_impairment_no_adl_memory,2000000154,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+subjective_decline_jessen,2000000155,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
+dementia_cognitive_domains,2000000156,Observation,,,yes;no,4188539;4188540,,date_diagnosis,1;0,bool
 mort_date,,Person,,,,,,,,date
 live_date,2000000004,Observation,,,,,,,,date
 mort,,Person,,,true;false,,,,1;0,bool
@@ -215,6 +225,7 @@ cognitive_impairment_attention,2000000108,Observation,,,yes;no,4188539;4188540,,
 cognitive_impairment_executive,2000000109,Observation,,,yes;no,4188539;4188540,,date_executive,1;0,bool
 cognitive_impairment_memory,2000000110,Observation,,,yes;no,4188539;4188540,,date_memory,1;0,bool
 cognitive_impairment_processing,2000000111,Observation,,,yes;no,4188539;4188540,,date_language,1;0,bool
+cognitive_impairment_working_memory,2000000146,Observation,,,yes;no,4188539;4188540,,date_memory,1;0,bool
 cognitive_score_overall,2000000112,Measurement,,,,,,date_attention,>=0,num
 cognitive_score_memory,2000000113,Measurement,,,,,,date_memory,>=0,num
 cognitive_score_processing,2000000114,Measurement,,,,,,date_language,>=0,num
