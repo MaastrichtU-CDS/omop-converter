@@ -56,13 +56,19 @@ Dementia;Clinical information & cognitive screening tests;;;;;;;;;;;;;;;;;;;;;;;
 ;;CDR sum of boxes;CDR_sum_of_boxes;Clinical Dementia Rating sum of boxes;numeric;;>=0;num;;No;;Observation;;2000000003;;;;;;;;;Date_CDR;
 ;Other clinical information;;;;;;;;;;;;;;;;;;;;;;;
 ;;;subjective_memory_complaints;Subjective Memory Complaints;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000147;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
-;;;mild_cognitive_impairment_petersen;Mild Cognitive Impairment according to Petersen criteria;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000148;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
-;;;mild_cognitive_impairment_jessen;Mild Cognitive Impairment according to Jessen criteria;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000149;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
-;;;mild_cognitive_impairment_no_adl_scd;Mild Cognitive Impairment without (I)ADL criterion - SCD compared to others same age OR to 5-10 yrs ag;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000150;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
-;;;mild_cognitive_impairment_no_adl_memory;Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age AND to 5-10 yrs ago;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000151;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
-;;;amnestic_mild_cognitive_impairment_no_adl_scd;Amnestic Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age OR to 5-10 yrs ag;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000152;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
-;;;amnestic_mild_cognitive_impairment_no_adl_memory;Amnestic Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age AND to 5-10 yrs ag;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000153;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
-;;;non_amnestic_mild_cognitive_impairment_no_adl_memory;Nonamnestic Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age OR to 5-10 yrs ag;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000154;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
+;;;mci_petersen;Mild Cognitive Impairment according to Petersen criteria;factor;0-5;"0;1;2;3;4;5";int;;No;"[Yesterday 16:04] Beran, M. (Magdalena)
+0 = OK
+1 = MCI
+2 = MCI without memory complaints
+3 = subjective memory complaints
+4 = pre-dementia
+5 = pure (I)ALD impairment";Observation;;2000000148;;;;;"0;1;2;3;4;5";;;;Date_diagnosis;
+;;;mci_jessen;Mild Cognitive Impairment according to Jessen criteria;factor;0-5;"0;1;2;3;4;5";int;;No;;Observation;;2000000149;;;;;"0;1;2;3;4;5";;;;Date_diagnosis;
+;;;mci_no_adl_scd;Mild Cognitive Impairment without (I)ADL criterion - SCD compared to others same age OR to 5-10 yrs ag;factor;0-3;"0;1;2;3";int;;No;;Observation;;2000000150;;;;;"0;1;2;3";;;;Date_diagnosis;
+;;;mci_no_adl_memory;Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age AND to 5-10 yrs ago;factor;0-3;"0;1;2;3";int;;No;;Observation;;2000000151;;;;;"0;1;2;3";;;;Date_diagnosis;
+;;;amnestic_mci_no_adl_scd;Amnestic Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age OR to 5-10 yrs ag;factor;0-3;"0;1;2;3";int;;No;;Observation;;2000000152;;;;;"0;1;2;3";;;;Date_diagnosis;
+;;;amnestic_mci_no_adl_memory;Amnestic Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age AND to 5-10 yrs ag;factor;0-3;"0;1;2;3";int;;No;;Observation;;2000000153;;;;;"0;1;2;3";;;;Date_diagnosis;
+;;;non_amnestic_mci_no_adl_memory;Nonamnestic Mild Cognitive Impairment without (I)ADL criterion - memory complaints compared to others same age OR to 5-10 yrs ag;factor;0-3;"0;1;2;3";int;;No;;Observation;;2000000154;;;;;"0;1;2;3";;;;Date_diagnosis;
 ;;;subjective_decline_jessen;Memory complaints or subjective decline - Jessen et al 2014;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000155;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
 ;;;dementia_cognitive_domains;Impaired on 2 or more cognitive domains and at least 3 (I)ADL activities;factor;"1=yes; 0=no";"1;0";bool;;No;;Observation;;2000000156;;;;;"yes;no";"4188539;4188540";;;Date_diagnosis;
 Mortality;;;;;;;;;;;;;;;;;;;;;;;;
@@ -181,9 +187,18 @@ APOE;Pharmocogenetics findings;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;mhi_5_questionnaire;MHI 5 questionnaire (Depression and Anxiety);numerical;;>0;num;;No;;Measurement;;2000000079;;;;;;;;;Date_depression;
 ;;;lidas_questionnaire;LIDAS (Self Report - Depression);numerical;;>0;num;;No;;Measurement;;2000000091;;;;;;;;;Date_depression;
-;;;npi_questionnaire_frq;NPI questionnairet (Anxiety) - Frequency;numerical;;>0;num;;No;;Measurement;;2000000092;;;;;;;;;Date_depression;
-;;;npi_questionnaire_sev;NPI questionnairet (Anxiety) - Severity;numerical;;>0;num;;No;;Measurement;;2000000100;;;;;;;;;Date_depression;
-Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;;
+;;;npi_questionnaire_frq;NPI questionnairet (Anxiety) - Frequency;numerical;;"1;2;3;4";num;;No;"1=rarely, less than once per week;2=sometimes, about once per week; 3=often, several times per week; and 4=very often, once or more per day";Measurement;;2000000092;;;;;"1;2;3;4";;;;Date_depression;
+;;;npi_questionnaire_sev;NPI questionnairet (Anxiety) - Severity;numerical;;"1;2;3";num;;No;"1 = Mild (noticeable, but not a significant change)
+2 = Moderate (significant, but not a dramatic change)
+3 = Severe (very marked or prominent, a dramatic change)";Measurement;;2000000100;;;;;"1;2;3";;;;Date_depression;
+;;;npi_questionnaire_dis;NPI questionnairet (Anxiety) - Distress;numerical;;"0;1;2;3;4;5";num;;No;"0 = Not distressing at all
+1 = Minimal (slightly distressing, not a problem to cope with)
+2 = Mild (not very distressing, generally easy to cope with)
+3 = Moderate (fairly distressing, not always easy to cope with)
+4 = Severe (very distressing, difficult to cope with)
+5 = Extreme or Very Severe (extremely distressing, unable to
+ cope with)";Measurement;;2000000166;;;;;"0;1;2;3;4;5";;;;Date_depression;
+Cognition;Neuropsychological examination;;;];;;;;;;;;;;;;;;;;;;;
 ;Cognitive screening tests;Date MMSE;Date_MMSE;Date MMSE assessment;date;;;date;;No;;;;;;;;;;;;;;
 ;Cognitive screening tests;MMSE total score;MMSE_total;MMSE total score;numeric;;"0;30";num;;No;;Measurement;SNOMED;4169175;Athena-4169175;;;;;;;;Date_MMSE;
 ;Dates Neuropsychological evaluation;Date neuropsychological evaluation;Date_NPE;Date of neuropsychological examination ;Date;;;date;;No;;;;;;;;;;;;;;
@@ -202,8 +217,13 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Attention_test_stroop_2_adj;Attention score from Stroop 2 - adjusted for number of errors;numeric;;>0;num;;No;;Measurement;;2000000089;;;;;;;;;Date_Attention;
 ;;SDST;Attention_test_sdst_60_correct;Attention score from Symbol Digit Substitution Task - number correct   ;numeric;;>0;num;;No;;Measurement;;2000000032;;;;;;;;;Date_Attention;
 ;;;Attention_test_sdst_60_errors;Attention score from Symbol Digit Substitution Task - number incorrect   ;numeric;;>0;num;;No;;Measurement;;2000000120;;;;;;;;;Date_Attention;
+;;;Attention_test_sdst_60_ts;Attention score from Symbol Digit Substitution Task - total score;numeric;;>0;num;;No;Total score - takes into account both correct and incorrect answers;Measurement;;2000000157;;;;;;;;;Date_Attention;
+;;;Attention_test_sdst_90_correct;Attention score from Symbol Digit Substitution Task - number correct   ;numeric;;>0;num;;No;;Measurement;;2000000158;;;;;;;;;Date_Attention;
+;;;Attention_test_sdst_90_errors;Attention score from Symbol Digit Substitution Task - number incorrect   ;numeric;;>0;num;;No;;Measurement;;2000000159;;;;;;;;;Date_Attention;
+;;;Attention_test_sdst_90_ts;Attention score from Symbol Digit Substitution Task - total score;numeric;;>0;num;;No;;Measurement;;2000000160;;;;;;;;;Date_Attention;
 ;;SDST;Attention_test_sdst_120_correct;Attention score from Symbol Digit Substitution Task - number correct   ;numeric;;>0;num;;No;;Measurement;;2000000137;;;;;;;;;Date_Attention;
 ;;;Attention_test_sdst_120_errors;Attention score from Symbol Digit Substitution Task - number incorrect   ;numeric;;>0;num;;No;;Measurement;;2000000138;;;;;;;;;Date_Attention;
+;;;Attention_test_sdst_120_ts;Attention score from Symbol Digit Substitution Task - total score;numeric;;>0;num;;No;;Measurement;;2000000161;;;;;;;;;Date_Attention;
 ;;;Attention_test_ldst_30_correct;Attention score from Letter Digit Substitution Task - number correct      ;numeric;;>0;num;;No;;Measurement;;2000000139;;;;;;;;;Date_Attention;
 ;;;Attention_test_ldst_30_errors;Attention score from Letter Digit Substitution Task - number incorrect      ;numeric;;>0;num;;No;;Measurement;;2000000140;;;;;;;;;Date_Attention;
 ;;;Attention_test_ldst_60_correct;Attention score from Letter Digit Substitution Task - number correct      ;numeric;;>0;num;;No;;Measurement;;2000000090;;;;;;;;;Date_Attention;
@@ -286,8 +306,10 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;;
 ;;;Priority_executive_bat;Brixton anticipation task (0-54);numeric;;>0;num;;No;;Measurement;;2000000085;;;;;;;;;Date_Executive;
 ;;;Priority_executive_Cijfferreeksspanne;Cijfferreeksspanne;numeric;;>0;num;;No;;Measurement;;2000000126;;;;;;;;;Date_Executive;
 ;;;Priority_executive_vosp;VOSP number location;numeric;;>0;num;;No;;Measurement;;2000000127;;;;;;;;;Date_Executive;
-;;;Priority_executive_wais_3_b;WAIS-III digit span backward;numeric;;>0;num;;No;;Measurement;;2000000128;;;;;;;;;Date_Executive;
+;;;Priority_executive_wais_3_b;WAIS-III digit span backward - score;numeric;;>0;num;;No;;Measurement;;2000000128;;;;;;;;;Date_Executive;
+;;;"		priority_executive_wais_3_b_span";WAIS-III digit span backward - span/level;numeric;;>0;num;;No;;Measurement;;2000000162;;;;;;;;;Date_Executive;
 ;;;Priority_executive_wais_3_f;WAIS-III digit span forward;numeric;;>0;num;;No;;Measurement;;2000000134;;;;;;;;;Date_Executive;
+;;;"		priority_executive_wais_3_f_span";WAIS-III digit span forward - span/level;numeric;;>0;num;;No;;Measurement;;2000000163;;;;;;;;;Date_Executive;
 ;;;;Priority test for executive function score from another alternative;numeric;;;;;No;;;;;;;;;;;;;Date_Executive;
 ;Priority executive Test;Priority executive ;Priority_executive;raw score;numeric;;> 0;;;No;;;;;;;;;;;;;Date_Executive;
 ;Priority executive Test;Priority executive z-score;Priority_executive_z;z-score;numeric;;-3 - +3 SD;;;No;;;;;;;;;;;;;Date_Executive;
@@ -299,8 +321,10 @@ Cognition;Neuropsychological examination;;;;;;;;;;;;;;;;;;;;;;;
 6. Any picture naming test                                                                                 7. if not available, please provide alternative if possible";;;;;;;;;;;;Date_Language;
 ;;Animals Fluency 1 min;Priority_language_animal_fluency_60_correct;Priority test for language from Animal Fluency 1 min - correct;numeric;;>0;num;;No;;Measurement;;2000000068;;;;;;;;;Date_Language;
 ;;;Priority_language_animal_fluency_60_errors;Priority test for language from Animal Fluency 1 min - incorrect;numeric;;>0;num;;No;;Measurement;;2000000123;;;;;;;;;Date_Language;
+;;;Priority_language_animal_fluency_60_ts;Priority test for language from Animal Fluency 1 min - total score;numeric;;>0;num;;No;;Measurement;;2000000164;;;;;;;;;Date_Language;
 ;;Animals Fluency 2 min;Priority_language_animal_fluency_120_correct;Priority test for language from Animal Fluency 2 min - correct;numeric;;>0;num;;No;;Measurement;;2000000135;;;;;;;;;Date_Language;
 ;;;Priority_language_animal_fluency_120_errors;Priority test for language from Animal Fluency 2 min - incorrect;numeric;;>0;num;;No;;Measurement;;2000000136;;;;;;;;;Date_Language;
+;;;Priority_language_animal_fluency_120_ts;Priority test for language from Animal Fluency 2 min - total score;numeric;;>0;num;;No;;Measurement;;2000000165;;;;;;;;;Date_Language;
 ;;;Priority_language_category_fluency_60;Priority test for language from Category Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000069;;;;;;;;;Date_Language;
 ;;Letter Fluency 1 min;Priority_language_letter_fluency_60;Priority test for language from Letter Fluency 1 min;numeric;;>0;num;;No;;Measurement;;2000000070;;;;;;;;;Date_Language;
 ;;BNT-15;Priority_language_bnt_15;Priority test for language from  Boston Naming Test (15 items);numeric;;>0;num;;No;;Measurement;;2000000072;;;;;;;;;Date_Language;
