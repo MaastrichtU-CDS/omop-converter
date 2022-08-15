@@ -31,6 +31,13 @@ def insert_vocabulary(pg):
         print(f'Populating the {table} table')
         pg.copy_from_file(table, f'{os.environ[VOCABULARY_PATH]}/{vocabulary_file}')
 
+def truncate_vocabulary(pg):
+    """ Truncate the vocabulary tables.
+    """
+    print('Truncate vocabulary tables')
+    for table in VOCABULARY_FILES.keys():
+        pg.run_sql(f'TRUNCATE TABLE {table};')
+
 def set_constraints(pg):
     """ Set the constraints for the database.
     """

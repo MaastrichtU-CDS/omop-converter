@@ -83,11 +83,19 @@ def set_db(insert_voc, sequence_start):
         if insert_voc and VOCABULARY_PATH in os.environ:
             insert_vocabulary(pg)
 
+@click.option(
+    '--truncate/--no-truncate',
+    default=False,
+    type=bool,
+    help='Truncate the vocabulary tables'
+)
 @cli.command()
-def insert_voc():
+def insert_voc(truncate):
     """ Insert the vocabularies.
     """
     with PostgresManager() as pg:
+        if truncate:
+            truncate_vocabulary(pg)
         if VOCABULARY_PATH in os.environ:
             insert_vocabulary(pg)
 
