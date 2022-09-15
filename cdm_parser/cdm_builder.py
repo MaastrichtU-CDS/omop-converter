@@ -133,8 +133,8 @@ def build_condition(person_id, field, value=None, value_as_concept=None, source_
 def check_duplicated_observation(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None):
     return ((f"""SELECT COUNT(observation_id) FROM OBSERVATION WHERE person_id=%s AND observation_concept_id=%s
-        AND observation_datetime=%s AND {"value_as_string='%s'" if value else "value_as_concept_id=%s"} AND visit_occurrence_id=%s 
-    """), (person_id, field[CONCEPT_ID], date, value or value_as_concept, visit_id))
+        AND observation_datetime=%s AND {"value_as_string=%s" if value else "value_as_concept_id=%s"} AND visit_occurrence_id=%s 
+    """), (person_id, field[CONCEPT_ID], date, str(value) if value else value_as_concept, visit_id))
 
 def check_duplicated_measurement(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None):
