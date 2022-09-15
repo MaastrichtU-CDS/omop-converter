@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,limit
 source_id,OPRNR,,,,,,,,,,
 date,visitdate,,,,,%Y-%m-%d,,,,,
 birth_year,gebjrt0,,,,,,,,,,

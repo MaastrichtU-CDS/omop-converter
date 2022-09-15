@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,limit
 source_id,LLnr,,,,,,,,,,
 date,,,,,,,,,,,
 birth_year,Birth_year,,,,,,,,,,

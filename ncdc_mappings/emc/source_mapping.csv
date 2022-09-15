@@ -1,4 +1,4 @@
-variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold
+variable,source_variable,alternatives,condition,values,values_parsed,format,static_value,aggregate,conversion,threshold,limit
 source_id,ergoid,,,,,,,,,,
 date,e4_3494,startdat,,,,%Y-%m-%d,,,,,
 birth_year,,,,,,,,,,,
