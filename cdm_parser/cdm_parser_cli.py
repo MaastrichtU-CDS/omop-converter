@@ -217,6 +217,17 @@ def info(convert_categoricals):
     destination_mapping = parse_csv_mapping(os.getenv(DESTINATION_MAPPING_PATH))
     source_mapping = parse_csv_mapping(os.getenv(SOURCE_MAPPING_PATH))
 
+    parser = DataParser(
+        source_mapping,
+        destination_mapping,
+        os.getenv(FOLLOW_UP_SUFFIX),
+        os.getenv(FOLLOW_UP_PREFIX),
+        None,
+        os.getenv(MISSING_VALUES),
+        os.getenv(IGNORE_DUPLICATES),
+        None
+    )
+
     header = DataParser.parse_dataset(
         os.getenv(DATASET_PATH),
         0,
@@ -238,6 +249,10 @@ def info(convert_categoricals):
         DATASET: {
             MESSAGE: 'Variables available in the dataset and not included: ',
             VARIABLES: [],
+        },
+        VARIABLES: {
+            MESSAGE: 'Variables on the source mapping not available in the dataset: ',
+            VARIABLES: [],
         }
     }
     source_variables = []
@@ -248,7 +263,13 @@ def info(convert_categoricals):
                 info[SOURCE_MAPPING][VARIABLES].append(key)
             if key not in destination_mapping or VALUES_CONCEPT_ID not in destination_mapping[key]:
                 info[DESTINATION_MAPPING][VARIABLES].append(key)
-    info[DATASET][VARIABLES] = [column for column in header if column not in source_variables]
+        if value[SOURCE_VARIABLE] and value[SOURCE_VARIABLE] not in header:
+            info[VARIABLES][VARIABLES].append(key)
+
+    info[DATASET][VARIABLES] = [
+        column for column in header if column not in 
+            [prefix + source_variables for prefix in parser.prefixes] + [source_variables + suffix for suffix in parser.fu_suffix]
+    ]
     for value in info.values():
         if len(value[VARIABLES]) > 0:
             print(value[MESSAGE] + ' ,'.join(value[VARIABLES]))
