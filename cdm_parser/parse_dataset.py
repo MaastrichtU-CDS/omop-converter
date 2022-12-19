@@ -78,10 +78,17 @@ class DataParser:
     def valid_row_value(variable, row, ignore_values=[], validation=None, limit=None):
         """ Validate if the value exists and is not null
         """
+        # Validation performed:
+        # - the variable is present in the row
+        # - the value is not null or an empty string
+        # - the value contains a symbol (e.g. >=)
+        # - the value must be below a certain limit
+        # - the value must be within a certain range (can be categorical or numerical)
         return variable in row and is_value_valid(row[variable]) and \
             str(row[variable]) not in ignore_values and \
-                (not is_value_valid(limit) or parse_float(row[variable]) < parse_float(limit)) and \
-                    (not validation or DataParser.validate_value(row[variable], validation))
+                (len([symbol in row[variable] for symbol in SYMBOLS_CONCEPT_ID.keys()]) > 0 or \
+                    (not is_value_valid(limit) or parse_float(row[variable]) < parse_float(limit)) and \
+                        (not validation or DataParser.validate_value(row[variable], validation)))
 
     @staticmethod
     def parse_dataset(path, start, limit, convert_categoricals, delimiter, callback):
@@ -174,20 +181,33 @@ class DataParser:
         format=None, type=None, prefix=None, suffix=None):
         """ Get the parsed value for a variable.
         """
+        # TODO: convoluted function, too many return statements
+        # Convert symbols to standard codes
+        symbol_cid = None
+        for symbol in SYMBOLS_CONCEPT_ID.keys():                            
+            if symbol in str(value):
+                value_parsed = str(value).split(symbol, 1)[1]
+                symbol_cid = SYMBOLS_CONCEPT_ID[symbol]
+                break
         # Parse the value according to the case:
         # - Thresholding the value and obtaining a boolean
         # - Using the value without transformations
-        value_parsed = parse_float(value) > parse_float(threshold) if threshold else value
+        value_parsed = parse_float(value_parsed) > parse_float(threshold) \
+            if threshold else value_parsed
         if variable in self.value_mapping:
             # Retrieving the destination value from the mapping
             value_map = self.value_mapping[variable]
+            concept_id = self.value_mapping[variable][VALUE_AS_CONCEPT_ID]
+            value_code = None
             if str(value_parsed) in value_map:
-                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], value_map[str(value_parsed)])
+                value_code =  value_map[str(value_parsed)]
             elif DEFAULT_VALUE in value_map:
-                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], value_map[DEFAULT_VALUE])
+                value_code = value_map[DEFAULT_VALUE]
             elif source_variable and source_variable in value_map:
-                return (self.value_mapping[variable][VALUE_AS_CONCEPT_ID], value_map[source_variable])
-            raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
+                value_code = value_map[source_variable]
+            else:
+                raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
+            return (concept_id, value_code, symbol_cid)
         elif aggregate:
             # Aggregating multiple values using one of the aggregation functions available.
             aggregated_value = None
@@ -197,7 +217,7 @@ class DataParser:
                 aggregated_value = sum(values)/len(value)
             else:
                 raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
-            return (False, aggregated_value)
+            return (False, aggregated_value, symbol_cid)
         # If any of the previous cases don't apply, return the value and apply a conversion if necessary.
         if type == TYPE_DATE:
             if format:
@@ -210,7 +230,7 @@ class DataParser:
                 raise ParsingError(f"No date format provided for variable {variable}!")
         elif type == TYPE_NUMERIC:
             value_parsed = parse_float(value)
-        return (False, parse_float(value) * parse_float(conversion) if conversion else value_parsed)
+        return (False, parse_float(value) * parse_float(conversion) if conversion else value_parsed, symbol_cid)
 
     def get_death_datetime(self, row):
         """ Retrieve the death datetime if available. Otherwise, if a
@@ -219,7 +239,9 @@ class DataParser:
         death_datetime = None
         death_time_source_variable = self.get_source_variable(DEATH_DATE)
         death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
-        if death_time_source_variable and self.valid_row_value(death_time_source_variable, row):
+        if death_time_source_variable and self.valid_row_value(
+            death_time_source_variable, row, ignore_values=self.missing_values
+        ):
             try:
                 # TODO: get death date format first
                 death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
@@ -228,8 +250,10 @@ class DataParser:
                     f'Error parsing a malformated date for the death date {death_flag_source_variable} ' + 
                     f'with source variable {str(row[death_time_source_variable])}: {str(error)})'
                 )
-        elif death_flag_source_variable and self.valid_row_value(death_flag_source_variable, row):
-            (_, parsed_value) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
+        elif death_flag_source_variable and self.valid_row_value(
+            death_flag_source_variable, row, ignore_values=self.missing_values
+        ):
+            (_, parsed_value, _) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
             if parsed_value and parsed_value == 'True':
                 death_datetime = DATE_DEFAULT
         return death_datetime
@@ -423,7 +447,7 @@ class DataParser:
                     # source variables
                     try:
                         domain = self.destination_mapping[key][DOMAIN]
-                        (value_as_concept, parsed_value) = self.get_parsed_value(
+                        (value_as_concept, parsed_value, symbol_cid) = self.get_parsed_value(
                             key,
                             source_value if value[AGGREGATE] else source_value[0],
                             aggregate=value[AGGREGATE],
@@ -464,6 +488,7 @@ class DataParser:
                                 'source_value': ';'.join([str(value) for value in source_value]),
                                 'date': date,
                                 'visit_id': visit_id,
+                                'symbol_cid': symbol_cid
                             }
                             if value_as_concept:
                                 named_args['value_as_concept'] = parsed_value

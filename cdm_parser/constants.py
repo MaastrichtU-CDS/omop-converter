@@ -121,3 +121,12 @@ VOCABULARY_FILES = {
     'CONCEPT_CLASS': 'CONCEPT_CLASS.csv',
     'DOMAIN': 'DOMAIN.csv'
 }
+
+# Concept ID based on SNOMED
+SYMBOLS_CONCEPT_ID = {
+    '<=': '4171754',
+    '>=': '4171755',
+    '=': '4172703',
+    '>': '4172704',
+    '<': '4171756',
+}
