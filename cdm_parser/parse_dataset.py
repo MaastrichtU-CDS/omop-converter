@@ -27,7 +27,7 @@ class DataParser:
     """ Parses the dataset to the OMOP CDM.
     """
     def __init__(self, source_mapping, destination_mapping,
-        fu_suffix, cohort_id, missing_values, ignore_duplicate, pg):
+        fu_suffix, fu_prefix, cohort_id, missing_values, ignore_duplicate, pg):
         self.source_mapping = source_mapping
         self.destination_mapping = destination_mapping
         self.cohort_id = cohort_id
@@ -42,7 +42,9 @@ class DataParser:
         self.fu_suffix = ['']
         if fu_suffix:
             self.fu_suffix.extend(fu_suffix.split(DEFAULT_SEPARATOR))
-
+        self.fu_prefix = ['']
+        if fu_prefix:
+            self.fu_prefix.extend(fu_prefix.split(DEFAULT_SEPARATOR))
         # Retrieve the necessary information from the mappings
         self.value_mapping = self.create_value_mapping()
         (self.date_source_variables, self.date_format, _) = self.get_parameters(DATE, with_format=True)
@@ -169,7 +171,7 @@ class DataParser:
         return (parameter_source_variables, parameter_format, limit)
 
     def get_parsed_value(self, variable, value, aggregate=None, conversion=None, threshold=None, source_variable=None,
-        format=None, type=None):
+        format=None, type=None, prefix=None, suffix=None):
         """ Get the parsed value for a variable.
         """
         # Parse the value according to the case:
@@ -219,6 +221,7 @@ class DataParser:
         death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
         if death_time_source_variable and self.valid_row_value(death_time_source_variable, row):
             try:
+                # TODO: get death date format first
                 death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
             except Exception as error:
                 raise ParsingError(
@@ -291,7 +294,7 @@ class DataParser:
         if death_datetime:
             self.pg.run_sql(*update_person(person_id, death_datetime))
 
-    def get_visits(self, row, person_id, suffix=''):
+    def get_visits(self, row, person_id, suffix='', prefix=''):
         """ Retrieve existing visit dates or parse the available dates and
             create new visits. A suffix can be provided to get/parse 
             visits for the follow ups.
@@ -300,7 +303,7 @@ class DataParser:
         # TODO: Calculating the end data when provided with a period for the wave
         visits = {}
         for date_source_variable in self.date_source_variables:
-            date_variable = date_source_variable + suffix
+            date_variable = prefix + date_source_variable + suffix
             if date_variable in row and row[date_variable]:
                 visit_id = None
                 try:
@@ -331,10 +334,11 @@ class DataParser:
                 # the link between the source id and the person id will be stored
                 # in a dictionary and in a temporary table.
                 person_id = None
+                # TODO: also provide the source id when there is an error
                 if id_source_variable:
                     if not self.valid_row_value(id_source_variable, row):
                         raise ParsingError(
-                            f'Error when parsing the source id for record number {index}.')
+                            f'Error when parsing the source id ({id_source_variable}) for record number {index}.')
                     source_id = row[id_source_variable]
                     if source_id in id_map:
                         person_id = id_map[source_id]
@@ -349,14 +353,21 @@ class DataParser:
                             insert_id_record(source_id, person_id, self.cohort_id, self.pg)
                         id_map[source_id] = person_id
                 else:
+                    # print('No ID variable available')
                     person_id = self.parse_person(row)
                 # Parse the row once for each suffix used
                 visit_found = False
+                # TODO: Improve the prefix/suffix handling
                 for suffix in self.fu_suffix:
-                    visits = self.get_visits(row, person_id, suffix=suffix)
+                    visits = self.get_visits(row, person_id, prefix='', suffix=suffix)
                     if len(visits.keys()) > 0:
                         visit_found = True
-                        self.transform_row(row, person_id, visits, suffix=suffix)
+                        self.transform_row(row, person_id, visits, prefix='', suffix=suffix)
+                for prefix in self.fu_prefix:
+                    visits = self.get_visits(row, person_id, prefix=prefix, suffix='')
+                    if len(visits.keys()) > 0:
+                        visit_found = True
+                        self.transform_row(row, person_id, visits, prefix=prefix, suffix='')
                 if not visit_found:
                     print(f'No visit dates found for the person with id {person_id}')
                 # Keep track of the number of records processed
@@ -369,7 +380,7 @@ class DataParser:
                skipped_records += 1
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
-    def transform_row(self, row, person_id, visits, suffix=''):
+    def transform_row(self, row, person_id, visits, prefix='', suffix=''):
         """ Transform each row and insert in the database.
         """
         # Parse the observations/measurements/conditions
@@ -392,7 +403,7 @@ class DataParser:
                         source_variables.extend(value[ALTERNATIVES].split(DEFAULT_SEPARATOR))
                     # Check the first variable for the field that it's valid
                     for source_variable in source_variables:
-                        source_variable_suffixed = source_variable + suffix
+                        source_variable_suffixed = prefix + source_variable + suffix
                         # Validate source value by checking if it's not null, not a missing value, 
                         # and (if provided) apply a condition.
                         if self.valid_row_value(
@@ -420,7 +431,9 @@ class DataParser:
                             threshold=value[THRESHOLD],
                             source_variable=source_variable_valid[0] if len(source_variable_valid) > 0 else None,
                             format=value[FORMAT],
-                            type=self.destination_mapping[key][TYPE]
+                            type=self.destination_mapping[key][TYPE],
+                            prefix=prefix,
+                            suffix=suffix,
                         )
                         if parsed_value != DEFAULT_SKIP:
                             # Check if there is a specific date for the variable
@@ -430,7 +443,7 @@ class DataParser:
                                 self.destination_mapping[key][DATE])
                             if source_dates:
                                 for source_date in source_dates:
-                                    source_date_variable = source_date + suffix
+                                    source_date_variable = prefix + source_date + suffix
                                     if source_date_variable in visits:
                                         visit_id = visits[source_date_variable]
                                     if self.valid_row_value(source_date_variable, row):
@@ -463,7 +476,7 @@ class DataParser:
                                 if additional_info_value:
                                     named_args['additional_info'] = additional_info_value
                                 else:
-                                    additional_info_variable = self.source_mapping[additional_info][SOURCE_VARIABLE] + suffix
+                                    additional_info_variable = prefix + self.source_mapping[additional_info][SOURCE_VARIABLE] + suffix
                                     if additional_info_variable and self.valid_row_value(additional_info_variable, row):
                                         additional_info_value = self.get_parsed_value(
                                             additional_info_variable,
