@@ -2,7 +2,7 @@ import click
 import os
 from datetime import datetime
 
-from utils import export_config, import_config, run_command
+from utils import export_config, import_config, run_command, parse_output
 from constants import *
 from cdm_builder import *
 from parser import parse_csv_mapping
@@ -239,25 +239,33 @@ def info(convert_categoricals):
 
     info = {
         SOURCE_MAPPING: {
-            MESSAGE: 'Source mapping incomplete: ',
+            ERROR_MESSAGE: 'Source mapping incomplete: ',
+            MESSAGE: 'Source mapping complete.',
             VARIABLES: []
         },
         DESTINATION_MAPPING: {
-            MESSAGE: 'Destination mapping incomplete: ',
+            ERROR_MESSAGE: 'Destination mapping incomplete: ',
+            MESSAGE: 'Destination mapping complete.',
             VARIABLES: []
         },
         DATASET: {
-            MESSAGE: 'Variables available in the dataset and not included: ',
+            ERROR_MESSAGE: 'Variables available in the dataset and not included: ',
+            MESSAGE: 'All variables from the dataset included in the mapping.',
             VARIABLES: [],
         },
         VARIABLES: {
-            MESSAGE: 'Variables on the source mapping not available in the dataset: ',
+            ERROR_MESSAGE: 'Variables on the source mapping not available in the dataset: ',
+            MESSAGE: 'All variables from the source mapping found in the dataset.',
             VARIABLES: [],
         }
     }
     source_variables = []
     for key, value in source_mapping.items():
-        source_variables.append(value[SOURCE_VARIABLE])
+        #source_variables.append(value[SOURCE_VARIABLE])
+        source_variable = value[SOURCE_VARIABLE]
+        source_variables.append([source_variable] + \
+                    [prefix + source_variable for prefix in parser.fu_prefix] + \
+                        [source_variable + suffix for suffix in parser.fu_suffix])
         if value[VALUES]:
             if not value[VALUES_PARSED]:
                 info[SOURCE_MAPPING][VARIABLES].append(key)
@@ -266,13 +274,14 @@ def info(convert_categoricals):
         if value[SOURCE_VARIABLE] and value[SOURCE_VARIABLE] not in header:
             info[VARIABLES][VARIABLES].append(key)
 
-    info[DATASET][VARIABLES] = [
-        column for column in header if column not in 
-            [prefix + source_variables for prefix in parser.prefixes] + [source_variables + suffix for suffix in parser.fu_suffix]
-    ]
+    # Columns available in the dataset and unused
+    info[DATASET][VARIABLES] = [column for column in header if column not in source_variables]
+
     for value in info.values():
         if len(value[VARIABLES]) > 0:
-            print(value[MESSAGE] + ' ,'.join(value[VARIABLES]))
+            print(parse_output(value[ERROR_MESSAGE] + ', '.join(value[VARIABLES])))
+        else:
+            print(parse_output(value[MESSAGE]))
 
 @cli.command()
 def report():
