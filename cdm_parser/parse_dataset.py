@@ -42,7 +42,7 @@ class DataParser:
         self.fu_suffix = ['']
         if fu_suffix:
             self.fu_suffix.extend(fu_suffix.split(DEFAULT_SEPARATOR))
-        self.fu_prefix = ['']
+        self.fu_prefix = []
         if fu_prefix:
             self.fu_prefix.extend(fu_prefix.split(DEFAULT_SEPARATOR))
         # Retrieve the necessary information from the mappings
@@ -184,6 +184,7 @@ class DataParser:
         # TODO: convoluted function, too many return statements
         # Convert symbols to standard codes
         symbol_cid = None
+        value_parsed = value
         for symbol in SYMBOLS_CONCEPT_ID.keys():                            
             if symbol in str(value):
                 value_parsed = str(value).split(symbol, 1)[1]
@@ -419,8 +420,11 @@ class DataParser:
                     print(f'Skipped variable {key} since its domain is not currently accepted')
                     self.warnings.append(key)
             else:
+                # TODO: Improve the logic for the Condition column
                 source_value = []
                 source_variable_valid = []
+                source_value_alternative = []
+                source_variable_valid_alternative = []
                 if value[SOURCE_VARIABLE]:
                     source_variables = [value[SOURCE_VARIABLE]]
                     if value[ALTERNATIVES]:
@@ -436,10 +440,17 @@ class DataParser:
                             ignore_values=self.missing_values,
                             validation=self.destination_mapping[key][VALUES_RANGE],
                             limit=value[LIMIT]
-                        ) and (not value[CONDITION] or row[source_variable_suffixed] \
-                            in value[CONDITION].split(DEFAULT_SEPARATOR)):
-                                source_value.append(row[source_variable_suffixed])
-                                source_variable_valid.append(source_variable_suffixed)
+                        ):
+                            if not is_value_valid(value[CONDITION]) or row[source_variable_suffixed] \
+                                in value[CONDITION].split(DEFAULT_SEPARATOR):
+                                    source_value.append(row[source_variable_suffixed])
+                                    source_variable_valid.append(source_variable_suffixed)
+                            else:
+                                source_value_alternative.append(row[source_variable_suffixed])
+                                source_variable_valid_alternative.append(source_variable_suffixed)
+                    if len(source_value) == 0:
+                        source_value = source_value_alternative
+                        source_variable_valid = source_variable_valid_alternative
                 elif value[STATIC_VALUE]:
                     source_value = [value[STATIC_VALUE]]
                 if len(source_value) > 0:

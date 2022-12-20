@@ -67,3 +67,8 @@ def is_value_valid(value):
     """ Check if a value is null, None, or empty.
     """
     return not pd.isnull(value) and (str(value)).strip() != ''
+
+def parse_output(output):
+    """ Standard format to print the output.
+    """
+    return '>> ' + output
