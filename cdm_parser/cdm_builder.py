@@ -236,7 +236,7 @@ def get_observations_by_visit_id(pg, visit_id):
 def get_measurements_by_visit_id(pg, visit_id):
     """ Get observation by visit id and person id.
     """
-    return pg.run_sql(f"""SELECT measurement_concept_id, measurement_datetime, value_as_number 
+    return pg.run_sql(f"""SELECT measurement_concept_id, measurement_datetime, value_as_number, operator_concept_id 
         FROM MEASUREMENT WHERE visit_occurrence_id = {visit_id};""", fetch_all=True)
 
 def get_conditions_by_visit_id(pg, visit_id):

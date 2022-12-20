@@ -27,7 +27,7 @@ COLUMN_TYPE = {
 DATE_FORMAT_PLANE = '%d/%m/%Y'
 DEFAULT_DATE_PLANE = '01/01/1970'
 
-def get_parsed_value(mapping, value):
+def get_parsed_value(mapping, value, prefix=''):
     """ Get the parsed value for a variable.
     """
     if value and len(mapping.keys()) > 0:
@@ -35,11 +35,11 @@ def get_parsed_value(mapping, value):
             if mapping[str(value)] == DEFAULT_SKIP:
                 return ''
             else:
-                return mapping[str(value)]
+                return prefix + mapping[str(value)]
         raise ParsingError(
             f'Error parsing the values for the NCDC plane table: {value} not in {mapping.keys()}'
         )
-    return value
+    return prefix + str(value) if prefix else value
 
 def get_column_statement(column_name, type, domain=OBSERVATION):
     """ Build the sql statement for the column.
@@ -103,10 +103,16 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
             column_value[concept_map[DATE]] = observation[1].strftime('%Y-%m-%d')
     # Measurements
     for measurement in measurements:
-        concept_map = concept_mapping[str(measurement[0])]
-        if concept_map[DATE] and measurement[1] and measurement[1].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE:
-            column_value[concept_map[DATE]] = measurement[1].strftime('%Y-%m-%d')
-        column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map[MAPPING], measurement[2])
+        symbol = ''
+        if measurement[3]:
+            symbol = [symbol for symbol, concept_id in SYMBOLS_CONCEPT_ID.items() if str(concept_id) == str(measurement[3])][0]
+        else:
+            # If it's a measurement, the column won't accept a string
+            # TODO: Solution for the case of using symbols in measurements e.g. <250
+            concept_map = concept_mapping[str(measurement[0])]
+            if concept_map[DATE] and measurement[1] and measurement[1].strftime(DATE_FORMAT_PLANE) != DEFAULT_DATE_PLANE:
+                column_value[concept_map[DATE]] = measurement[1].strftime('%Y-%m-%d')
+            column_value[concept_map[VARIABLE]] = get_parsed_value(concept_map[MAPPING], measurement[2], prefix=symbol)
     # Condition Occurrence
     for condition in conditions:
         concept_map = concept_mapping[str(condition[0])]

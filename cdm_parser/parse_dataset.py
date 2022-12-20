@@ -204,8 +204,13 @@ class DataParser:
                 value_code =  value_map[str(value_parsed)]
             elif DEFAULT_VALUE in value_map:
                 value_code = value_map[DEFAULT_VALUE]
-            elif source_variable and source_variable in value_map:
-                value_code = value_map[source_variable]
+            elif source_variable:
+                if source_variable in value_map:
+                    value_code = value_map[source_variable]
+                else:
+                    source_value_stripped = source_variable.strip(prefix).strip(suffix)
+                    if source_value_stripped in value_map:
+                        value_code = value_map[source_value_stripped]
             else:
                 raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
             return (concept_id, value_code, symbol_cid)
@@ -230,8 +235,8 @@ class DataParser:
             else:
                 raise ParsingError(f"No date format provided for variable {variable}!")
         elif type == TYPE_NUMERIC:
-            value_parsed = parse_float(value)
-        return (False, parse_float(value) * parse_float(conversion) if conversion else value_parsed, symbol_cid)
+            value_parsed = parse_float(value_parsed)
+        return (False, parse_float(value_parsed) * parse_float(conversion) if conversion else value_parsed, symbol_cid)
 
     def get_death_datetime(self, row):
         """ Retrieve the death datetime if available. Otherwise, if a
