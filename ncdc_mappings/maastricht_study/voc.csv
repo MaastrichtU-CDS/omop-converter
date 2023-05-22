@@ -153,9 +153,3 @@ concept_id	concept_name	domain_id	vocabulary_id	concept_class_id	standard_concep
 2000010019	cst_status	Measurement	Vocabulary	Measurement		cst_status	20210101	20991231	
 2000010020	cst_adjusted	Measurement	Vocabulary	Measurement		cst_adjusted	20210101	20991231	
 2000010021	ldst_status	Measurement	Vocabulary	Measurement		ldst_status	20210101	20991231	
-2000010022	ldst_30_correct	Measurement	Vocabulary	Measurement		ldst_30_correct	20210101	20991231	
-2000010023	ldst_60_correct	Measurement	Vocabulary	Measurement		ldst_60_correct	20210101	20991231	
-2000010024	ldst_90_correct	Measurement	Vocabulary	Measurement		ldst_90_correct	20210101	20991231	
-2000010025	ldst_30_incorrect	Measurement	Vocabulary	Measurement		ldst_30_incorrect	20210101	20991231	
-2000010026	ldst_60_incorrect	Measurement	Vocabulary	Measurement		ldst_60_incorrect	20210101	20991231	
-2000010027	ldst_90_incorrect	Measurement	Vocabulary	Measurement		ldst_90_incorrect	20210101	20991231	
