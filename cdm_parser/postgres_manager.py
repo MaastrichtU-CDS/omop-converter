@@ -62,7 +62,7 @@ class PostgresManager:
         )
         self.connection.commit()
 
-    def create_table(self, table_name, columns, ):
+    def create_table(self, table_name, columns):
         """ Create a new table.
         """
         self.cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (

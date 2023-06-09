@@ -131,20 +131,20 @@ def build_condition(person_id, field, value=None, value_as_concept=None, source_
     """), (person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info))
 
 def check_duplicated_observation(person_id, field, value=None, value_as_concept=None, source_value=None,
-    date='19700101 00:00:00', visit_id=None, additional_info=None):
+    date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     return ((f"""SELECT COUNT(observation_id) FROM OBSERVATION WHERE person_id=%s AND observation_concept_id=%s
         AND observation_datetime=%s AND {"value_as_string=%s" if value else "value_as_concept_id=%s"} AND visit_occurrence_id=%s 
     """), (person_id, field[CONCEPT_ID], date, str(value) if value else value_as_concept, visit_id))
 
 def check_duplicated_measurement(person_id, field, value=None, value_as_concept=None, source_value=None,
-    date='19700101 00:00:00', visit_id=None, additional_info=None):
+    date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     return ((f"""SELECT COUNT(measurement_id) FROM MEASUREMENT WHERE person_id=%s AND
         measurement_concept_id=%s AND measurement_datetime=%s AND {"value_as_number=%s" if value
         else "value_as_concept_id=%s"} AND visit_occurrence_id=%s
     """), (person_id, field[CONCEPT_ID], date, value or value_as_concept, visit_id))
 
 def check_duplicated_condition(person_id, field, value=None, value_as_concept=None, source_value=None,
-    date='19700101 00:00:00', visit_id=None, additional_info=None):
+    date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     return (("""SELECT COUNT(condition_occurrence_id) FROM CONDITION_OCCURRENCE WHERE person_id=%s AND 
         condition_concept_id=%s AND condition_start_datetime=%s AND visit_occurrence_id=%s
     """), (person_id, field[CONCEPT_ID], date, visit_id))
@@ -248,5 +248,7 @@ def get_conditions_by_visit_id(pg, visit_id):
 def insert_values(pg, table_name, columns):
     """ Insert values into a table according to the specification from the parameters.
     """
+    # TODO: Check the NULL values
+    # if len([str(val) for val in columns.values() if str(val) == 'None']) > 0:
     return pg.run_sql(f"""INSERT INTO {table_name} ({', '.join(columns.keys())}) 
-        VALUES ({', '.join([f"'{str(val)}'" if str(val) else 'NULL' for val in columns.values()])})""")
+        VALUES ({', '.join([f"'{str(val)}'" if str(val) and str(val) != 'None' else 'NULL' for val in columns.values()])})""")

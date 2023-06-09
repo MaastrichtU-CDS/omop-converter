@@ -221,6 +221,8 @@ class DataParser:
                 else [parse_float(val) for val in value]
             if aggregate == MEAN:
                 aggregated_value = sum(values)/len(value)
+            elif aggregate == SUM:
+                aggregated_value = sum(values)
             else:
                 raise ParsingError(f'Unrecognized function {aggregate} to aggregate the values for variable {variable}')
             return (False, aggregated_value, symbol_cid)
@@ -486,7 +488,7 @@ class DataParser:
                                     source_date_variable = prefix + source_date + suffix
                                     if source_date_variable in visits:
                                         visit_id = visits[source_date_variable]
-                                    if self.valid_row_value(source_date_variable, row):
+                                    if self.valid_row_value(source_date_variable, row, ignore_values=self.missing_values):
                                         try:
                                             date = parse_date(
                                                 str(row[source_date_variable]),
