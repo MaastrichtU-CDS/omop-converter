@@ -66,7 +66,13 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
     type=int,
     help='Start value for the sequences that will be created (default 1)'
 )
-def set_db(insert_voc, sequence_start):
+@click.option(
+    '--create-db/--no-create-db',
+    default=True,
+    type=bool,
+    help='Create the database? (default: True)',
+)
+def set_db(insert_voc, sequence_start, create_db):
     """ Set up the CDM database:
         * Create new database with the CDM schema;
         * Create the sequences used to obtain de id's (a start value
@@ -74,7 +80,8 @@ def set_db(insert_voc, sequence_start):
         data sources will be parsed and used in the same database)
         * Optionally: Insert the vocabulary if available;
     """
-    create_database()
+    if create_db:
+        create_database()
     with PostgresManager() as pg:
         set_schema(pg)
         if os.getenv(SOURCE_NAME):
