@@ -79,6 +79,7 @@ THRESHOLD = 'threshold'
 LIMIT = 'limit'
 
 MEAN = 'mean'
+SUM = 'sum'
 
 VALUE_AS_CONCEPT_ID = 'value_as_concept_id'
 DEFAULT_VALUE = '-'
