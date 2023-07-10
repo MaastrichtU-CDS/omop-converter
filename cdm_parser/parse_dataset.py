@@ -86,7 +86,7 @@ class DataParser:
         # - the value must be within a certain range (can be categorical or numerical)
         return variable in row and is_value_valid(row[variable]) and \
             str(row[variable]) not in ignore_values and \
-                (len([symbol in row[variable] for symbol in SYMBOLS_CONCEPT_ID.keys()]) > 0 or \
+                (len([symbol in str(row[variable]) for symbol in SYMBOLS_CONCEPT_ID.keys()]) > 0 or \
                     (not is_value_valid(limit) or parse_float(row[variable]) < parse_float(limit)) and \
                         (not validation or DataParser.validate_value(row[variable], validation)))
 
