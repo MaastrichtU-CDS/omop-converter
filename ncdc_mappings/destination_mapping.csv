@@ -53,7 +53,7 @@ live_date,2000000004,Observation,,,,,,,,date
 mort,,Person,,,true;false,,,,1;0,bool
 sbp,4152194,Measurement,mmHg,8876,,,,date_vitals,>30,num
 dbp,4154790,Measurement,mmHg,8876,,,,date_vitals,>30,num
-bmi,4245997,Observation,kg/m2,9531,,,,date_vitals,>0,num
+bmi,4245997,Measurement,kg/m2,9531,,,,date_vitals,>0,num
 weight,37111521,Observation,kg,9529,,,,date_vitals,>0,num
 height,4087492,Observation,cm,8582,,,,date_vitals,>0,num
 waist,4172830,Observation,cm,8582,,,,date_vitals,>0,num
