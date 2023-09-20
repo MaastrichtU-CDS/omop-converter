@@ -8,5 +8,5 @@ postgresql.zip
 postgresql/
 mappings/
 __MACOSX
-scripts/
+scripts_*/
 .DS_Store
