@@ -369,5 +369,6 @@ Plasma;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;vwf;Von Willebrand factor (%);numeric;;>0;num;;No;;Measurement;SNOMED;4056962;Athena-4056962;%;;;;;;;Date_Plasma;Non-standard
 Metabolomics;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;metabo_age;Predicted age based on the metabolomic data;numeric;;>0;num;;No;;Measurement;;2000000143;;year;9448;UCUM;;;;;Date_metabolomics;
+;;;metabo_health;Health score based on the metabolomic data;numeric;;>0;num;;No;;Measurement;;2000000167;;;;;;;;;Date_metabolomics;
 MRI;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;brain_age;Predicted age based on the MRI data;numeric;;>0;num;;No;;Measurement;;2000000144;;year;9448;UCUM;;;;;Date_mri;

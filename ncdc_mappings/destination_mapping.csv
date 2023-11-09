@@ -257,4 +257,5 @@ il_1b,4282774,Measurement,,,,,,date_plasma,>0,num
 tnfalpha,2000000076,Measurement,,,,,,date_plasma,>0,num
 vwf,4056962,Measurement,%,,,,,date_plasma,>0,num
 metabo_age,2000000143,Measurement,year,9448,,,,date_metabolomics,>0,num
+metabo_health,2000000167,Measurement,,,,,,date_metabolomics,>0,num
 brain_age,2000000144,Measurement,year,9448,,,,date_mri,>0,num

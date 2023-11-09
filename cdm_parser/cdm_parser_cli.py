@@ -151,6 +151,7 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
         if cohort_name:
             location_id = insert_location(cohort_location if cohort_location else cohort_name, pg)
             cohort_id = insert_cohort(cohort_name, location_id, pg)
+            print(f"Cohort id {str(cohort_id)}")
 
         # Create the necessary temporary table
         create_id_table(pg)
