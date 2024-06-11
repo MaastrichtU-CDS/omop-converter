@@ -157,3 +157,7 @@ However, such a model can also raise the complexity of the representation when c
 In the NCDC environment, it became important to also provide the harmonized data in a plane format as a starting point to interact with the federated infrastructure and as a faster pathway to analyse the data.
 The command `parse-omop-to-plane` defines a new table based on the variable names from the mapping (`destination_mapping`) used.
 This table is then populated with the data for each participant by visit from the database that follows the data model.
+
+## Citation
+
+If you find this code useful for your research, please cite: [https://doi.org/10.1016/j.jbi.2024.104661](https://doi.org/10.1016/j.jbi.2024.104661)
