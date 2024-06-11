@@ -1,7 +1,7 @@
 # OMOP ETL for file-based DB
 
 ETL to convert file-based databases into the OMOP CDM.
-This tool was developed within the NCDC (Netherlands Consortium of Dementia Cohorts) Memorabel [project] (https://projecten.zonmw.nl/nl/project/path-towards-primary-prevention-dementia).
+This tool was developed within the NCDC (Netherlands Consortium of Dementia Cohorts) Memorabel [project](https://projecten.zonmw.nl/nl/project/path-towards-primary-prevention-dementia).
 
 - [OMOP ETL for file-based DB](#omop-etl-for-file-based-db)
   - [CDM Parser CLI](#cdm-parser-cli)
