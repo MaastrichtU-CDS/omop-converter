@@ -75,6 +75,15 @@ class DataParser:
         return True
 
     @staticmethod
+    def create_variable_names(variable, prefixes, suffixes):
+        variable_names = []
+        for prefix in prefixes:
+            variable_names.append(prefix + variable)
+        for suffix in suffixes:
+            variable_names.append(variable + suffix)
+        return variable_names
+
+    @staticmethod
     def valid_row_value(variable, row, ignore_values=[], validation=None, limit=None):
         """ Validate if the value exists and is not null
         """
@@ -245,25 +254,29 @@ class DataParser:
             flag is present, a default value will be used.
         """
         death_datetime = None
-        death_time_source_variable = self.get_source_variable(DEATH_DATE)
-        death_flag_source_variable = self.get_source_variable(DEATH_FLAG)
-        if death_time_source_variable and self.valid_row_value(
-            death_time_source_variable, row, ignore_values=self.missing_values
-        ):
-            try:
-                # TODO: get death date format first
-                death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
-            except Exception as error:
-                raise ParsingError(
-                    f'Error parsing a malformated date for the death date {death_flag_source_variable} ' + 
-                    f'with source variable {str(row[death_time_source_variable])}: {str(error)})'
-                )
-        elif death_flag_source_variable and self.valid_row_value(
-            death_flag_source_variable, row, ignore_values=self.missing_values
-        ):
-            (_, parsed_value, _) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
-            if parsed_value and parsed_value == 'True':
-                death_datetime = DATE_DEFAULT
+        death_time_source_variables = self.get_source_variable_from_wave(DEATH_DATE)
+        death_flag_source_variables = self.get_source_variable_from_wave(DEATH_FLAG)
+        for death_time_source_variable in death_time_source_variables:
+            if death_time_source_variable and self.valid_row_value(
+                death_time_source_variable, row, ignore_values=self.missing_values
+            ):
+                try:
+                    # TODO: get death date format first
+                    death_datetime = parse_date(str(row[death_time_source_variable]), self.date_format, DATE_FORMAT)
+                    break
+                except Exception as error:
+                    raise ParsingError(
+                        f'Error parsing a malformated date for the death date {death_time_source_variable} ' + 
+                        f'with source variable {str(row[death_time_source_variable])}: {str(error)})'
+                    )
+        if death_datetime is None:
+            for death_flag_source_variable in death_flag_source_variables:
+                if death_flag_source_variable and self.valid_row_value(
+                    death_flag_source_variable, row, ignore_values=self.missing_values
+                ):
+                    (_, parsed_value, _) = self.get_parsed_value(DEATH_FLAG, row[death_flag_source_variable])
+                    if parsed_value and parsed_value == 'True':
+                        death_datetime = DATE_DEFAULT
         return death_datetime
 
     def get_source_variable(self, variable):
@@ -271,17 +284,31 @@ class DataParser:
         """
         return self.source_mapping[variable][SOURCE_VARIABLE] if variable in self.source_mapping else None
 
+    def get_source_variable_from_wave(self, variable):
+        """ Check if there is a map for the source id.
+        """
+        source_variable = self.get_source_variable(variable)
+        return (self.create_variable_names(source_variable, self.fu_prefix, self.fu_suffix))
+    
     def parse_person(self, row):
         """ Parse the person information from the row.
         """
-        sex_source_variable = self.get_source_variable(GENDER)
-        if not self.valid_row_value(sex_source_variable, row):
+        sex_source_variables = self.get_source_variable_from_wave(GENDER)
+        sex_source_variable = None
+        for source_variable in sex_source_variables:
+            if self.valid_row_value(source_variable, row):
+                # TODO: data quality check (all values match?)
+                sex_source_variable = source_variable
+                break
+        if sex_source_variable is None:
             raise ParsingError('Missing information for the sex variable.')
-        birth_year_source_variable = self.get_source_variable(YEAR_OF_BIRTH)
+        birth_year_source_variables = self.get_source_variable_from_wave(YEAR_OF_BIRTH)
         birth_year = None
-        if birth_year_source_variable and self.valid_row_value(birth_year_source_variable, row):
-            birth_year = int(parse_float(row[birth_year_source_variable]))
-        else:
+        for source_variable in birth_year_source_variables:
+            if self.valid_row_value(source_variable, row):
+                birth_year = int(parse_float(row[source_variable]))
+                break
+        if birth_year is None:
             # The year of birth is required to create an entry for the person. In case that 
             # variable isn't provided, the year of birth will be obtained from a variable indicating
             # the age for a particular date.
@@ -290,20 +317,27 @@ class DataParser:
                 if age_variables:
                     (age_date_variables, age_date_format, _) = self.get_parameters(
                             self.destination_mapping[AGE][DATE])
-                    for i, age_variable in enumerate(age_variables):
-                        age = None
-                        if self.valid_row_value(age_variable, row, limit=limit) and age_date_variables:
-                            age = parse_float(row[age_variable])
-                        elif AGE in self.source_mapping and is_value_valid(self.source_mapping[AGE][STATIC_VALUE]):
-                            age = parse_float(self.source_mapping[AGE][STATIC_VALUE])
-                        if is_value_valid(age):
-                            try:
-                                birth_year = get_year_of_birth(age, str(row[age_date_variables[i]]), \
-                                    age_date_format if age_date_format else self.date_format)
-                                break
-                            except Exception as error:
-                                raise ParsingError(
-                                    f'Error parsing year of birth from variable {age_variable}: {str(error)}')
+                    for i, age_variable_base in enumerate(age_variables):
+                        age_variable_wave = self.get_source_variable_from_wave(age_variable_base)
+                        if age_date_variables and len(age_date_variables) > i:
+                            age_date_variable_wave = self.create_variable_names(age_date_variables[i], self.fu_prefix, self.fu_suffix)
+                            for j, age_variable in enumerate(age_variable_wave):
+                                age = None
+                                if self.valid_row_value(age_variable, row, limit=limit) and age_date_variables:
+                                    age = parse_float(row[age_variable])
+                                elif AGE in self.source_mapping and is_value_valid(self.source_mapping[AGE][STATIC_VALUE]):
+                                    age = parse_float(self.source_mapping[AGE][STATIC_VALUE])
+                                if is_value_valid(age):
+                                    try:
+                                        birth_year = get_year_of_birth(age, str(row[age_date_variable_wave[j]]), \
+                                            age_date_format if age_date_format else self.date_format)
+                                        break
+                                    except Exception as error:
+                                        raise ParsingError(
+                                            f'Error parsing year of birth from variable {age_variable}: {str(error)}')
+                        else:
+                            raise ParsingError(
+                                            f'Error parsing year of birth, date variable not found {age_variable}: {str(error)}')
 
         if not birth_year:
             raise ParsingError('Missing required information, the row should contain the year of birth.')
@@ -345,8 +379,8 @@ class DataParser:
                         visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
                     visits[date_variable] = visit_id
                 except Exception as error:
-                    print(f"Error while trying to parse a date from the following variable \
-                        {date_variable}: {str(error)}")
+                    print(f"Error while trying to parse a date from the following variable {date_variable}" + \
+                          f"(person id: {person_id}): {str(error)}")
         return visits
 
     def transform_rows(self, iterator, start, limit):

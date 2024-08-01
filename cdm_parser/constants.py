@@ -78,6 +78,9 @@ CONVERSION = 'conversion'
 THRESHOLD = 'threshold'
 LIMIT = 'limit'
 
+PREFIX = 'PREFIX'
+SUFFIX = 'SUFFIX'
+
 MEAN = 'mean'
 SUM = 'sum'
 
