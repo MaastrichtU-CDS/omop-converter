@@ -14,7 +14,9 @@ COPY ./cdm_parser ./cdm_parser
 # Copy additonal files - the vocabularies that will be used (can be downloaded
 # from Athena) and the postgres files with the SQL statements to create the
 # OMOP databse.
-COPY requirements.txt vocabularies.zip init.sh postgresql.zip ./
+COPY requirements.txt init.sh vocabularies.zip postgresql.zip ./
+# For the light version, remove the vocabularies.zip above and copy the following:
+# COPY vocabularies-light.zip ./vocabularies.zip
 
 # Install the requirements for the CDM parser
 RUN pip3 install --no-cache-dir -r requirements.txt
