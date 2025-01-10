@@ -66,7 +66,7 @@ class PostgresManager:
         """ Create a new table.
         """
         self.cursor.execute(f"""CREATE TABLE IF NOT EXISTS {table_name} (
-            {', '.join(columns)}
+            {', '.join(columns)}, PRIMARY KEY (id, date)
         );""")
         self.connection.commit()
 

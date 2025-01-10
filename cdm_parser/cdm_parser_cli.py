@@ -173,6 +173,8 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
             limit,
             convert_categoricals, 
             delimiter=os.getenv(DATASET_DELIMITER) or DEFAULT_DELIMITER,
+            bulk=os.getenv(BULK),
+            bulk_range=os.getenv(BULK_RANGE) or 50,
             callback=parser.transform_rows,
         )
 
@@ -181,8 +183,10 @@ def parse_data(cohort_name, cohort_location, start, limit, convert_categoricals,
            pg.drop_table(ID_TABLE)
 
 @click.option('--table-name', prompt=True)
+@click.option('--cohort-id', default=None, type=int)
+@click.option('--drop-table', default=1, type=int)
 @cli.command()
-def parse_omop_to_plane(table_name):
+def parse_omop_to_plane(table_name, cohort_id, drop_table):
     """ Parse the OMOP content to a plane/simpified table. Available to 
         facilitate the first contact with SQL databases and querying. However,
         it's recommended to use the OMOP table (and develop any scripts or algorithms 
@@ -191,21 +195,37 @@ def parse_omop_to_plane(table_name):
     """
     destination_mapping = parse_csv_mapping(os.getenv(DESTINATION_MAPPING_PATH))
     with PostgresManager() as pg:
-        pg.drop_table(table_name)
+        if drop_table:
+            print("Drop table")
+            pg.drop_table(table_name)
+        else:
+            print("Delete cohort rows")
+            delete_by_cohort(pg, table_name, cohort_id)
         # Transform the mapping variables into columns and create the table
         columns = parse_mapping_to_columns(destination_mapping)
         pg.create_table(table_name, columns.values())
         print(f'Table {table_name} created successfully')
         # Parse the data from OMOP to the simplified table
         print('Parsing the OMOP CDM data to the plane table')
-        visits = get_visit_occurrences(pg)
+        parsed_visits = []
+        visits = get_visit_occurrences(pg, cohort_id)
         for count, visit in enumerate(visits):
+            # Retrieve the observations, measurements, and conditions for each
+            # visit (visit[0] - the visit ID)
             observations = get_observations_by_visit_id(pg, visit[0])
             measurements = get_measurements_by_visit_id(pg, visit[0])
             conditions = get_conditions_by_visit_id(pg, visit[0])
             visit_values = parse_visit(
                 destination_mapping, columns, visit, observations, measurements, conditions)
-            insert_values(pg, table_name, visit_values)
+            if os.getenv(BULK):
+                parsed_visits.append(visit_values)
+                bulk_range = int(os.getenv(BULK_RANGE)) or 50
+                if len(parsed_visits) == bulk_range or count == len(visits) - 1:
+                    insert_values(pg, table_name, parsed_visits)
+                    print(f"Bulk insert: {count + 1} rows")
+                    parsed_visits = []
+            else:
+                insert_values(pg, table_name, [visit_values])
             if (count + 1) % 1000 == 0:
                 print(f'Processed {count + 1} visits from {len(visits)}')
 

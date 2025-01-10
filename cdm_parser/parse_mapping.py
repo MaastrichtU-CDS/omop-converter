@@ -57,7 +57,6 @@ def parse_mapping_to_columns(mapping):
             columns[key] = get_column_statement(key, value[TYPE], value[DOMAIN])
         if value[DATE] and value[DATE] not in columns:
             columns[value[DATE]] = get_column_statement(value[DATE], DATE)
-    columns['pk'] = 'PRIMARY KEY (id, date)'
     return columns
 
 def parse_visit(destination_mapping, columns, visit, observations, measurements, conditions):
@@ -79,6 +78,8 @@ def parse_visit(destination_mapping, columns, visit, observations, measurements,
                         concept_mapping[concept_id][VALUES_CONCEPT_ID] or concept_mapping[concept_id][VALUES],
                         concept_mapping[concept_id][VALUES_RANGE]
                     )
+        elif DATE in key:
+            column_value[key] = ''
 
     # Person information
     column_value[ID] = visit[2]

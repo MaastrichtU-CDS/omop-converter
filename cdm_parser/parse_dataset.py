@@ -23,6 +23,21 @@ CDM_SQL = {
     },
 }
 
+CDM_SQL_VALUES = {
+    CONDITION_OCCURRENCE: {
+        BUILD: build_condition_values,
+        BULK: build_condition_bulk,
+    },
+    MEASUREMENT: {
+        BUILD: build_measurement_values,
+        BULK: build_measurement_bulk,
+    },
+    OBSERVATION: {
+        BUILD: build_observation_values,
+        BULK: build_observation_bulk,
+    },
+}
+
 class DataParser:
     """ Parses the dataset to the OMOP CDM.
     """
@@ -38,7 +53,9 @@ class DataParser:
         # Keywords used as missing values
         self.missing_values = missing_values.split(';') if missing_values else []
 
-        # Build the array with the follow up suffixes
+        # Build the array with the follow up suffixes and prefixes
+        # An empty string is included to represent the baseline (
+        # variables that do not include a prefix/suffix)
         self.fu_suffix = ['']
         if fu_suffix:
             self.fu_suffix.extend(fu_suffix.split(DEFAULT_SEPARATOR))
@@ -100,7 +117,7 @@ class DataParser:
                         (not validation or DataParser.validate_value(row[variable], validation)))
 
     @staticmethod
-    def parse_dataset(path, start, limit, convert_categoricals, delimiter, callback):
+    def parse_dataset(path, start, limit, convert_categoricals, delimiter, callback, bulk=False, bulk_range=1):
         """ Read the dataset according to the file type
         """
         error_handling = 'ignore' if os.getenv(IGNORE_ENCODING_ERRORS) else 'strict'
@@ -108,6 +125,8 @@ class DataParser:
         kwargs = {
             'start': start,
             'limit': limit,
+            'bulk': bulk,
+            'bulk_range': bulk_range,
         }
         if '.csv' in path:
             with open(path, 'r', errors=error_handling, encoding=os.getenv(ENCODING)) as csv_file:
@@ -370,20 +389,20 @@ class DataParser:
         visits = {}
         for date_source_variable in self.date_source_variables:
             date_variable = prefix + date_source_variable + suffix
-            if date_variable in row and row[date_variable]:
+            if date_variable in row and row[date_variable] and is_value_valid(row[date_variable]):
                 visit_id = None
                 try:
                     visit_date = parse_date(str(row[date_variable]), self.date_format, DATE_FORMAT)
                     visit_id = get_visit_by_person_and_date(self.pg, person_id, visit_date)
                     if not visit_id:
-                        visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.pg)
+                        visit_id = insert_visit_occurrence(person_id, visit_date, visit_date, self.cohort_id, self.pg)
                     visits[date_variable] = visit_id
                 except Exception as error:
                     print(f"Error while trying to parse a date from the following variable {date_variable}" + \
                           f"(person id: {person_id}): {str(error)}")
         return visits
 
-    def transform_rows(self, iterator, start, limit):
+    def transform_rows(self, iterator, start, limit, bulk=False, bulk_range=50):
         """ Transform each row in the dataset
         """
         id_map = {}
@@ -424,16 +443,25 @@ class DataParser:
                 # Parse the row once for each suffix used
                 visit_found = False
                 # TODO: Improve the prefix/suffix handling
+                insert_statements = {
+                    OBSERVATION: [],
+                    MEASUREMENT: [],
+                    CONDITION_OCCURRENCE: [],
+                }
                 for suffix in self.fu_suffix:
                     visits = self.get_visits(row, person_id, prefix='', suffix=suffix)
                     if len(visits.keys()) > 0:
                         visit_found = True
-                        self.transform_row(row, person_id, visits, prefix='', suffix=suffix)
+                        (sql_domain, sql_statement) = self.transform_row(row, person_id, visits, prefix='', suffix=suffix)
+                        if bulk and sql_domain in insert_statements:
+                            insert_statements[sql_domain].append(sql_statement)
                 for prefix in self.fu_prefix:
                     visits = self.get_visits(row, person_id, prefix=prefix, suffix='')
                     if len(visits.keys()) > 0:
                         visit_found = True
-                        self.transform_row(row, person_id, visits, prefix=prefix, suffix='')
+                        (sql_domain, sql_statement) = self.transform_row(row, person_id, visits, prefix=prefix, suffix='')
+                        if bulk and sql_domain in insert_statements:
+                            insert_statements[sql_domain].append(sql_statement)
                 if not visit_found:
                     print(f'No visit dates found for the person with id {person_id}')
                 # Keep track of the number of records processed
@@ -444,9 +472,21 @@ class DataParser:
                # TODO: Use a logger and add this information in a file
                print(f'Skipped record {index} due to an error: {str(error)}')
                skipped_records += 1
+        if bulk:
+            print(f"Bulk insert: {bulk_range} records by statement")
+            for sql_domain in insert_statements.keys():
+                print(f"Domain {sql_domain}")
+                for record_count in range(0, len(insert_statements[sql_domain]), bulk_range):
+                    self.pg.run_sql(
+                        CDM_SQL_VALUES[sql_domain][BULK](
+                            insert_statements[sql_domain][record_count: record_count + bulk_range]
+                        )
+                    )
+                    print(f"Records processed: {record_count}")
+
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
-    def transform_row(self, row, person_id, visits, prefix='', suffix=''):
+    def transform_row(self, row, person_id, visits, prefix='', suffix='', bulk=False):
         """ Transform each row and insert in the database.
         """
         # Parse the observations/measurements/conditions
@@ -565,12 +605,15 @@ class DataParser:
                                 named_args['additional_info'] = value[STATIC_VALUE]
 
                             # Run the SQL script to insert the measurement/observation/condition
-                            # TODO: Batch insert and commit if everything runs correctly.
                             if not self.ignore_duplicate or not self.pg.run_sql(
                                 *CDM_SQL[domain][CHECK_DUPLICATE](person_id, self.destination_mapping[key], **named_args),
                                 fetch_one=True
                             ):
-                                self.pg.run_sql(*CDM_SQL[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
+                                if bulk:
+                                    return (domain, CDM_SQL_VALUES[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
+                                else:
+                                    self.pg.run_sql(*CDM_SQL[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
+                                    return (None, None)
                     except ParsingError as error:
                         if key not in self.warnings:
                             self.warnings.append(key)

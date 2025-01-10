@@ -109,6 +109,24 @@ def build_observation(person_id, field, value=None, value_as_concept=None, sourc
         (nextval('observation_sequence'),%s,%s,%s, 32879, %s,%s,%s,%s,%s, 0, 0);
     """), (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value))
 
+def build_observation_bulk(observations):
+    """ Build the sql statement for a bulk insert of observations.
+    """
+    return f"""INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
+        observation_type_concept_id,value_as_string,value_as_concept_id,visit_occurrence_id,unit_concept_id,
+        observation_source_value,observation_source_concept_id,obs_event_field_concept_id) VALUES 
+        {observations.join(", ")};"""
+
+def build_observation_values(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
+    """ Build the sql statement for an observation.
+    """
+    unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else None
+    return (
+        ("(nextval('observation_sequence'),%s,%s,%s, 32879, %s,%s,%s,%s,%s, 0, 0);"),
+        (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
+    )
+
 def build_measurement(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     """ Build the sql statement for a measurement.
@@ -120,6 +138,24 @@ def build_measurement(person_id, field, value=None, value_as_concept=None, sourc
         VALUES (nextval('measurement_sequence'),%s,%s,%s,0,%s,%s,%s,%s,%s,0,%s,%s)
     """, (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, additional_info, source_value, symbol_cid))
 
+def build_measurement_bulk(measurements):
+    """ Build the sql statement for a bulk insert of measurements.
+    """
+    return f"""INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
+        measurement_type_concept_id,value_as_number,value_as_concept_id,visit_occurrence_id,unit_concept_id,
+        measurement_source_value,measurement_source_concept_id,value_source_value,operator_concept_id)
+        VALUES {measurements.join(", ")};"""
+
+def build_measurement_values(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
+    """ Build the sql statement for a measurement.
+    """
+    unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else None
+    return (
+        "(nextval('measurement_sequence'),%s,%s,%s,0,%s,%s,%s,%s,%s,0,%s,%s)",
+        (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, additional_info, source_value, symbol_cid)
+    )
+
 def build_condition(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     """ Build the sql statement for a condition.
@@ -129,6 +165,23 @@ def build_condition(person_id, field, value=None, value_as_concept=None, source_
         condition_source_value,condition_source_concept_id,condition_status_source_value) VALUES
         (nextval('condition_sequence'),%s,%s,%s,0,0,%s,%s,0,%s)
     """), (person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info))
+
+def build_condition_bulk(conditions):
+    """ Build the sql statement for a bulk insert of conditions.
+    """
+    return f"""INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
+        condition_start_datetime,condition_type_concept_id,condition_status_concept_id,visit_occurrence_id,
+        condition_source_value,condition_source_concept_id,condition_status_source_value) VALUES
+        {conditions.join(", ")};"""
+
+def build_condition_values(person_id, field, value=None, value_as_concept=None, source_value=None,
+    date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
+    """ Build the sql statement for a condition.
+    """
+    return (
+        ("(nextval('condition_sequence'),%s,%s,%s,0,0,%s,%s,0,%s)"),
+        (person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info)
+    )
 
 def check_duplicated_observation(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
@@ -162,15 +215,15 @@ def build_cohort(cohort_name, location_id):
         SELECT care_site_id FROM CARE_SITE WHERE care_site_name='{0}' LIMIT 1
     """.format(cohort_name, location_id)
 
-def build_visit_occurrence(person_id, start_date, end_date):
+def build_visit_occurrence(person_id, start_date, end_date, cohort_id):
     """ Build the sql statement for a visit occurence.
     """
     return """INSERT INTO VISIT_OCCURRENCE (visit_occurrence_id,person_id,visit_concept_id,visit_start_date,
-        visit_start_datetime,visit_end_date,visit_end_datetime,visit_type_concept_id,visit_source_concept_id,
+        visit_start_datetime,visit_end_date,visit_end_datetime,visit_type_concept_id,care_site_id,visit_source_concept_id,
         admitted_from_concept_id,discharge_to_concept_id) VALUES
-        (nextval('visit_occurrence_sequence'), {0}, 0, '{1}', '{1}', '{2}', '{2}', 0, 0, 0, 0)
+        (nextval('visit_occurrence_sequence'), {0}, 0, '{1}', '{1}', '{2}', '{2}', 0, {3}, 0, 0, 0)
         RETURNING visit_occurrence_id
-    """.format(person_id, start_date, end_date)
+    """.format(person_id, start_date, end_date, cohort_id)
 
 def build_location(address):
     """ Build the sql statement to insert a location.
@@ -183,10 +236,10 @@ def insert_cohort(cohort_name, location_id, pg):
     """
     return pg.run_sql(build_cohort(cohort_name, location_id), fetch_one=True)
 
-def insert_visit_occurrence(person_id, start_date, end_date, pg):
+def insert_visit_occurrence(person_id, start_date, end_date, cohort_id, pg):
     """ Insert the visit occurence information.
     """
-    return pg.run_sql(build_visit_occurrence(person_id, start_date, end_date), fetch_one=True)
+    return pg.run_sql(build_visit_occurrence(person_id, start_date, end_date, cohort_id), fetch_one=True)
 
 def insert_location(address, pg):
     """ Insert a location.
@@ -219,13 +272,14 @@ def get_visit_by_person_and_date(pg, person_id, start_date):
     return pg.run_sql(f"""SELECT visit_occurrence_id FROM VISIT_OCCURRENCE WHERE 
         person_id = {person_id} AND visit_start_datetime = '{start_date}'""", fetch_one=True)
 
-def get_visit_occurrences(pg):
+def get_visit_occurrences(pg, cohort_id):
     """ Get all visit occurences.
     """
     #keys = ['visit_id', 'person_id', 'year_of_birth', 'gender_concept_id', 'death_datetime']
-    return pg.run_sql("""SELECT v.visit_occurrence_id, v.visit_start_datetime, p.person_id, p.year_of_birth,
+    return pg.run_sql(f"""SELECT v.visit_occurrence_id, v.visit_start_datetime, p.person_id, p.year_of_birth,
         p.gender_concept_id, p.death_datetime FROM VISIT_OCCURRENCE AS v JOIN PERSON AS p ON 
-        p.person_id = v.person_id""", fetch_all=True)
+        p.person_id = v.person_id {"WHERE p.care_site_id = " + str(cohort_id) if cohort_id is not None else ""}
+    """, fetch_all=True)
 
 def get_observations_by_visit_id(pg, visit_id):
     """ Get observation by visit id and person id.
@@ -250,5 +304,17 @@ def insert_values(pg, table_name, columns):
     """
     # TODO: Check the NULL values
     # if len([str(val) for val in columns.values() if str(val) == 'None']) > 0:
-    return pg.run_sql(f"""INSERT INTO {table_name} ({', '.join(columns.keys())}) 
-        VALUES ({', '.join([f"'{str(val)}'" if str(val) and str(val) != 'None' else 'NULL' for val in columns.values()])})""")
+    values_statements = []
+    for row in columns:
+        values_statements.append(', '.join(
+            [f"'{str(val)}'" if str(val) and str(val) != 'None' else 'NULL' for val in row.values()]
+        ))
+    return pg.run_sql(f"""INSERT INTO {table_name} ({', '.join(columns[0].keys())}) 
+        VALUES ({'), ('.join(values_statements)});""")
+
+def delete_by_cohort(pg, table_name, cohort_id):
+    """ Delete rows from a table based on the cohort id.
+    """
+    return pg.run_sql(
+        f"DELETE FROM {table_name} WHERE person_id IN (SELECT person_id FROM person_source_id WHERE cohort_id = {cohort_id});"
+    )
