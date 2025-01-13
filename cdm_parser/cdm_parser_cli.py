@@ -30,9 +30,11 @@ def cli():
 @click.option('--encoding', prompt=False, default=None)
 @click.option('--missing-values', prompt=False, default=None)
 @click.option('--ignore-duplicates', prompt=False, default=False)
+@click.option('--bulk', prompt=False, default=False)
+@click.option('--bulk-range', prompt=False, default=1)
 def set_up(user, password, host, port, database_name, vocabulary_path, destination_mapping,
     source_mapping, dataset, dataset_delimiter, follow_up_suffix, encoding, missing_values,
-    ignore_duplicates):
+    ignore_duplicates, bulk, bulk_range):
     """ Set up the configurations needed.
     """
     configurations = {
@@ -50,6 +52,8 @@ def set_up(user, password, host, port, database_name, vocabulary_path, destinati
         ENCODING: encoding,
         MISSING_VALUES: missing_values,
         IGNORE_DUPLICATES: ignore_duplicates,
+        BULK: bulk,
+        BULK_RANGE: bulk_range
     }
     export_config(DB_CONFIGURATION_PATH, DB_CONFIGURATION_SECTION, configurations)
 

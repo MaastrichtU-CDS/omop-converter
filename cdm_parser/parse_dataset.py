@@ -126,7 +126,7 @@ class DataParser:
             'start': start,
             'limit': limit,
             'bulk': bulk,
-            'bulk_range': bulk_range,
+            'bulk_range': int(bulk_range),
         }
         if '.csv' in path:
             with open(path, 'r', errors=error_handling, encoding=os.getenv(ENCODING)) as csv_file:
@@ -411,6 +411,11 @@ class DataParser:
         id_source_variable = self.get_source_variable(SOURCE_ID)
         if not id_source_variable:
             print("No source id variable provided!")
+        insert_statements = {
+            OBSERVATION: [],
+            MEASUREMENT: [],
+            CONDITION_OCCURRENCE: [],
+        }
         for index, row in iterator:
             if limit > 0 and index - start >= limit:
                 break
@@ -443,25 +448,22 @@ class DataParser:
                 # Parse the row once for each suffix used
                 visit_found = False
                 # TODO: Improve the prefix/suffix handling
-                insert_statements = {
-                    OBSERVATION: [],
-                    MEASUREMENT: [],
-                    CONDITION_OCCURRENCE: [],
-                }
                 for suffix in self.fu_suffix:
                     visits = self.get_visits(row, person_id, prefix='', suffix=suffix)
                     if len(visits.keys()) > 0:
                         visit_found = True
-                        (sql_domain, sql_statement) = self.transform_row(row, person_id, visits, prefix='', suffix=suffix)
-                        if bulk and sql_domain in insert_statements:
-                            insert_statements[sql_domain].append(sql_statement)
+                        sql_statements = self.transform_row(row, person_id, visits, prefix='', suffix=suffix, bulk=bulk)
+                        if bulk:
+                            for (sql_domain, sql_statement) in sql_statements:
+                                insert_statements[sql_domain].append(sql_statement)
                 for prefix in self.fu_prefix:
                     visits = self.get_visits(row, person_id, prefix=prefix, suffix='')
                     if len(visits.keys()) > 0:
                         visit_found = True
-                        (sql_domain, sql_statement) = self.transform_row(row, person_id, visits, prefix=prefix, suffix='')
-                        if bulk and sql_domain in insert_statements:
-                            insert_statements[sql_domain].append(sql_statement)
+                        sql_statements = self.transform_row(row, person_id, visits, prefix=prefix, suffix='', bulk=bulk)
+                        if bulk:
+                            for (sql_domain, sql_statement) in sql_statements:
+                                insert_statements[sql_domain].append(sql_statement)
                 if not visit_found:
                     print(f'No visit dates found for the person with id {person_id}')
                 # Keep track of the number of records processed
@@ -473,7 +475,7 @@ class DataParser:
                print(f'Skipped record {index} due to an error: {str(error)}')
                skipped_records += 1
         if bulk:
-            print(f"Bulk insert: {bulk_range} records by statement")
+            print(f"Bulk insert: {str(bulk_range)} records by statement")
             for sql_domain in insert_statements.keys():
                 print(f"Domain {sql_domain}")
                 for record_count in range(0, len(insert_statements[sql_domain]), bulk_range):
@@ -482,7 +484,7 @@ class DataParser:
                             insert_statements[sql_domain][record_count: record_count + bulk_range]
                         )
                     )
-                    print(f"Records processed: {record_count}")
+                    print(f"Records processed: {record_count + bulk_range}")
 
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
@@ -490,6 +492,7 @@ class DataParser:
         """ Transform each row and insert in the database.
         """
         # Parse the observations/measurements/conditions
+        sql_statements = []
         for key, value in self.source_mapping.items():
             if key not in self.destination_mapping:
                 if DATE not in key.lower() and key not in self.warnings:
@@ -532,6 +535,8 @@ class DataParser:
                     if len(source_value) == 0:
                         source_value = source_value_alternative
                         source_variable_valid = source_variable_valid_alternative
+                # TODO: Also used for additonal information added to a different column
+                # probably better to separate the two.
                 elif value[STATIC_VALUE]:
                     source_value = [value[STATIC_VALUE]]
                 if len(source_value) > 0:
@@ -610,12 +615,12 @@ class DataParser:
                                 fetch_one=True
                             ):
                                 if bulk:
-                                    return (domain, CDM_SQL_VALUES[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
+                                    sql_statements.append((domain, CDM_SQL_VALUES[domain][BUILD](person_id, self.destination_mapping[key], **named_args)))
                                 else:
                                     self.pg.run_sql(*CDM_SQL[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
-                                    return (None, None)
                     except ParsingError as error:
                         if key not in self.warnings:
                             self.warnings.append(key)
                             print(f"Error when transforming the row for variable {key}: {error}")
                         pass
+        return sql_statements

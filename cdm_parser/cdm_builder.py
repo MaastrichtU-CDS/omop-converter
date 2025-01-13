@@ -115,17 +115,16 @@ def build_observation_bulk(observations):
     return f"""INSERT INTO OBSERVATION (observation_id,person_id,observation_concept_id,observation_datetime,
         observation_type_concept_id,value_as_string,value_as_concept_id,visit_occurrence_id,unit_concept_id,
         observation_source_value,observation_source_concept_id,obs_event_field_concept_id) VALUES 
-        {observations.join(", ")};"""
+        {", ".join(observations)};"""
 
 def build_observation_values(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     """ Build the sql statement for an observation.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else None
-    return (
-        ("(nextval('observation_sequence'),%s,%s,%s, 32879, %s,%s,%s,%s,%s, 0, 0);"),
-        (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
-    )
+    return ("(nextval('observation_sequence'),{},{},'{}', 32879, '{}',{},{},{},'{}', 0, 0)".format(
+        person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, source_value)
+    ).replace("None", "NULL")
 
 def build_measurement(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
@@ -144,17 +143,16 @@ def build_measurement_bulk(measurements):
     return f"""INSERT INTO MEASUREMENT (measurement_id,person_id,measurement_concept_id,measurement_datetime,
         measurement_type_concept_id,value_as_number,value_as_concept_id,visit_occurrence_id,unit_concept_id,
         measurement_source_value,measurement_source_concept_id,value_source_value,operator_concept_id)
-        VALUES {measurements.join(", ")};"""
+        VALUES {", ".join(measurements)};"""
 
 def build_measurement_values(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     """ Build the sql statement for a measurement.
     """
     unit_concept_id = field[UNIT_CONCEPT_ID] if field[UNIT_CONCEPT_ID] else None
-    return (
-        "(nextval('measurement_sequence'),%s,%s,%s,0,%s,%s,%s,%s,%s,0,%s,%s)",
-        (person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, additional_info, source_value, symbol_cid)
-    )
+    return ("(nextval('measurement_sequence'),{},{},'{}',0,{},{},{},{},'{}',0,'{}',{})".format(
+        person_id, field[CONCEPT_ID], date, value, value_as_concept, visit_id, unit_concept_id, additional_info, source_value, symbol_cid)
+    ).replace("None", "NULL")
 
 def build_condition(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
@@ -172,16 +170,15 @@ def build_condition_bulk(conditions):
     return f"""INSERT INTO CONDITION_OCCURRENCE (condition_occurrence_id,person_id,condition_concept_id,
         condition_start_datetime,condition_type_concept_id,condition_status_concept_id,visit_occurrence_id,
         condition_source_value,condition_source_concept_id,condition_status_source_value) VALUES
-        {conditions.join(", ")};"""
+        {", ".join(conditions)};"""
 
 def build_condition_values(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
     """ Build the sql statement for a condition.
     """
-    return (
-        ("(nextval('condition_sequence'),%s,%s,%s,0,0,%s,%s,0,%s)"),
-        (person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info)
-    )
+    return ("(nextval('condition_sequence'),{},{},'{}',0,0,{},'{}',0,'{}')".format(
+        person_id, field[CONCEPT_ID], date, visit_id, source_value, additional_info)
+    ).replace("None", "NULL")
 
 def check_duplicated_observation(person_id, field, value=None, value_as_concept=None, source_value=None,
     date='19700101 00:00:00', visit_id=None, additional_info=None, symbol_cid=None):
