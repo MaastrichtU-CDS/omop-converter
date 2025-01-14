@@ -445,47 +445,59 @@ class DataParser:
                 else:
                     # print('No ID variable available')
                     person_id = self.parse_person(row)
-                # Parse the row once for each suffix used
+                # Parse the row once for each prefix/suffix used
                 visit_found = False
-                # TODO: Improve the prefix/suffix handling
-                for suffix in self.fu_suffix:
-                    visits = self.get_visits(row, person_id, prefix='', suffix=suffix)
-                    if len(visits.keys()) > 0:
-                        visit_found = True
-                        sql_statements = self.transform_row(row, person_id, visits, prefix='', suffix=suffix, bulk=bulk)
-                        if bulk:
-                            for (sql_domain, sql_statement) in sql_statements:
-                                insert_statements[sql_domain].append(sql_statement)
-                for prefix in self.fu_prefix:
-                    visits = self.get_visits(row, person_id, prefix=prefix, suffix='')
-                    if len(visits.keys()) > 0:
-                        visit_found = True
-                        sql_statements = self.transform_row(row, person_id, visits, prefix=prefix, suffix='', bulk=bulk)
-                        if bulk:
-                            for (sql_domain, sql_statement) in sql_statements:
-                                insert_statements[sql_domain].append(sql_statement)
+                fu_info = {
+                    PREFIX: self.fu_prefix,
+                    SUFFIX: self.fu_suffix,
+                }
+                for info_key, info_values in fu_info.items():
+                    for info_value in info_values:
+                        prefix=info_value if info_key == PREFIX else ''
+                        suffix=info_value if info_key == SUFFIX else ''
+                        # Retrieve the visit or insert a new visit for the participant
+                        visits = self.get_visits(
+                            row,
+                            person_id,
+                            prefix=prefix,
+                            suffix=suffix,
+                        )
+                        if len(visits.keys()) > 0:
+                            visit_found = True
+                            # Process the data in the row. If bulk is True, it creates the sql statements by
+                            # OMOP domain. If bulk is False, it will insert each variable individually.
+                            sql_statements = self.transform_row(
+                                row,
+                                person_id,
+                                visits,
+                                prefix=prefix,
+                                suffix=suffix,
+                                bulk=bulk,
+                            )
+                            if bulk:
+                                for (sql_domain, sql_statement) in sql_statements:
+                                    insert_statements[sql_domain].append(sql_statement)
                 if not visit_found:
                     print(f'No visit dates found for the person with id {person_id}')
                 # Keep track of the number of records processed
                 processed_records += 1
                 if processed_records % 250 == 0:
                     print(f'Processed {processed_records} records')
+                if bulk:
+                    for sql_domain in insert_statements.keys():
+                        print(f"Domain {sql_domain}")
+                        for record_count in range(0, len(insert_statements[sql_domain]), bulk_range):
+                            self.pg.run_sql(
+                                CDM_SQL_VALUES[sql_domain][BULK](
+                                    insert_statements[sql_domain][record_count: record_count + bulk_range]
+                                )
+                            )
+                            print(f"Records inserted (bulk): {record_count + bulk_range}")
+                        insert_statements[sql_domain] = []
             except ParsingError as error:
                # TODO: Use a logger and add this information in a file
                print(f'Skipped record {index} due to an error: {str(error)}')
                skipped_records += 1
-        if bulk:
-            print(f"Bulk insert: {str(bulk_range)} records by statement")
-            for sql_domain in insert_statements.keys():
-                print(f"Domain {sql_domain}")
-                for record_count in range(0, len(insert_statements[sql_domain]), bulk_range):
-                    self.pg.run_sql(
-                        CDM_SQL_VALUES[sql_domain][BULK](
-                            insert_statements[sql_domain][record_count: record_count + bulk_range]
-                        )
-                    )
-                    print(f"Records processed: {record_count + bulk_range}")
-
         print(f'Processed {processed_records} records and skipped {skipped_records} records due to errors')
 
     def transform_row(self, row, person_id, visits, prefix='', suffix='', bulk=False):
@@ -610,14 +622,14 @@ class DataParser:
                                 named_args['additional_info'] = value[STATIC_VALUE]
 
                             # Run the SQL script to insert the measurement/observation/condition
-                            if not self.ignore_duplicate or not self.pg.run_sql(
-                                *CDM_SQL[domain][CHECK_DUPLICATE](person_id, self.destination_mapping[key], **named_args),
-                                fetch_one=True
-                            ):
-                                if bulk:
-                                    sql_statements.append((domain, CDM_SQL_VALUES[domain][BUILD](person_id, self.destination_mapping[key], **named_args)))
-                                else:
-                                    self.pg.run_sql(*CDM_SQL[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
+                            # if not self.ignore_duplicate or not self.pg.run_sql(
+                            #     *CDM_SQL[domain][CHECK_DUPLICATE](person_id, self.destination_mapping[key], **named_args),
+                            #     fetch_one=True
+                            # ):
+                            if bulk:
+                                sql_statements.append((domain, CDM_SQL_VALUES[domain][BUILD](person_id, self.destination_mapping[key], **named_args)))
+                            else:
+                                self.pg.run_sql(*CDM_SQL[domain][BUILD](person_id, self.destination_mapping[key], **named_args))
                     except ParsingError as error:
                         if key not in self.warnings:
                             self.warnings.append(key)
