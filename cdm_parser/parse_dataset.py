@@ -135,6 +135,10 @@ class DataParser:
                     next(csv_reader)
                 callback(enumerate(csv_reader, start=start), **kwargs)
                 header = csv_reader.fieldnames
+            # Alternative:
+            # df = pd.read_csv(path, encoding=os.getenv(ENCODING), on_bad_lines='skip', delimiter=delimiter)
+            # callback(df.loc[start:].iterrows(), **kwargs)
+            # header = df.head()
         elif '.sav' in path:
             df = pd.read_spss(path, convert_categoricals=convert_categoricals)
             callback(df.loc[start:].iterrows(), **kwargs)
@@ -144,6 +148,13 @@ class DataParser:
             callback(df.loc[start:].iterrows(), **kwargs)
             header = df.head()
         return header
+
+    @staticmethod
+    def parse_source_value(source_values):
+        """ Parse the source value to keep store it in the DB.
+        """
+        # TODO: create an environment variable to constraint the string size.
+        return (';'.join([str(value) for value in source_values]))[:50]
 
     def map_variable_values(self, variable, specification):
         """ Create the mapping between a source and destination variable
@@ -239,7 +250,7 @@ class DataParser:
                     source_value_stripped = source_variable.strip(prefix).strip(suffix)
                     if source_value_stripped in value_map:
                         value_code = value_map[source_value_stripped]
-            else:
+            if value_code is None:
                 raise ParsingError(f'Variable {variable} is incorrectly mapped: value {value} is not mapped')
             return (concept_id, value_code, symbol_cid)
         elif aggregate:
@@ -337,7 +348,8 @@ class DataParser:
                     (age_date_variables, age_date_format, _) = self.get_parameters(
                             self.destination_mapping[AGE][DATE])
                     for i, age_variable_base in enumerate(age_variables):
-                        age_variable_wave = self.get_source_variable_from_wave(age_variable_base)
+                        # age_variable_wave = self.get_source_variable_from_wave(age_variable_base)
+                        age_variable_wave = self.create_variable_names(age_variable_base, self.fu_prefix, self.fu_suffix)
                         if age_date_variables and len(age_date_variables) > i:
                             age_date_variable_wave = self.create_variable_names(age_date_variables[i], self.fu_prefix, self.fu_suffix)
                             for j, age_variable in enumerate(age_variable_wave):
@@ -408,6 +420,7 @@ class DataParser:
         id_map = {}
         processed_records = 0
         skipped_records = 0
+        bulk_insert_records = 0
         id_source_variable = self.get_source_variable(SOURCE_ID)
         if not id_source_variable:
             print("No source id variable provided!")
@@ -476,6 +489,7 @@ class DataParser:
                             )
                             if bulk:
                                 for (sql_domain, sql_statement) in sql_statements:
+                                    bulk_insert_records += 1
                                     insert_statements[sql_domain].append(sql_statement)
                 if not visit_found:
                     print(f'No visit dates found for the person with id {person_id}')
@@ -483,17 +497,18 @@ class DataParser:
                 processed_records += 1
                 if processed_records % 250 == 0:
                     print(f'Processed {processed_records} records')
-                if bulk:
+                if bulk and bulk_insert_records > bulk_range:
+                    # print(f"Bulk insert: {bulk_insert_records} records")
                     for sql_domain in insert_statements.keys():
-                        print(f"Domain {sql_domain}")
+                        # print(f"Domain {sql_domain}")
                         for record_count in range(0, len(insert_statements[sql_domain]), bulk_range):
                             self.pg.run_sql(
                                 CDM_SQL_VALUES[sql_domain][BULK](
                                     insert_statements[sql_domain][record_count: record_count + bulk_range]
                                 )
                             )
-                            print(f"Records inserted (bulk): {record_count + bulk_range}")
                         insert_statements[sql_domain] = []
+                    bulk_insert_records = 0
             except ParsingError as error:
                # TODO: Use a logger and add this information in a file
                print(f'Skipped record {index} due to an error: {str(error)}')
@@ -594,7 +609,7 @@ class DataParser:
                                             )
                             # Create the necessary arguments to build the SQL statement
                             named_args = {
-                                'source_value': ';'.join([str(value) for value in source_value]),
+                                'source_value': self.parse_source_value(source_value),
                                 'date': date,
                                 'visit_id': visit_id,
                                 'symbol_cid': symbol_cid

@@ -313,5 +313,5 @@ def delete_by_cohort(pg, table_name, cohort_id):
     """ Delete rows from a table based on the cohort id.
     """
     return pg.run_sql(
-        f"DELETE FROM {table_name} WHERE person_id IN (SELECT person_id FROM person_source_id WHERE cohort_id = {cohort_id});"
+        f"DELETE FROM {table_name} WHERE id IN (SELECT person_id FROM person_source_id WHERE cohort_id = '{cohort_id}');"
     )
